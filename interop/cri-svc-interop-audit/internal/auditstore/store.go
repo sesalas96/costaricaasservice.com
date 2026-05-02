@@ -10,8 +10,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/devsebas/saascr/libs/cri-lib-crypto/hashchain"
-	"github.com/devsebas/saascr/libs/cri-lib-shared/idgen"
+	"github.com/devsebas/costaricaasservice/libs/cri-lib-crypto/hashchain"
+	"github.com/devsebas/costaricaasservice/libs/cri-lib-shared/idgen"
 )
 
 // Entry es una transacción inter-member registrada en el log.

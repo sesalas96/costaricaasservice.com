@@ -1,6 +1,6 @@
 # cri-gateway-api
 
-Plantilla de servicio Go para `saascr`. **No correr en producción** — usar como scaffold.
+Plantilla de servicio Go para `costaricaasservice`. **No correr en producción** — usar como scaffold.
 
 ## Crear un servicio nuevo
 

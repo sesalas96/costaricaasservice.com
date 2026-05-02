@@ -27,12 +27,12 @@ import (
 	"os"
 	"time"
 
-	screrrors "github.com/devsebas/saascr/libs/cri-lib-shared/errors"
-	"github.com/devsebas/saascr/libs/cri-lib-shared/httpx"
+	screrrors "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/errors"
+	"github.com/devsebas/costaricaasservice/libs/cri-lib-shared/httpx"
 
-	"github.com/devsebas/saascr/interop/cri-svc-security-server/internal/config"
-	"github.com/devsebas/saascr/interop/cri-svc-security-server/internal/hubclient"
-	"github.com/devsebas/saascr/interop/cri-svc-security-server/internal/signing"
+	"github.com/devsebas/costaricaasservice/interop/cri-svc-security-server/internal/config"
+	"github.com/devsebas/costaricaasservice/interop/cri-svc-security-server/internal/hubclient"
+	"github.com/devsebas/costaricaasservice/interop/cri-svc-security-server/internal/signing"
 )
 
 // Handler maneja /v1/interop/inbox.

@@ -21,13 +21,13 @@ import (
 	"net/http"
 	"time"
 
-	scrctx "github.com/devsebas/saascr/libs/cri-lib-shared/ctx"
-	screrrors "github.com/devsebas/saascr/libs/cri-lib-shared/errors"
-	"github.com/devsebas/saascr/libs/cri-lib-shared/httpx"
-	"github.com/devsebas/saascr/libs/cri-lib-shared/idgen"
+	scrctx "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/ctx"
+	screrrors "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/errors"
+	"github.com/devsebas/costaricaasservice/libs/cri-lib-shared/httpx"
+	"github.com/devsebas/costaricaasservice/libs/cri-lib-shared/idgen"
 
-	"github.com/devsebas/saascr/interop/cri-svc-security-server/internal/config"
-	"github.com/devsebas/saascr/interop/cri-svc-security-server/internal/signing"
+	"github.com/devsebas/costaricaasservice/interop/cri-svc-security-server/internal/config"
+	"github.com/devsebas/costaricaasservice/interop/cri-svc-security-server/internal/signing"
 )
 
 // Handler maneja /v1/interop/call.

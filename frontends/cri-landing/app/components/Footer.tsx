@@ -12,7 +12,7 @@ export default function Footer() {
           style={{ background: "var(--color-cr-blue-bright)" }}
         />
         <span className="font-mono text-xs uppercase tracking-widest">
-          saascr
+          costaricaasservice
         </span>
         <span>· {t.footer.coreOf}</span>
       </div>

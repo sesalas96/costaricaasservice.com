@@ -3,7 +3,7 @@ import "./globals.css";
 import Providers from "./components/Providers";
 
 export const metadata: Metadata = {
-  title: "saascr — Núcleo de Conecta CR",
+  title: "costaricaasservice — Núcleo de Conecta CR",
   description:
     "Plataforma SaaS B2G/B2B inspirada en e-Estonia. X-Road + e-ID + portal ciudadano como producto multi-tenant.",
 };

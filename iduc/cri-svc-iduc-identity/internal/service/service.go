@@ -10,11 +10,11 @@ import (
 	"strings"
 	"time"
 
-	screrrors "github.com/devsebas/saascr/libs/cri-lib-shared/errors"
+	screrrors "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/errors"
 
-	"github.com/devsebas/saascr/iduc/cri-svc-iduc-identity/internal/passwords"
-	"github.com/devsebas/saascr/iduc/cri-svc-iduc-identity/internal/store"
-	"github.com/devsebas/saascr/iduc/cri-svc-iduc-identity/internal/token"
+	"github.com/devsebas/costaricaasservice/iduc/cri-svc-iduc-identity/internal/passwords"
+	"github.com/devsebas/costaricaasservice/iduc/cri-svc-iduc-identity/internal/store"
+	"github.com/devsebas/costaricaasservice/iduc/cri-svc-iduc-identity/internal/token"
 )
 
 // Service agrega las capacidades de identidad.

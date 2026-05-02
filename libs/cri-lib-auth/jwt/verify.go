@@ -1,6 +1,6 @@
 // Package jwt verifica tokens RS256 emitidos por cri-svc-iduc-identity.
 //
-// Convenciones del JWT en saascr:
+// Convenciones del JWT en costaricaasservice:
 //   - alg: RS256
 //   - sub: citizen_id u operator_id (string)
 //   - jti: numérico (sequence) — usado en Roaring bitmap del gateway
@@ -18,10 +18,10 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 
-	"github.com/devsebas/saascr/libs/cri-lib-auth/auth"
+	"github.com/devsebas/costaricaasservice/libs/cri-lib-auth/auth"
 )
 
-// Claims son las pretensiones esperadas en cada token saascr.
+// Claims son las pretensiones esperadas en cada token costaricaasservice.
 type Claims struct {
 	Realm  string   `json:"realm"`
 	Roles  []string `json:"roles"`

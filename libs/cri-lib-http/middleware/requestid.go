@@ -5,8 +5,8 @@ package middleware
 import (
 	"net/http"
 
-	scrctx "github.com/devsebas/saascr/libs/cri-lib-shared/ctx"
-	"github.com/devsebas/saascr/libs/cri-lib-shared/idgen"
+	scrctx "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/ctx"
+	"github.com/devsebas/costaricaasservice/libs/cri-lib-shared/idgen"
 )
 
 const (

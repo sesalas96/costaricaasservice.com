@@ -11,10 +11,10 @@ import (
 	"errors"
 	"strconv"
 
-	interop "github.com/devsebas/saascr/libs/cri-lib-interop-client/interop"
-	screrrors "github.com/devsebas/saascr/libs/cri-lib-shared/errors"
+	interop "github.com/devsebas/costaricaasservice/libs/cri-lib-interop-client/interop"
+	screrrors "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/errors"
 
-	"github.com/devsebas/saascr/members/cri-svc-ccss/internal/store"
+	"github.com/devsebas/costaricaasservice/members/cri-svc-ccss/internal/store"
 )
 
 type Service struct {

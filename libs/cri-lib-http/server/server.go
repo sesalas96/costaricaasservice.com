@@ -1,5 +1,5 @@
 // Package server centraliza el bootstrap de http.Server con timeouts saludables
-// y el stack de middlewares por defecto que todos los servicios saascr usan.
+// y el stack de middlewares por defecto que todos los servicios costaricaasservice usan.
 package server
 
 import (
@@ -10,7 +10,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 
-	mw "github.com/devsebas/saascr/libs/cri-lib-http/middleware"
+	mw "github.com/devsebas/costaricaasservice/libs/cri-lib-http/middleware"
 )
 
 // Config define las opciones de bootstrap del server.

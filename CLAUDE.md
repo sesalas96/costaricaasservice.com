@@ -1,4 +1,4 @@
-# saascr — Núcleo de Conecta CR
+# costaricaasservice — Núcleo de Conecta CR
 
 Plataforma SaaS B2G/B2B de gobierno digital. Implementación del modelo e-Estonia (X-Road + e-ID + portal ciudadano) como producto multi-tenant.
 
@@ -13,7 +13,7 @@ Plataforma SaaS B2G/B2B de gobierno digital. Implementación del modelo e-Estoni
 
 ## Producto — qué se vende
 
-| Capa | Componente saascr | Análogo Estonia |
+| Capa | Componente costaricaasservice | Análogo Estonia |
 |---|---|---|
 | 1. Identidad | `iduc/` — ID ciudadana, claves, firma digital | e-ID |
 | 2. Interoperabilidad | `interop/` — hub central + security server desplegable | X-Road |
@@ -33,7 +33,7 @@ Plataforma SaaS B2G/B2B de gobierno digital. Implementación del modelo e-Estoni
 ## Estructura del Monorepo
 
 ```text
-03_saascr/
+03_costaricaasservice/
 ├── gateway/          # API Gateway + BFFs
 ├── iduc/             # Identidad Digital Única (autenticación, claves, firma)
 ├── interop/          # Conecta — X-Road analog (hub, security-server, router, audit)
@@ -56,7 +56,7 @@ Plataforma SaaS B2G/B2B de gobierno digital. Implementación del modelo e-Estoni
 | `cri-gateway-api` | Gateway central. Valida JWT RS256, inyecta headers internos (`X-CRI-Sub`, `X-CRI-Roles`, `X-CRI-Realm`), rate limit por IP/user, RBAC, reverse proxy. Roaring bitmap de JTIs revocados. |
 | `cri-bff-citizen` | BFF para MiCR (web + mobile). Orquesta llamadas para: ver mis datos, declaración pre-llenada, bitácora de accesos, firmar. |
 | `cri-bff-member` | BFF para portales de instituciones (operadores). Catálogo de servicios, métricas de uso, invocación de servicios remotos. |
-| `cri-bff-admin` | BFF para control plane saascr (gestión de realms, members, claves, billing, observabilidad). |
+| `cri-bff-admin` | BFF para control plane costaricaasservice (gestión de realms, members, claves, billing, observabilidad). |
 
 ## iduc/ — Identidad Digital Única Costarricense
 
@@ -96,7 +96,7 @@ Plataforma SaaS B2G/B2B de gobierno digital. Implementación del modelo e-Estoni
 
 | Repo | Descripción |
 |---|---|
-| `cri-lib-shared` | `httpx` (envelope), `errors` (AppError), `ctx` (request ID + realm), `ulid` (request_id), `pagination`. Module: `github.com/devsebas/saascr/libs/cri-lib-shared`. |
+| `cri-lib-shared` | `httpx` (envelope), `errors` (AppError), `ctx` (request ID + realm), `ulid` (request_id), `pagination`. Module: `github.com/devsebas/costaricaasservice/libs/cri-lib-shared`. |
 | `cri-lib-http` | Middlewares chi: logging, recover, requestId, **tenant resolver (realm)**, CORS. Cliente HTTP con interceptors. |
 | `cri-lib-auth` | `auth.Principal` (Sub, Roles, Realm), JWT RS256 verifier, middlewares chi. Roles: `citizen`, `member_*`, `admin_*`. |
 | `cri-lib-crypto` | Ed25519 sign/verify (firmas ciudadanas), X.509 helpers (members), SHA-256 hash chain + Merkle (audit). |
@@ -114,7 +114,7 @@ Plataforma SaaS B2G/B2B de gobierno digital. Implementación del modelo e-Estoni
 - **Comunicación sync**: HTTP/JSON vía gateway para clientes externos. HTTP directo entre svcs internos del mismo realm. **Inter-member SOLO vía security-server + interop-router** (firmado y auditado).
 - **Comunicación async**: Kafka eventos (CloudEvents envelope vía `cri-lib-events`). Topics: `cri.<domain>.events`. DLQ: `cri.dlq`.
 - **Auth flow**: Client → Gateway (JWT verify + Roaring bitmap revocation + RBAC) → BFF → Services. Headers inyectados: `X-CRI-Sub`, `X-CRI-Roles`, `X-CRI-Realm`, `X-Request-Id`.
-- **Roles** (`libs/cri-lib-auth/auth/roles.go`): `citizen`, `member_operator`, `member_admin`, `realm_admin`, `saascr_admin`.
+- **Roles** (`libs/cri-lib-auth/auth/roles.go`): `citizen`, `member_operator`, `member_admin`, `realm_admin`, `costaricaasservice_admin`.
 - **Crypto**:
   - Firmas ciudadanas: Ed25519, claves en KMS (Vault Transit / AWS KMS).
   - Members: X.509 (RSA-3072 o ECDSA P-384) firmadas por el hub-CA del realm.

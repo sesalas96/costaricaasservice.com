@@ -1,5 +1,5 @@
 // Package httpx contiene helpers para escribir respuestas HTTP en el
-// formato envelope estándar de saascr: {data, meta} en éxito, {error, meta}
+// formato envelope estándar de costaricaasservice: {data, meta} en éxito, {error, meta}
 // en error. Siempre con requestId.
 package httpx
 
@@ -8,8 +8,8 @@ import (
 	"log/slog"
 	"net/http"
 
-	scrctx "github.com/devsebas/saascr/libs/cri-lib-shared/ctx"
-	screrrors "github.com/devsebas/saascr/libs/cri-lib-shared/errors"
+	scrctx "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/ctx"
+	screrrors "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/errors"
 )
 
 // Meta contiene metadatos comunes a toda respuesta.

@@ -1,4 +1,4 @@
-# saascr — Núcleo de Conecta CR
+# costaricaasservice — Núcleo de Conecta CR
 
 Plataforma SaaS B2G/B2B de gobierno digital, inspirada en el modelo e-Estonia.
 

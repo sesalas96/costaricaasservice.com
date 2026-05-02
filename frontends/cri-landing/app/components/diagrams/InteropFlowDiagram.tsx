@@ -85,7 +85,7 @@ export default function InteropFlowDiagram({
     // 5 nodos en fila (forward), audit arriba, hub abajo.
     // Ida arriba (right→left, animated). Vuelta por debajo (bottom→bottom dashed).
     const ROW = 240;
-    const COLS = [0, 320, 640, 960, 1280];
+    const COLS = [0, 380, 760, 1140, 1520];
     const nodes: Node[] = [
       svc("src", COLS[0], ROW, "members", i.haciendaSvc.title, i.haciendaSvc.sub, true),
       svc("ss-src", COLS[1], ROW, "interop", i.ssHac.title, i.ssHac.sub, true),
@@ -154,7 +154,7 @@ export default function InteropFlowDiagram({
     //                  ↓
     //              [Tu bitácora]
     const ROW = 200;
-    const COLS = [0, 380, 760];
+    const COLS = [0, 620, 1240];
     const nodes: Node[] = [
       svc("a", COLS[0], ROW, "members", c.institutionA.title, c.institutionA.sub, true),
       svc("bridge", COLS[1], ROW, "interop", c.bridge.title, c.bridge.sub, true),

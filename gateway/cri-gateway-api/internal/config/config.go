@@ -10,7 +10,7 @@ import (
 
 	"github.com/spf13/viper"
 
-	"github.com/devsebas/saascr/gateway/cri-gateway-api/internal/upstream"
+	"github.com/devsebas/costaricaasservice/gateway/cri-gateway-api/internal/upstream"
 )
 
 type Server struct {

@@ -7,11 +7,11 @@ import (
 	"strings"
 	"time"
 
-	scrctx "github.com/devsebas/saascr/libs/cri-lib-shared/ctx"
-	screrrors "github.com/devsebas/saascr/libs/cri-lib-shared/errors"
-	"github.com/devsebas/saascr/libs/cri-lib-shared/httpx"
+	scrctx "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/ctx"
+	screrrors "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/errors"
+	"github.com/devsebas/costaricaasservice/libs/cri-lib-shared/httpx"
 
-	"github.com/devsebas/saascr/gateway/cri-gateway-api/internal/upstream"
+	"github.com/devsebas/costaricaasservice/gateway/cri-gateway-api/internal/upstream"
 )
 
 // Handler implementa http.Handler. Para cada request, busca la Route que

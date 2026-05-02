@@ -1,4 +1,4 @@
-// Package errors define el error estándar AppError de saascr.
+// Package errors define el error estándar AppError de costaricaasservice.
 // Todo error que cruce un boundary HTTP o de servicio se modela como AppError
 // para que httpx.Fail pueda mapearlo a una respuesta envelope consistente.
 package errors

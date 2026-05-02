@@ -8,13 +8,13 @@ import (
 
 	"github.com/go-chi/chi/v5"
 
-	scrctx "github.com/devsebas/saascr/libs/cri-lib-shared/ctx"
-	screrrors "github.com/devsebas/saascr/libs/cri-lib-shared/errors"
-	"github.com/devsebas/saascr/libs/cri-lib-shared/httpx"
+	scrctx "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/ctx"
+	screrrors "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/errors"
+	"github.com/devsebas/costaricaasservice/libs/cri-lib-shared/httpx"
 
-	interop "github.com/devsebas/saascr/libs/cri-lib-interop-client/interop"
+	interop "github.com/devsebas/costaricaasservice/libs/cri-lib-interop-client/interop"
 
-	"github.com/devsebas/saascr/members/cri-svc-hacienda/internal/service"
+	"github.com/devsebas/costaricaasservice/members/cri-svc-hacienda/internal/service"
 )
 
 type API struct {

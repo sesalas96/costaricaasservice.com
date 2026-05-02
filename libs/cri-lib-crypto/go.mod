@@ -1,3 +1,3 @@
-module github.com/devsebas/saascr/libs/cri-lib-crypto
+module github.com/devsebas/costaricaasservice/libs/cri-lib-crypto
 
 go 1.24

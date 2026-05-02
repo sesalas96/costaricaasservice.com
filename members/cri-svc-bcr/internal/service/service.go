@@ -1,6 +1,6 @@
 // Package service del cri-svc-bcr.
 //
-// BCR es un member PRIVADO (Tier 4) que consume el fabric saascr para
+// BCR es un member PRIVADO (Tier 4) que consume el fabric costaricaasservice para
 // onboarding de clientes (KYC + verificación de ingresos). No expone
 // servicios — solo consume registro-civil y hacienda.
 //
@@ -14,8 +14,8 @@ import (
 	"encoding/json"
 	"strconv"
 
-	interop "github.com/devsebas/saascr/libs/cri-lib-interop-client/interop"
-	screrrors "github.com/devsebas/saascr/libs/cri-lib-shared/errors"
+	interop "github.com/devsebas/costaricaasservice/libs/cri-lib-interop-client/interop"
+	screrrors "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/errors"
 )
 
 type Service struct {

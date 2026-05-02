@@ -216,7 +216,7 @@ export default function EcosystemDiagram({
     //         [Tu firma]    [Tu bitácora]
     const ROW = 200;
     const BRANCH = 460;
-    const COLS = [0, 320, 680, 1040];
+    const COLS = [0, 600, 1200, 1800];
     const nodes: Node[] = [
       svc("me", COLS[0], ROW, "frontend", c.me.title, c.me.sub, undefined, true),
       svc("micr", COLS[1], ROW, "frontend", c.micr.title, c.micr.sub),

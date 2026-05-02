@@ -1,10 +1,10 @@
-module github.com/devsebas/saascr/interop/cri-svc-security-server
+module github.com/devsebas/costaricaasservice/interop/cri-svc-security-server
 
 go 1.24
 
 require (
-	github.com/devsebas/saascr/libs/cri-lib-http v0.0.0
-	github.com/devsebas/saascr/libs/cri-lib-shared v0.0.0
+	github.com/devsebas/costaricaasservice/libs/cri-lib-http v0.0.0
+	github.com/devsebas/costaricaasservice/libs/cri-lib-shared v0.0.0
 	github.com/spf13/viper v1.19.0
 )
 
@@ -33,7 +33,7 @@ require (
 )
 
 replace (
-	github.com/devsebas/saascr/libs/cri-lib-auth => ../../libs/cri-lib-auth
-	github.com/devsebas/saascr/libs/cri-lib-http => ../../libs/cri-lib-http
-	github.com/devsebas/saascr/libs/cri-lib-shared => ../../libs/cri-lib-shared
+	github.com/devsebas/costaricaasservice/libs/cri-lib-auth => ../../libs/cri-lib-auth
+	github.com/devsebas/costaricaasservice/libs/cri-lib-http => ../../libs/cri-lib-http
+	github.com/devsebas/costaricaasservice/libs/cri-lib-shared => ../../libs/cri-lib-shared
 )

@@ -8,13 +8,13 @@ import (
 	"os/signal"
 	"syscall"
 
-	srv "github.com/devsebas/saascr/libs/cri-lib-http/server"
-	interop "github.com/devsebas/saascr/libs/cri-lib-interop-client/interop"
+	srv "github.com/devsebas/costaricaasservice/libs/cri-lib-http/server"
+	interop "github.com/devsebas/costaricaasservice/libs/cri-lib-interop-client/interop"
 
-	"github.com/devsebas/saascr/members/cri-svc-registro-civil/internal/config"
-	"github.com/devsebas/saascr/members/cri-svc-registro-civil/internal/handlers"
-	"github.com/devsebas/saascr/members/cri-svc-registro-civil/internal/service"
-	"github.com/devsebas/saascr/members/cri-svc-registro-civil/internal/store"
+	"github.com/devsebas/costaricaasservice/members/cri-svc-registro-civil/internal/config"
+	"github.com/devsebas/costaricaasservice/members/cri-svc-registro-civil/internal/handlers"
+	"github.com/devsebas/costaricaasservice/members/cri-svc-registro-civil/internal/service"
+	"github.com/devsebas/costaricaasservice/members/cri-svc-registro-civil/internal/store"
 )
 
 func main() {

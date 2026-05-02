@@ -9,10 +9,10 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/devsebas/saascr/platform/cri-templates-service/internal/config"
-	"github.com/devsebas/saascr/platform/cri-templates-service/internal/handlers"
+	"github.com/devsebas/costaricaasservice/platform/cri-templates-service/internal/config"
+	"github.com/devsebas/costaricaasservice/platform/cri-templates-service/internal/handlers"
 
-	srv "github.com/devsebas/saascr/libs/cri-lib-http/server"
+	srv "github.com/devsebas/costaricaasservice/libs/cri-lib-http/server"
 )
 
 func main() {

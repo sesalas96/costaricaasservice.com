@@ -39,7 +39,7 @@ cp -R "$TEMPLATE" "$TARGET"
 NAME_DB="${NAME//-/_}"
 find "$TARGET" -type f \( -name "*.go" -o -name "go.mod" -o -name "*.yaml" -o -name "Dockerfile" -o -name "README.md" \) -exec \
   sed -i.bak \
-    -e "s|saascr/platform/cri-templates-service|saascr/$AREA/cri-svc-$NAME|g" \
+    -e "s|costaricaasservice/platform/cri-templates-service|costaricaasservice/$AREA/cri-svc-$NAME|g" \
     -e "s|cri-templates-service|cri-svc-$NAME|g" \
     -e "s|cri_templates|cri_$NAME_DB|g" \
     -e "s|TEMPLATE_PORT|$PORT|g" \

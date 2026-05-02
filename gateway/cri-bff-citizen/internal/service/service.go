@@ -10,9 +10,9 @@ import (
 	"context"
 	"encoding/json"
 
-	screrrors "github.com/devsebas/saascr/libs/cri-lib-shared/errors"
+	screrrors "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/errors"
 
-	"github.com/devsebas/saascr/gateway/cri-bff-citizen/internal/clients"
+	"github.com/devsebas/costaricaasservice/gateway/cri-bff-citizen/internal/clients"
 )
 
 type Service struct {

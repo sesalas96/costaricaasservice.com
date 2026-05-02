@@ -86,7 +86,7 @@ export default function IdentityDiagram({ audience }: { audience: Audience }) {
     //                            ↓
     //                       [iduc-keys]
     const ROW = 240;
-    const COLS = [0, 280, 580, 880, 1180];
+    const COLS = [0, 380, 760, 1140, 1520];
     const nodes: Node[] = [
       svc("citizen", COLS[0], ROW, "frontend", i.citizen.title, i.citizen.sub, true),
       svc("micr", COLS[1], ROW, "frontend", i.micr.title, i.micr.sub),

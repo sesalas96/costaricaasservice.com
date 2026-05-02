@@ -4,7 +4,7 @@ import (
 	"regexp"
 	"strings"
 
-	screrrors "github.com/devsebas/saascr/libs/cri-lib-shared/errors"
+	screrrors "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/errors"
 )
 
 // Cédula CR formato simple: 9 dígitos opcionales con guiones (1-1234-5678 o 112345678).

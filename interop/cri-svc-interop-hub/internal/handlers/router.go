@@ -24,11 +24,11 @@ import (
 
 	"github.com/go-chi/chi/v5"
 
-	scrctx "github.com/devsebas/saascr/libs/cri-lib-shared/ctx"
-	screrrors "github.com/devsebas/saascr/libs/cri-lib-shared/errors"
-	"github.com/devsebas/saascr/libs/cri-lib-shared/httpx"
+	scrctx "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/ctx"
+	screrrors "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/errors"
+	"github.com/devsebas/costaricaasservice/libs/cri-lib-shared/httpx"
 
-	"github.com/devsebas/saascr/interop/cri-svc-interop-hub/internal/service"
+	"github.com/devsebas/costaricaasservice/interop/cri-svc-interop-hub/internal/service"
 )
 
 type API struct {

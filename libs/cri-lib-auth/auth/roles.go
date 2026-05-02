@@ -17,8 +17,8 @@ const (
 	// Realm admin — administra un realm completo (jurisdicción).
 	RoleRealmAdmin Role = "REALM_ADMIN"
 
-	// Saascr admin — control plane del SaaS, opera todos los realms.
-	RoleSaascrAdmin Role = "SAASCR_ADMIN"
+	// Costaricaasservice admin — control plane del SaaS, opera todos los realms.
+	RoleCostaricaasserviceAdmin Role = "COSTARICAASSERVICE_ADMIN"
 )
 
 // Has verifica si la lista contiene el rol pedido.

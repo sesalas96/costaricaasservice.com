@@ -1,4 +1,4 @@
-title = "saascr — gitleaks config"
+title = "costaricaasservice — gitleaks config"
 
 [[rules]]
 id = "generic-api-key"
@@ -43,7 +43,7 @@ regex = '''hvs\.[A-Za-z0-9_-]{20,}'''
 tags = ["vault", "key"]
 
 [allowlist]
-description = "saascr allowlist"
+description = "costaricaasservice allowlist"
 paths = [
   '''^.*/testdata/.*$''',
   '''^.*/fixtures/.*$''',

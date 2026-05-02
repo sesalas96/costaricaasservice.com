@@ -18,14 +18,14 @@ import (
 	"strconv"
 	"strings"
 
-	scrctx "github.com/devsebas/saascr/libs/cri-lib-shared/ctx"
-	screrrors "github.com/devsebas/saascr/libs/cri-lib-shared/errors"
-	"github.com/devsebas/saascr/libs/cri-lib-shared/httpx"
+	scrctx "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/ctx"
+	screrrors "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/errors"
+	"github.com/devsebas/costaricaasservice/libs/cri-lib-shared/httpx"
 
-	authjwt "github.com/devsebas/saascr/libs/cri-lib-auth/jwt"
-	authmw "github.com/devsebas/saascr/libs/cri-lib-auth/middleware"
+	authjwt "github.com/devsebas/costaricaasservice/libs/cri-lib-auth/jwt"
+	authmw "github.com/devsebas/costaricaasservice/libs/cri-lib-auth/middleware"
 
-	"github.com/devsebas/saascr/gateway/cri-gateway-api/internal/revocation"
+	"github.com/devsebas/costaricaasservice/gateway/cri-gateway-api/internal/revocation"
 )
 
 // Config son los parámetros del middleware.

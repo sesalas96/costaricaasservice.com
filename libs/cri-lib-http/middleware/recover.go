@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"runtime/debug"
 
-	screrrors "github.com/devsebas/saascr/libs/cri-lib-shared/errors"
-	"github.com/devsebas/saascr/libs/cri-lib-shared/httpx"
+	screrrors "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/errors"
+	"github.com/devsebas/costaricaasservice/libs/cri-lib-shared/httpx"
 )
 
 // Recover atrapa panics y responde 500 con envelope.

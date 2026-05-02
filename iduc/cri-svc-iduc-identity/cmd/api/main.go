@@ -8,13 +8,13 @@ import (
 	"os/signal"
 	"syscall"
 
-	srv "github.com/devsebas/saascr/libs/cri-lib-http/server"
+	srv "github.com/devsebas/costaricaasservice/libs/cri-lib-http/server"
 
-	"github.com/devsebas/saascr/iduc/cri-svc-iduc-identity/internal/config"
-	"github.com/devsebas/saascr/iduc/cri-svc-iduc-identity/internal/handlers"
-	"github.com/devsebas/saascr/iduc/cri-svc-iduc-identity/internal/service"
-	"github.com/devsebas/saascr/iduc/cri-svc-iduc-identity/internal/store"
-	"github.com/devsebas/saascr/iduc/cri-svc-iduc-identity/internal/token"
+	"github.com/devsebas/costaricaasservice/iduc/cri-svc-iduc-identity/internal/config"
+	"github.com/devsebas/costaricaasservice/iduc/cri-svc-iduc-identity/internal/handlers"
+	"github.com/devsebas/costaricaasservice/iduc/cri-svc-iduc-identity/internal/service"
+	"github.com/devsebas/costaricaasservice/iduc/cri-svc-iduc-identity/internal/store"
+	"github.com/devsebas/costaricaasservice/iduc/cri-svc-iduc-identity/internal/token"
 )
 
 func main() {

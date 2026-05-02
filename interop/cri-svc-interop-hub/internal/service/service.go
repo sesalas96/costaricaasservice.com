@@ -16,9 +16,9 @@ import (
 	"strings"
 	"time"
 
-	screrrors "github.com/devsebas/saascr/libs/cri-lib-shared/errors"
+	screrrors "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/errors"
 
-	"github.com/devsebas/saascr/interop/cri-svc-interop-hub/internal/store"
+	"github.com/devsebas/costaricaasservice/interop/cri-svc-interop-hub/internal/store"
 )
 
 type Service struct {

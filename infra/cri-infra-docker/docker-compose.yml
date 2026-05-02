@@ -1,4 +1,4 @@
-name: saascr
+name: costaricaasservice
 
 services:
   postgres:

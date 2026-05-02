@@ -2,7 +2,7 @@
 
 - **Estado:** Aceptado
 - **Fecha:** 2026-05-02
-- **Decisores:** equipo saascr
+- **Decisores:** equipo costaricaasservice
 
 ## Contexto
 
@@ -10,7 +10,7 @@ Las claves privadas que firman documentos en nombre del ciudadano son el activo 
 
 - Capacidad de un atacante de firmar documentos legalmente vinculantes en nombre de cualquier ciudadano.
 - Pérdida de la equivalencia jurídica con la firma manuscrita — toda la propuesta de valor del producto se cae.
-- Riesgo legal directo para `saascr` y para el realm.
+- Riesgo legal directo para `costaricaasservice` y para el realm.
 
 El ciberataque de Conti/Hive a Costa Rica (abril–mayo 2022) demostró que la asunción "la BD interna está segura" no se sostiene. El diseño debe asumir compromiso del entorno de servicio.
 

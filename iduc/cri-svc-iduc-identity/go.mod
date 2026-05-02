@@ -1,10 +1,10 @@
-module github.com/devsebas/saascr/iduc/cri-svc-iduc-identity
+module github.com/devsebas/costaricaasservice/iduc/cri-svc-iduc-identity
 
 go 1.25.0
 
 require (
-	github.com/devsebas/saascr/libs/cri-lib-http v0.0.0
-	github.com/devsebas/saascr/libs/cri-lib-shared v0.0.0
+	github.com/devsebas/costaricaasservice/libs/cri-lib-http v0.0.0
+	github.com/devsebas/costaricaasservice/libs/cri-lib-shared v0.0.0
 	github.com/go-chi/chi/v5 v5.1.0
 	github.com/golang-jwt/jwt/v5 v5.3.1
 	github.com/jackc/pgx/v5 v5.9.2
@@ -40,7 +40,7 @@ require (
 )
 
 replace (
-	github.com/devsebas/saascr/libs/cri-lib-auth => ../../libs/cri-lib-auth
-	github.com/devsebas/saascr/libs/cri-lib-http => ../../libs/cri-lib-http
-	github.com/devsebas/saascr/libs/cri-lib-shared => ../../libs/cri-lib-shared
+	github.com/devsebas/costaricaasservice/libs/cri-lib-auth => ../../libs/cri-lib-auth
+	github.com/devsebas/costaricaasservice/libs/cri-lib-http => ../../libs/cri-lib-http
+	github.com/devsebas/costaricaasservice/libs/cri-lib-shared => ../../libs/cri-lib-shared
 )

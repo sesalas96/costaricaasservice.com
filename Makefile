@@ -1,4 +1,4 @@
-# saascr — root Makefile
+# costaricaasservice — root Makefile
 # Orquesta infra, migraciones, seed, build/test de todos los servicios.
 
 SHELL := /usr/bin/env bash
@@ -16,7 +16,7 @@ C_WARN  := \033[1;33m
 .PHONY: help up down restart status logs psql dbs migrate seed build test lint tidy clean new-svc up-observability
 
 help: ## Muestra esta ayuda
-	@printf "$(C_INFO)saascr — comandos$(C_RESET)\n\n"
+	@printf "$(C_INFO)costaricaasservice — comandos$(C_RESET)\n\n"
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN{FS=":.*?## "} {printf "  $(C_OK)%-20s$(C_RESET) %s\n", $$1, $$2}'
 
 up: ## Levanta infra local (postgres+kafka+redis+vault)

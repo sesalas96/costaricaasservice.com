@@ -1,4 +1,4 @@
-module github.com/devsebas/saascr/libs/cri-lib-shared
+module github.com/devsebas/costaricaasservice/libs/cri-lib-shared
 
 go 1.24
 

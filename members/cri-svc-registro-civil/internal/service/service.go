@@ -2,9 +2,9 @@
 package service
 
 import (
-	screrrors "github.com/devsebas/saascr/libs/cri-lib-shared/errors"
+	screrrors "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/errors"
 
-	"github.com/devsebas/saascr/members/cri-svc-registro-civil/internal/store"
+	"github.com/devsebas/costaricaasservice/members/cri-svc-registro-civil/internal/store"
 )
 
 type Service struct {

@@ -34,7 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="flex-1 max-w-6xl mx-auto px-6 py-8 w-full">{children}</main>
         <footer className="border-t border-slate-200 bg-white text-xs text-slate-500">
           <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between">
-            <span>saascr · realm <code className="font-mono">demo</code></span>
+            <span>costaricaasservice · realm <code className="font-mono">demo</code></span>
             <span>Modelo e-Estonia · Conecta CR</span>
           </div>
         </footer>

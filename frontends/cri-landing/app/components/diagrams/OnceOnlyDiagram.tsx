@@ -87,7 +87,7 @@ export default function OnceOnlyDiagram({
     // Fila top forward; X-Road abajo; retorno como arco único por debajo.
     const TOP_Y = 220;
     const BOTTOM_Y = 460;
-    const COLS = [0, 280, 560, 840, 1120, 1400];
+    const COLS = [0, 380, 760, 1140, 1520, 1900];
     const nodes: Node[] = [
       svc("citizen", COLS[0], TOP_Y, "frontend", o.citizen.title, o.citizen.sub, true),
       svc("micr", COLS[1], TOP_Y, "frontend", o.micr.title, o.micr.sub),
@@ -167,7 +167,7 @@ export default function OnceOnlyDiagram({
     //                                                       │
     //                          ←─── te llega lista ─────────┘ (arco bottom)
     const ROW = 220;
-    const COLS = [0, 280, 560, 840, 1120];
+    const COLS = [0, 620, 1240, 1860, 2480];
     const nodes: Node[] = [
       svc("me", COLS[0], ROW, "frontend", c.me.title, c.me.sub, true),
       svc("micr", COLS[1], ROW, "frontend", c.micr.title, c.micr.sub),

@@ -1,6 +1,6 @@
 env: local
 service_name: cri-svc-iduc-identity
-port: "18081" # 8081 está ocupado por cbn — saascr usa 18000-18999 en local
+port: "18081" # 8081 está ocupado por cbn — costaricaasservice usa 18000-18999 en local
 log_level: debug
 base_host: "" # vacío en servicios internos — confiar en el header X-CRI-Realm
 

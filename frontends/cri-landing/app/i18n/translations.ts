@@ -238,25 +238,24 @@ export type Translations = {
 export const translations: Record<Lang, Translations> = {
   es: {
     hero: {
-      eyebrow: "saascr · núcleo de Conecta CR",
+      eyebrow: "costaricaasservice · núcleo de Conecta CR",
       titleStart: "Gobierno digital,",
       titleHighlight: "como producto.",
       descBefore:
-        "Estonia tardó 25 años en armarlo. Vamos por 3 meses. Un ",
-      descBold1: "puente entre instituciones",
-      descMid1: " para que no te pidan dos veces el mismo dato, una ",
-      descBold2: "firma digital desde el celular",
-      descMid2: " con el mismo peso legal que la de papel, y un ",
-      descBold3: "portal donde vos ves todo",
-      descAfter:
-        " — quién consultó tu información y por qué. Lista para arrancar, sin meses de licitación.",
+        "Estonia tardó 25 años. Nosotros, 3 meses. ",
+      descBold1: "Las instituciones se hablan entre ellas",
+      descMid1: " y no te piden lo mismo dos veces. ",
+      descBold2: "Firmás desde el celular",
+      descMid2: " con valor legal. ",
+      descBold3: "Ves quién consulta tus datos",
+      descAfter: " y por qué.",
       ctaPrimary: "Ver el ecosistema",
       ctaSecondary: "Garantías estonias",
     },
     guarantees: {
       eyebrow: "Propuesta de valor",
       heading: "El sistema operativo del Estado digital.",
-      lead: "saascr no es middleware. Es la plataforma sobre la que un país opera su gobierno digital — desde un trámite de cinco minutos hasta una elección verificable. La misma capa que conecta a Registro Civil con Hacienda conecta a la CCSS con una farmacia privada, con idéntica garantía de identidad, trazabilidad y firma.",
+      lead: "costaricaasservice no es middleware. Es la plataforma sobre la que un país opera su gobierno digital — desde un trámite de cinco minutos hasta una elección verificable. La misma capa que conecta a Registro Civil con Hacienda conecta a la CCSS con una farmacia privada, con idéntica garantía de identidad, trazabilidad y firma.",
       audiencesHeading: "Quién gana con esto",
       audiences: [
         {
@@ -277,7 +276,7 @@ export const translations: Record<Lang, Translations> = {
       ],
       casesEyebrow: "Casos de uso",
       casesHeading: "Lo que el Estado digital habilita.",
-      casesLead: "Estos son los flujos reales que saascr permite armar — todos cumplen las 4 garantías estonias por construcción, no por diligencia.",
+      casesLead: "Estos son los flujos reales que costaricaasservice permite armar — todos cumplen las 4 garantías estonias por construcción, no por diligencia.",
       cases: [
         {
           tag: "Hacienda",
@@ -372,7 +371,7 @@ export const translations: Record<Lang, Translations> = {
     },
     casesPage: {
       eyebrow: "Catálogo · casos de uso",
-      heading: "Todos los flujos que saascr habilita.",
+      heading: "Todos los flujos que costaricaasservice habilita.",
       lead: "Casos organizados por dominio. Cada uno detalla los actores que intervienen y la categoría a la que pertenece — todos cumplen las cuatro garantías estonias por construcción.",
       backToHome: "Volver al inicio",
       casesCount: "{n} casos catalogados · {c} dominios",
@@ -462,14 +461,14 @@ export const translations: Record<Lang, Translations> = {
     ecosystem: {
       citizen: { title: "Ciudadano", sub: "MiCR Web · Mobile" },
       operator: { title: "Operador Member", sub: "Portal institución" },
-      admin: { title: "Admin saascr", sub: "Control plane" },
+      admin: { title: "Admin costaricaasservice", sub: "Control plane" },
       gateway: {
         title: "API Gateway",
         sub: "JWT RS256 · RBAC · rate limit · revocación Roaring",
       },
       bffCitizen: { title: "BFF Citizen", sub: "Orquesta MiCR" },
       bffMember: { title: "BFF Member", sub: "Portal operador" },
-      bffAdmin: { title: "BFF Admin", sub: "Control plane saascr" },
+      bffAdmin: { title: "BFF Admin", sub: "Control plane costaricaasservice" },
       iducGroup: "iduc · identidad",
       iducIdentity: {
         title: "iduc-identity",
@@ -734,25 +733,24 @@ export const translations: Record<Lang, Translations> = {
   },
   en: {
     hero: {
-      eyebrow: "saascr · core of Conecta CR",
+      eyebrow: "costaricaasservice · core of Conecta CR",
       titleStart: "Digital government,",
       titleHighlight: "as a product.",
       descBefore:
-        "Estonia took 25 years to build it. We're aiming for 3 months. A ",
-      descBold1: "bridge between institutions",
-      descMid1: " so they never ask you for the same thing twice, a ",
-      descBold2: "digital signature on your phone",
-      descMid2: " that carries the same weight as ink on paper, and a ",
-      descBold3: "portal where you see everything",
-      descAfter:
-        " — who looked at your data and why. Ready to launch, with no months of bidding.",
+        "Estonia took 25 years. We're aiming for 3 months. ",
+      descBold1: "Institutions talk to each other",
+      descMid1: " — no one asks you the same thing twice. ",
+      descBold2: "Sign from your phone",
+      descMid2: " with full legal weight. ",
+      descBold3: "See who looks at your data",
+      descAfter: " and why.",
       ctaPrimary: "Explore the ecosystem",
       ctaSecondary: "Estonian guarantees",
     },
     guarantees: {
       eyebrow: "Value proposition",
       heading: "The operating system of the digital state.",
-      lead: "saascr is not middleware. It is the platform on which a country runs its digital government — from a five-minute errand to a verifiable election. The same layer that connects the civil registry to the tax authority connects healthcare to a private pharmacy, with identical guarantees of identity, traceability and signature.",
+      lead: "costaricaasservice is not middleware. It is the platform on which a country runs its digital government — from a five-minute errand to a verifiable election. The same layer that connects the civil registry to the tax authority connects healthcare to a private pharmacy, with identical guarantees of identity, traceability and signature.",
       audiencesHeading: "Who wins",
       audiences: [
         {
@@ -773,7 +771,7 @@ export const translations: Record<Lang, Translations> = {
       ],
       casesEyebrow: "Use cases",
       casesHeading: "What the digital state unlocks.",
-      casesLead: "These are real flows saascr enables — all four Estonian guarantees come by construction, not by diligence.",
+      casesLead: "These are real flows costaricaasservice enables — all four Estonian guarantees come by construction, not by diligence.",
       cases: [
         {
           tag: "Tax",
@@ -868,7 +866,7 @@ export const translations: Record<Lang, Translations> = {
     },
     casesPage: {
       eyebrow: "Catalog · use cases",
-      heading: "Every flow saascr enables.",
+      heading: "Every flow costaricaasservice enables.",
       lead: "Use cases grouped by domain. Each one shows the actors involved and the category it belongs to — all four Estonian guarantees come by construction.",
       backToHome: "Back to home",
       casesCount: "{n} catalogued cases · {c} domains",
@@ -958,14 +956,14 @@ export const translations: Record<Lang, Translations> = {
     ecosystem: {
       citizen: { title: "Citizen", sub: "MiCR Web · Mobile" },
       operator: { title: "Member operator", sub: "Institution portal" },
-      admin: { title: "saascr admin", sub: "Control plane" },
+      admin: { title: "costaricaasservice admin", sub: "Control plane" },
       gateway: {
         title: "API Gateway",
         sub: "JWT RS256 · RBAC · rate limit · Roaring revocation",
       },
       bffCitizen: { title: "BFF Citizen", sub: "Orchestrates MiCR" },
       bffMember: { title: "BFF Member", sub: "Operator portal" },
-      bffAdmin: { title: "BFF Admin", sub: "saascr control plane" },
+      bffAdmin: { title: "BFF Admin", sub: "costaricaasservice control plane" },
       iducGroup: "iduc · identity",
       iducIdentity: {
         title: "iduc-identity",

@@ -2,9 +2,9 @@
 package service
 
 import (
-	screrrors "github.com/devsebas/saascr/libs/cri-lib-shared/errors"
+	screrrors "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/errors"
 
-	"github.com/devsebas/saascr/interop/cri-svc-interop-audit/internal/auditstore"
+	"github.com/devsebas/costaricaasservice/interop/cri-svc-interop-audit/internal/auditstore"
 )
 
 type Service struct {

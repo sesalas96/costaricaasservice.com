@@ -4,10 +4,10 @@ import (
 	"net/http"
 	"strings"
 
-	scrctx "github.com/devsebas/saascr/libs/cri-lib-shared/ctx"
-	screrrors "github.com/devsebas/saascr/libs/cri-lib-shared/errors"
-	"github.com/devsebas/saascr/libs/cri-lib-shared/httpx"
-	"github.com/devsebas/saascr/libs/cri-lib-shared/realm"
+	scrctx "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/ctx"
+	screrrors "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/errors"
+	"github.com/devsebas/costaricaasservice/libs/cri-lib-shared/httpx"
+	"github.com/devsebas/costaricaasservice/libs/cri-lib-shared/realm"
 )
 
 const HeaderRealm = "X-CRI-Realm"
@@ -17,7 +17,7 @@ const HeaderRealm = "X-CRI-Realm"
 //  2. Subdominio: {realm}.<host> con base configurable.
 //
 // Si baseHost es "", el subdominio NO se evalúa. El gateway llama con baseHost
-// "saascr.io" y los servicios internos lo dejan vacío (solo confían en el header).
+// "costaricaasservice.io" y los servicios internos lo dejan vacío (solo confían en el header).
 //
 // Falla con 400 REALM_REQUIRED si no se puede determinar.
 func ResolveRealm(baseHost string) func(http.Handler) http.Handler {
@@ -44,7 +44,7 @@ func ResolveRealm(baseHost string) func(http.Handler) http.Handler {
 }
 
 // subdomainOf retorna el primer label si host termina en "." + base.
-// host = "cr-prod.saascr.io", base = "saascr.io" → "cr-prod".
+// host = "cr-prod.costaricaasservice.io", base = "costaricaasservice.io" → "cr-prod".
 func subdomainOf(host, base string) string {
 	host = strings.ToLower(host)
 	if i := strings.IndexByte(host, ':'); i >= 0 {

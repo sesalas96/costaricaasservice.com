@@ -1,11 +1,11 @@
-module github.com/devsebas/saascr/gateway/cri-gateway-api
+module github.com/devsebas/costaricaasservice/gateway/cri-gateway-api
 
 go 1.24.0
 
 require (
 	github.com/RoaringBitmap/roaring/v2 v2.18.0
-	github.com/devsebas/saascr/libs/cri-lib-http v0.0.0
-	github.com/devsebas/saascr/libs/cri-lib-shared v0.0.0
+	github.com/devsebas/costaricaasservice/libs/cri-lib-http v0.0.0
+	github.com/devsebas/costaricaasservice/libs/cri-lib-shared v0.0.0
 	github.com/spf13/viper v1.19.0
 )
 
@@ -17,7 +17,7 @@ require (
 )
 
 require (
-	github.com/devsebas/saascr/libs/cri-lib-auth v0.0.0
+	github.com/devsebas/costaricaasservice/libs/cri-lib-auth v0.0.0
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
@@ -41,7 +41,7 @@ require (
 )
 
 replace (
-	github.com/devsebas/saascr/libs/cri-lib-auth => ../../libs/cri-lib-auth
-	github.com/devsebas/saascr/libs/cri-lib-http => ../../libs/cri-lib-http
-	github.com/devsebas/saascr/libs/cri-lib-shared => ../../libs/cri-lib-shared
+	github.com/devsebas/costaricaasservice/libs/cri-lib-auth => ../../libs/cri-lib-auth
+	github.com/devsebas/costaricaasservice/libs/cri-lib-http => ../../libs/cri-lib-http
+	github.com/devsebas/costaricaasservice/libs/cri-lib-shared => ../../libs/cri-lib-shared
 )

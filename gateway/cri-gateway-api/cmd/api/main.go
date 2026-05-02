@@ -20,14 +20,14 @@ import (
 	"os/signal"
 	"syscall"
 
-	srv "github.com/devsebas/saascr/libs/cri-lib-http/server"
+	srv "github.com/devsebas/costaricaasservice/libs/cri-lib-http/server"
 
-	"github.com/devsebas/saascr/gateway/cri-gateway-api/internal/authgw"
-	"github.com/devsebas/saascr/gateway/cri-gateway-api/internal/config"
-	"github.com/devsebas/saascr/gateway/cri-gateway-api/internal/proxy"
-	"github.com/devsebas/saascr/gateway/cri-gateway-api/internal/ratelimit"
-	"github.com/devsebas/saascr/gateway/cri-gateway-api/internal/revocation"
-	"github.com/devsebas/saascr/gateway/cri-gateway-api/internal/upstream"
+	"github.com/devsebas/costaricaasservice/gateway/cri-gateway-api/internal/authgw"
+	"github.com/devsebas/costaricaasservice/gateway/cri-gateway-api/internal/config"
+	"github.com/devsebas/costaricaasservice/gateway/cri-gateway-api/internal/proxy"
+	"github.com/devsebas/costaricaasservice/gateway/cri-gateway-api/internal/ratelimit"
+	"github.com/devsebas/costaricaasservice/gateway/cri-gateway-api/internal/revocation"
+	"github.com/devsebas/costaricaasservice/gateway/cri-gateway-api/internal/upstream"
 )
 
 func main() {

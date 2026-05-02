@@ -9,12 +9,12 @@ import (
 	"os/signal"
 	"syscall"
 
-	srv "github.com/devsebas/saascr/libs/cri-lib-http/server"
+	srv "github.com/devsebas/costaricaasservice/libs/cri-lib-http/server"
 
-	"github.com/devsebas/saascr/interop/cri-svc-interop-hub/internal/config"
-	"github.com/devsebas/saascr/interop/cri-svc-interop-hub/internal/handlers"
-	"github.com/devsebas/saascr/interop/cri-svc-interop-hub/internal/service"
-	"github.com/devsebas/saascr/interop/cri-svc-interop-hub/internal/store"
+	"github.com/devsebas/costaricaasservice/interop/cri-svc-interop-hub/internal/config"
+	"github.com/devsebas/costaricaasservice/interop/cri-svc-interop-hub/internal/handlers"
+	"github.com/devsebas/costaricaasservice/interop/cri-svc-interop-hub/internal/service"
+	"github.com/devsebas/costaricaasservice/interop/cri-svc-interop-hub/internal/store"
 )
 
 func main() {

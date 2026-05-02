@@ -8,13 +8,13 @@ import (
 	"os/signal"
 	"syscall"
 
-	httpmw "github.com/devsebas/saascr/libs/cri-lib-http/middleware"
-	srv "github.com/devsebas/saascr/libs/cri-lib-http/server"
+	httpmw "github.com/devsebas/costaricaasservice/libs/cri-lib-http/middleware"
+	srv "github.com/devsebas/costaricaasservice/libs/cri-lib-http/server"
 
-	"github.com/devsebas/saascr/gateway/cri-bff-citizen/internal/clients"
-	"github.com/devsebas/saascr/gateway/cri-bff-citizen/internal/config"
-	"github.com/devsebas/saascr/gateway/cri-bff-citizen/internal/handlers"
-	"github.com/devsebas/saascr/gateway/cri-bff-citizen/internal/service"
+	"github.com/devsebas/costaricaasservice/gateway/cri-bff-citizen/internal/clients"
+	"github.com/devsebas/costaricaasservice/gateway/cri-bff-citizen/internal/config"
+	"github.com/devsebas/costaricaasservice/gateway/cri-bff-citizen/internal/handlers"
+	"github.com/devsebas/costaricaasservice/gateway/cri-bff-citizen/internal/service"
 )
 
 func main() {

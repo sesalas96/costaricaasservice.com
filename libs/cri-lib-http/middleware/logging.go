@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	scrctx "github.com/devsebas/saascr/libs/cri-lib-shared/ctx"
+	scrctx "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/ctx"
 )
 
 // Logging emite un log por request con method, path, status, duración, requestId, realm.

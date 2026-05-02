@@ -8,12 +8,12 @@ import (
 	"os/signal"
 	"syscall"
 
-	srv "github.com/devsebas/saascr/libs/cri-lib-http/server"
-	interop "github.com/devsebas/saascr/libs/cri-lib-interop-client/interop"
+	srv "github.com/devsebas/costaricaasservice/libs/cri-lib-http/server"
+	interop "github.com/devsebas/costaricaasservice/libs/cri-lib-interop-client/interop"
 
-	"github.com/devsebas/saascr/members/cri-svc-bcr/internal/config"
-	"github.com/devsebas/saascr/members/cri-svc-bcr/internal/handlers"
-	"github.com/devsebas/saascr/members/cri-svc-bcr/internal/service"
+	"github.com/devsebas/costaricaasservice/members/cri-svc-bcr/internal/config"
+	"github.com/devsebas/costaricaasservice/members/cri-svc-bcr/internal/handlers"
+	"github.com/devsebas/costaricaasservice/members/cri-svc-bcr/internal/service"
 )
 
 func main() {

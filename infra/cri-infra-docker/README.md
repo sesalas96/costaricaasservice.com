@@ -1,6 +1,6 @@
 # cri-infra-docker
 
-Stack de infra local para `saascr`. Usar desde la raíz del repo: `make up`, `make down`, `make psql DB=...`.
+Stack de infra local para `costaricaasservice`. Usar desde la raíz del repo: `make up`, `make down`, `make psql DB=...`.
 
 ## Servicios
 

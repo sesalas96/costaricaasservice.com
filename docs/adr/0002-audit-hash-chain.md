@@ -2,7 +2,7 @@
 
 - **Estado:** Aceptado
 - **Fecha:** 2026-05-02
-- **Decisores:** equipo saascr
+- **Decisores:** equipo costaricaasservice
 
 ## Contexto
 

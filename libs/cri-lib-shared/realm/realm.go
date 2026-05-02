@@ -6,7 +6,7 @@ package realm
 import (
 	"regexp"
 
-	screrrors "github.com/devsebas/saascr/libs/cri-lib-shared/errors"
+	screrrors "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/errors"
 )
 
 var validRe = regexp.MustCompile(`^[a-z][a-z0-9-]{2,31}$`)

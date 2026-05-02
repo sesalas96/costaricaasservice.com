@@ -7,7 +7,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 
-	"github.com/devsebas/saascr/libs/cri-lib-shared/httpx"
+	"github.com/devsebas/costaricaasservice/libs/cri-lib-shared/httpx"
 )
 
 // Register monta los handlers en el router.

@@ -3,7 +3,7 @@ package auth
 import "context"
 
 // Principal representa al sujeto autenticado tras el gateway: ciudadano,
-// operador de member, admin de realm o admin saascr.
+// operador de member, admin de realm o admin costaricaasservice.
 type Principal struct {
 	Sub    string // identificador único (citizen_id, operator_id, etc.)
 	Roles  []Role // roles asignados

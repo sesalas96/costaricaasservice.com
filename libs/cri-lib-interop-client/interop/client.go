@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/devsebas/saascr/libs/cri-lib-shared/idgen"
+	"github.com/devsebas/costaricaasservice/libs/cri-lib-shared/idgen"
 )
 
 // Client es el cliente HTTP que un svc-member usa para invocar servicios

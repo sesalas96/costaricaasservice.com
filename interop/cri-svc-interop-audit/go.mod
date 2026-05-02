@@ -1,16 +1,16 @@
-module github.com/devsebas/saascr/interop/cri-svc-interop-audit
+module github.com/devsebas/costaricaasservice/interop/cri-svc-interop-audit
 
 go 1.24
 
 require (
-	github.com/devsebas/saascr/libs/cri-lib-http v0.0.0
-	github.com/devsebas/saascr/libs/cri-lib-shared v0.0.0
+	github.com/devsebas/costaricaasservice/libs/cri-lib-http v0.0.0
+	github.com/devsebas/costaricaasservice/libs/cri-lib-shared v0.0.0
 	github.com/go-chi/chi/v5 v5.1.0
 	github.com/spf13/viper v1.19.0
 )
 
 require (
-	github.com/devsebas/saascr/libs/cri-lib-crypto v0.0.0
+	github.com/devsebas/costaricaasservice/libs/cri-lib-crypto v0.0.0
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
@@ -34,9 +34,9 @@ require (
 )
 
 replace (
-	github.com/devsebas/saascr/libs/cri-lib-auth => ../../libs/cri-lib-auth
-	github.com/devsebas/saascr/libs/cri-lib-http => ../../libs/cri-lib-http
-	github.com/devsebas/saascr/libs/cri-lib-shared => ../../libs/cri-lib-shared
+	github.com/devsebas/costaricaasservice/libs/cri-lib-auth => ../../libs/cri-lib-auth
+	github.com/devsebas/costaricaasservice/libs/cri-lib-http => ../../libs/cri-lib-http
+	github.com/devsebas/costaricaasservice/libs/cri-lib-shared => ../../libs/cri-lib-shared
 )
 
-replace github.com/devsebas/saascr/libs/cri-lib-crypto => ../../libs/cri-lib-crypto
+replace github.com/devsebas/costaricaasservice/libs/cri-lib-crypto => ../../libs/cri-lib-crypto

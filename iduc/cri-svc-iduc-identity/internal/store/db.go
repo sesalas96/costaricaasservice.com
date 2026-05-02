@@ -16,7 +16,7 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"github.com/devsebas/saascr/libs/cri-lib-shared/realm"
+	"github.com/devsebas/costaricaasservice/libs/cri-lib-shared/realm"
 )
 
 // Store mantiene un pool por realm.
