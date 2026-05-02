@@ -1,0 +1,42 @@
+env: local
+service_name: cri-svc-security-server
+port: "18210"
+log_level: debug
+base_host: ""
+
+# Security-server de Registro Civil. Corre en :18210 y enruta requests del
+# binario de registro-civil (que escucha en :18301/_interop/dispatch).
+member:
+  realm: demo
+  slug: registro-civil
+  private_pem_path: ./.keys/registro-civil.pem
+  member_dispatch_url: http://localhost:18301/_interop/dispatch
+
+hub:
+  url: http://localhost:18101
+  cache_ttl: 5m
+
+audit:
+  url: http://localhost:18102
+
+peers:
+  - member: hacienda
+    inbox_url: http://localhost:18200/v1/interop/inbox
+    public_key_path: ./.keys/hacienda.pub.pem
+  - member: registro-civil
+    inbox_url: http://localhost:18210/v1/interop/inbox
+    public_key_path: ./.keys/registro-civil.pub.pem
+  - member: ccss
+    inbox_url: http://localhost:18220/v1/interop/inbox
+    public_key_path: ./.keys/ccss.pub.pem
+  - member: bcr
+    inbox_url: http://localhost:18230/v1/interop/inbox
+    public_key_path: ./.keys/bcr.pub.pem
+
+server:
+  read_timeout: 10s
+  write_timeout: 30s
+  idle_timeout: 60s
+  shutdown_timeout: 15s
+
+call_timeout: 5s

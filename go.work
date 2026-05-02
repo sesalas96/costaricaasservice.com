@@ -1,0 +1,20 @@
+go 1.25.0
+
+use (
+	./gateway/cri-bff-citizen
+	./gateway/cri-gateway-api
+	./iduc/cri-svc-iduc-identity
+	./interop/cri-svc-interop-audit
+	./interop/cri-svc-interop-hub
+	./interop/cri-svc-security-server
+	./libs/cri-lib-auth
+	./libs/cri-lib-crypto
+	./libs/cri-lib-http
+	./libs/cri-lib-interop-client
+	./libs/cri-lib-shared
+	./members/cri-svc-bcr
+	./members/cri-svc-ccss
+	./members/cri-svc-hacienda
+	./members/cri-svc-registro-civil
+	./platform/cri-templates-service
+)

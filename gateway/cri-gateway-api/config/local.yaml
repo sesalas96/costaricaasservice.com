@@ -1,0 +1,43 @@
+env: local
+service_name: cri-gateway-api
+port: "18000"
+log_level: debug
+base_host: "" # en local no resolvemos por subdominio; usar header X-CRI-Realm
+upstream_timeout: 30s
+
+server:
+  read_timeout: 10s
+  write_timeout: 30s
+  idle_timeout: 60s
+  shutdown_timeout: 15s
+
+auth:
+  public_pem_path: ../../iduc/cri-svc-iduc-identity/.keys/jwt-rs256.pub.pem
+  public_prefixes:
+    - /healthz
+    - /v1/auth/login
+    - /v1/auth/refresh
+    - /v1/citizens
+
+revocation:
+  identity_url: http://localhost:18081
+  poll_interval: 30s
+  realms:
+    - demo
+    - cr-prod
+
+rate_limit:
+  rate: 50.0
+  burst: 100.0
+  idle_ttl: 5m
+
+upstreams:
+  - prefix: /v1/auth
+    target_url: http://localhost:18081
+    strip_prefix: false
+  - prefix: /v1/citizens
+    target_url: http://localhost:18081
+    strip_prefix: false
+  - prefix: /v1/me
+    target_url: http://localhost:18082 # cri-bff-citizen, aún no existe — placeholder
+    strip_prefix: false

@@ -1,0 +1,4 @@
+DROP TABLE IF EXISTS revoked_jtis;
+DROP TABLE IF EXISTS sessions;
+DROP TABLE IF EXISTS citizens;
+DROP SEQUENCE IF EXISTS jti_seq;

@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #07090d;
+  --color-surface: #0f1218;
+  --color-surface-2: #161a22;
+  --color-border: #232936;
+  --color-text: #e7eaf0;
+  --color-muted: #8b93a3;
+
+  /* Costa Rica brand */
+  --color-cr-blue: #002b7f;
+  --color-cr-blue-bright: #1d4fc4;
+  --color-cr-red: #ce1126;
+  --color-cr-red-bright: #ef3145;
+  --color-cr-cream: #f7f5ef;
+
+  /* Por área del monorepo */
+  --color-area-gateway: #f43f5e;
+  --color-area-iduc: #10b981;
+  --color-area-interop: #38bdf8;
+  --color-area-members: #f59e0b;
+  --color-area-platform: #a78bfa;
+  --color-area-frontend: #e7eaf0;
+}
+
+html,
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(29, 79, 196, 0.4);
+  color: var(--color-text);
+}
+
+/* Bandera CR — 5 franjas horizontales en proporción 1:1:2:1:1
+   (azul · blanco · rojo · blanco · azul). Acá la dibujamos como
+   barra vertical en el tope (las "franjas" son verticales). */
+.cr-flag-bar {
+  height: 18px;
+  background: linear-gradient(
+    to bottom,
+    var(--color-cr-blue) 0% 16.67%,
+    var(--color-cr-cream) 16.67% 33.33%,
+    var(--color-cr-red) 33.33% 66.67%,
+    var(--color-cr-cream) 66.67% 83.33%,
+    var(--color-cr-blue) 83.33% 100%
+  );
+}
+
+/* Brillo sutil "as a product" usando los colores CR */
+.cr-glow {
+  background:
+    radial-gradient(
+      900px 500px at 85% -10%,
+      rgba(29, 79, 196, 0.22),
+      transparent 60%
+    ),
+    radial-gradient(
+      700px 400px at 5% 110%,
+      rgba(206, 17, 38, 0.16),
+      transparent 60%
+    ),
+    radial-gradient(
+      600px 300px at 50% 50%,
+      rgba(247, 245, 239, 0.04),
+      transparent 70%
+    );
+}
+
+.cr-text-gradient {
+  background: linear-gradient(
+    100deg,
+    var(--color-cr-blue-bright) 0%,
+    #ffffff 52%,
+    var(--color-cr-red-bright) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Edge "pulse" para los flujos clave */
+@keyframes flow-dash {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+.react-flow__edge.flow-pulse .react-flow__edge-path {
+  stroke-dasharray: 6 4;
+  animation: flow-dash 1.2s linear infinite;
+}
+
+/* xyflow overrides */
+.react-flow__attribution {
+  display: none;
+}
+
+.react-flow__controls {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.react-flow__controls-button {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+  fill: var(--color-text);
+}
+
+.react-flow__controls-button:hover {
+  background: var(--color-surface-2);
+}
+
+.react-flow__edge-path {
+  stroke-width: 1.5;
+}
+
+.react-flow__edge-text {
+  fill: var(--color-muted);
+  font-size: 11px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.react-flow__edge-textbg {
+  fill: var(--color-bg);
+}

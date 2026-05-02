@@ -1,0 +1,62 @@
+title = "saascr — gitleaks config"
+
+[[rules]]
+id = "generic-api-key"
+description = "Generic API key"
+regex = '''(?i)(api[_-]?key|apikey|secret|token)[\s]*[:=][\s]*['"]?[a-z0-9_\-]{20,}['"]?'''
+tags = ["key", "generic"]
+
+[[rules]]
+id = "aws-access-key"
+description = "AWS Access Key"
+regex = '''AKIA[0-9A-Z]{16}'''
+tags = ["aws", "key"]
+
+[[rules]]
+id = "github-pat"
+description = "GitHub Personal Access Token"
+regex = '''ghp_[A-Za-z0-9_]{36,}'''
+tags = ["github", "key"]
+
+[[rules]]
+id = "private-key-block"
+description = "Private key PEM block"
+regex = '''-----BEGIN ((RSA|EC|OPENSSH|PGP|DSA) )?PRIVATE KEY-----'''
+tags = ["key", "private"]
+
+[[rules]]
+id = "jwt-hardcoded"
+description = "JWT hardcoded"
+regex = '''eyJ[A-Za-z0-9_-]{10,}\.eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}'''
+tags = ["jwt"]
+
+[[rules]]
+id = "stripe-key"
+description = "Stripe key"
+regex = '''(sk|pk|rk)_(live|test)_[A-Za-z0-9]{20,}'''
+tags = ["stripe", "key"]
+
+[[rules]]
+id = "vault-token"
+description = "Vault token"
+regex = '''hvs\.[A-Za-z0-9_-]{20,}'''
+tags = ["vault", "key"]
+
+[allowlist]
+description = "saascr allowlist"
+paths = [
+  '''^.*/testdata/.*$''',
+  '''^.*/fixtures/.*$''',
+  '''^.*\.example$''',
+  '''^.*\.sample$''',
+  '''^go\.sum$''',
+  '''^.*/go\.sum$''',
+  '''^package-lock\.json$''',
+  '''^.*/package-lock\.json$''',
+  '''^pubspec\.lock$''',
+  '''^.*/pubspec\.lock$''',
+  '''^config/local\.yaml$''',
+  '''^.*/config/local\.yaml$''',
+  '''^docs/.*$''',
+  '''^infra/.*\.example$''',
+]

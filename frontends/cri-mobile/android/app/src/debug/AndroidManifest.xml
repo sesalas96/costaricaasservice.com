@@ -1,0 +1,8 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- INTERNET es requerido en debug para hot reload y herramientas Flutter. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- Cleartext: en debug permitimos http:// hacia el BFF en localhost
+         (10.0.2.2 desde el emulador) durante el desarrollo MVP. -->
+    <application android:usesCleartextTraffic="true" />
+</manifest>

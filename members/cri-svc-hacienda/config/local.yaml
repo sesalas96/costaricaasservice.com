@@ -1,0 +1,21 @@
+env: local
+service_name: cri-svc-hacienda
+port: "18302"
+log_level: debug
+base_host: ""
+
+# URL del SS local de hacienda. Cuando hacienda quiere consumir un servicio
+# de otro member (ej. registro-civil), envía la request al SS local que
+# firma + enruta al peer.
+security_server: http://localhost:18200
+
+database:
+  url: postgres://postgres:postgres@localhost:5432/cri_hacienda?sslmode=disable
+  max_conns: 10
+  min_conns: 2
+
+server:
+  read_timeout: 10s
+  write_timeout: 30s
+  idle_timeout: 60s
+  shutdown_timeout: 15s
