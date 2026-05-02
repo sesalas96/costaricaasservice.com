@@ -147,7 +147,7 @@ export default function IdentityDiagram({ audience }: { audience: Audience }) {
     // 5 nodos en fila horizontal, todo forward, callout arriba.
     //   [Vos] → [Tu cédula digital] → [Caja fuerte] → [Documento firmado] → [Cualquier institución]
     const ROW = 240;
-    const COLS = [0, 320, 640, 960, 1280];
+    const COLS = [0, 560, 1120, 1680, 2240];
     const nodes: Node[] = [
       svc("me", COLS[0], ROW, "frontend", c.me.title, c.me.sub, true),
       svc("eid", COLS[1], ROW, "iduc", c.eid.title, c.eid.sub, true),
