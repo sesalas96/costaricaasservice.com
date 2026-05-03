@@ -179,3 +179,50 @@ body {
   transform: translateX(0);
   pointer-events: auto;
 }
+
+/* MembersCarousel — marquee infinito */
+@keyframes members-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.members-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: members-marquee 60s linear infinite;
+  will-change: transform;
+}
+
+.members-marquee-viewport:hover .members-marquee-track,
+.members-marquee-viewport:focus-within .members-marquee-track {
+  animation-play-state: paused;
+}
+
+.members-marquee-viewport {
+  position: relative;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 6%,
+    black 94%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 6%,
+    black 94%,
+    transparent 100%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .members-marquee-track {
+    animation: none;
+  }
+}

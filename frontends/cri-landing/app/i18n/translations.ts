@@ -277,6 +277,48 @@ export type Translations = {
     nodeBadgeLabel: string;
     diagramHint: string;
   };
+  membersCarousel: {
+    eyebrow: string;
+    heading: string;
+    lead: string;
+    liveLabel: string;
+    plannedLabel: string;
+    hint: string;
+    cta: string;
+  };
+  demo: {
+    eyebrow: string;
+    heading: string;
+    lead: string;
+    quotaLabel: string;
+    quotaUnit: string;
+    quotaResetHint: string;
+    quotaExceeded: string;
+    quotaExceededHint: string;
+    casesHeading: string;
+    casesSub: string;
+    chatHeading: string;
+    chatSub: string;
+    chatPlaceholder: string;
+    chatEmpty: string;
+    chatEmptyHint: string;
+    youLabel: string;
+    llmLabel: string;
+    runAgain: string;
+    reset: string;
+    emailHeading: string;
+    emailTo: string;
+    statusBadges: {
+      thinking: string;
+      request: string;
+      response: string;
+      audit: string;
+      notify: string;
+    };
+    runningLabel: string;
+    completedLabel: string;
+    disclaimer: string;
+  };
 };
 
 export const translations: Record<Lang, Translations> = {
@@ -927,6 +969,48 @@ export const translations: Record<Lang, Translations> = {
       diagramHint:
         "tip: hacé click en una institución para ver qué expone vía Conecta",
     },
+    membersCarousel: {
+      eyebrow: "Catálogo · members",
+      heading: "Las instituciones que ya hablan por vos.",
+      lead: "Cada institución del Estado entra con las mismas garantías de identidad, trazabilidad y firma. Tocá cualquiera para ver de qué se hace cargo y qué expone vía Conecta.",
+      liveLabel: "live",
+      plannedLabel: "próximamente",
+      hint: "tip: pasá el mouse para pausar · tocá una para ver detalle",
+      cta: "ver catálogo completo",
+    },
+    demo: {
+      eyebrow: "Demo · CR LLM",
+      heading: "Pedile cualquier cosa al Estado.",
+      lead: "Imaginá un día — pronto — donde le hablás al Estado en lenguaje natural y el sistema resuelve. El CR LLM entiende lo que necesitás, llama a las instituciones correctas vía Conecta y te notifica al correo. Probá con uno de estos casos.",
+      quotaLabel: "Consumo del día",
+      quotaUnit: "consultas",
+      quotaResetHint: "Se resetea cada día a las 00:00 hora CR.",
+      quotaExceeded: "Llegaste al tope diario.",
+      quotaExceededHint: "Volvé mañana o tocá «reset» para borrar la cuota local de demostración.",
+      casesHeading: "Elegí un caso",
+      casesSub: "Cada caso simula la conversación entre el LLM y los members reales del ecosistema.",
+      chatHeading: "Chat con el CR LLM",
+      chatSub: "Mirá cómo viaja el pedido entre instituciones, en tiempo real.",
+      chatPlaceholder: "Escribí lo que necesitás del Estado…",
+      chatEmpty: "El chat está vacío.",
+      chatEmptyHint: "Tocá un caso a la izquierda para ver el flujo completo.",
+      youLabel: "Vos",
+      llmLabel: "CR LLM",
+      runAgain: "Repetir caso",
+      reset: "Reset",
+      emailHeading: "Notificación al correo",
+      emailTo: "Para",
+      statusBadges: {
+        thinking: "pensando",
+        request: "consulta",
+        response: "respuesta",
+        audit: "bitácora",
+        notify: "correo",
+      },
+      runningLabel: "Conectando members…",
+      completedLabel: "Resuelto sin formularios.",
+      disclaimer: "Datos y nombres son ilustrativos. La capa de LLM es una visión a futuro — la interoperabilidad subyacente es real y entregable hoy.",
+    },
   },
   en: {
     hero: {
@@ -1573,6 +1657,48 @@ export const translations: Record<Lang, Translations> = {
       emptyConsume: "Does not consume from others — it's a golden source.",
       nodeBadgeLabel: "view",
       diagramHint: "tip: click an institution to see what it exposes via Conecta",
+    },
+    membersCarousel: {
+      eyebrow: "Catalog · members",
+      heading: "The institutions already speaking for you.",
+      lead: "Every institution plugs in with the same guarantees of identity, traceability and signature. Tap any of them to see what it owns and what it exposes via Conecta.",
+      liveLabel: "live",
+      plannedLabel: "coming soon",
+      hint: "tip: hover to pause · tap one to see details",
+      cta: "see full catalog",
+    },
+    demo: {
+      eyebrow: "Demo · CR LLM",
+      heading: "Ask the state for anything.",
+      lead: "Imagine a day — soon — when you talk to the state in plain language and the system resolves. The CR LLM understands what you need, calls the right institutions over Conecta and emails you back. Try one of these scenarios.",
+      quotaLabel: "Today's usage",
+      quotaUnit: "queries",
+      quotaResetHint: "Resets every day at 00:00 CR time.",
+      quotaExceeded: "You hit the daily cap.",
+      quotaExceededHint: "Come back tomorrow or tap reset to clear the local demo quota.",
+      casesHeading: "Pick a scenario",
+      casesSub: "Each one simulates the LLM talking to real members in the ecosystem.",
+      chatHeading: "Chat with the CR LLM",
+      chatSub: "Watch the request travel across institutions in real time.",
+      chatPlaceholder: "Type what you need from the state…",
+      chatEmpty: "The chat is empty.",
+      chatEmptyHint: "Tap a scenario on the left to see the full flow.",
+      youLabel: "You",
+      llmLabel: "CR LLM",
+      runAgain: "Run again",
+      reset: "Reset",
+      emailHeading: "Email notification",
+      emailTo: "To",
+      statusBadges: {
+        thinking: "thinking",
+        request: "query",
+        response: "response",
+        audit: "audit",
+        notify: "email",
+      },
+      runningLabel: "Connecting members…",
+      completedLabel: "Resolved with zero forms.",
+      disclaimer: "Data and names are illustrative. The LLM layer is forward-looking — the underlying interoperability is real and shippable today.",
     },
   },
 };

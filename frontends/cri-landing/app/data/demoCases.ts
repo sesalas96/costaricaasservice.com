@@ -1,0 +1,349 @@
+import type { Lang } from "../i18n/translations";
+import type { InstitutionId } from "./institutions";
+
+export type DemoActor =
+  | InstitutionId
+  | "iduc-identity"
+  | "iduc-keys"
+  | "iduc-signing"
+  | "interop-router"
+  | "interop-audit"
+  | "notifications"
+  | "llm";
+
+export type DemoStepKind =
+  | "thinking"
+  | "request"
+  | "response"
+  | "audit"
+  | "notify"
+  | "result";
+
+export type DemoStep = {
+  kind: DemoStepKind;
+  actor: DemoActor;
+  endpoint?: string;
+  text: string;
+  delayMs: number;
+};
+
+export type DemoCaseLocale = {
+  cardTag: string;
+  cardTitle: string;
+  cardBody: string;
+  citizenAsk: string;
+  llmIntro: string;
+  steps: DemoStep[];
+  finalSummary: string;
+  emailSubject: string;
+  emailPreview: string;
+};
+
+export type DemoCaseDef = {
+  id: string;
+  accent: string;
+  es: DemoCaseLocale;
+  en: DemoCaseLocale;
+};
+
+export const DEMO_CASES: DemoCaseDef[] = [
+  {
+    id: "declaracion-renta",
+    accent: "var(--color-area-members)",
+    es: {
+      cardTag: "Hacienda · Reg.Civil · CCSS",
+      cardTitle: "Hacéme la declaración de renta",
+      cardBody: "El LLM consulta tus ingresos en Hacienda, cargas sociales en CCSS y composición familiar en Registro Civil. Te devuelve la declaración pre-llenada lista para firmar.",
+      citizenAsk: "Hacéme la declaración de renta de este año",
+      llmIntro: "Listo. Voy a armar tu declaración consultando a Hacienda, CCSS y Registro Civil vía Conecta. No te voy a pedir ningún documento — todo está en el sistema.",
+      steps: [
+        { kind: "thinking", actor: "llm", text: "Identificando contribuyente con tu cédula digital…", delayMs: 700 },
+        { kind: "request", actor: "iduc-identity", endpoint: "verify JWT RS256", text: "JWT verificado · sub=305280123 · realm=cr_prod", delayMs: 600 },
+        { kind: "request", actor: "hacienda", endpoint: "GET /tax-status/{cedula}", text: "Consultando estado tributario…", delayMs: 900 },
+        { kind: "response", actor: "hacienda", text: "Régimen: tradicional · ingresos 2026: ₡18.420.000 · retenciones: ₡1.105.200", delayMs: 700 },
+        { kind: "request", actor: "ccss", endpoint: "GET /contributions/{cedula}", text: "Consultando cargas sociales del año…", delayMs: 900 },
+        { kind: "response", actor: "ccss", text: "Aportes patronales validados · base mensual: ₡1.535.000", delayMs: 700 },
+        { kind: "request", actor: "registro-civil", endpoint: "GET /persons/{cedula}/household", text: "Consultando composición familiar…", delayMs: 800 },
+        { kind: "response", actor: "registro-civil", text: "2 dependientes registrados · estado civil: casado", delayMs: 600 },
+        { kind: "audit", actor: "interop-audit", text: "3 accesos inter-member registrados con hash chain · visible en tu bitácora MiCR", delayMs: 700 },
+        { kind: "notify", actor: "notifications", text: "Notificación legal preparada · borrador firmable enviado a tu correo", delayMs: 600 },
+      ],
+      finalSummary: "Declaración pre-llenada lista. Crédito a favor estimado: ₡412.800. Abrila en MiCR para firmar con un toque y presentarla — cero formularios.",
+      emailSubject: "Tu declaración 2026 está lista para firmar",
+      emailPreview: "Borrador pre-llenado por Hacienda con datos de Reg.Civil + CCSS. Vence en 18 días. Abrir MiCR →",
+    },
+    en: {
+      cardTag: "Tax · Civil Reg. · Healthcare",
+      cardTitle: "File my tax return",
+      cardBody: "The LLM queries your income at the tax authority, social charges at the healthcare fund and household at civil registry. Returns a prefilled return ready to sign.",
+      citizenAsk: "File my tax return for this year",
+      llmIntro: "On it. I'll build your return by querying Tax, Healthcare and Civil Registry over Conecta. No documents needed — it's all already in the system.",
+      steps: [
+        { kind: "thinking", actor: "llm", text: "Identifying taxpayer with your digital ID…", delayMs: 700 },
+        { kind: "request", actor: "iduc-identity", endpoint: "verify JWT RS256", text: "JWT verified · sub=305280123 · realm=cr_prod", delayMs: 600 },
+        { kind: "request", actor: "hacienda", endpoint: "GET /tax-status/{id}", text: "Fetching tax status…", delayMs: 900 },
+        { kind: "response", actor: "hacienda", text: "Regime: standard · 2026 income: ₡18,420,000 · withholdings: ₡1,105,200", delayMs: 700 },
+        { kind: "request", actor: "ccss", endpoint: "GET /contributions/{id}", text: "Fetching annual social charges…", delayMs: 900 },
+        { kind: "response", actor: "ccss", text: "Employer contributions validated · monthly base: ₡1,535,000", delayMs: 700 },
+        { kind: "request", actor: "registro-civil", endpoint: "GET /persons/{id}/household", text: "Fetching household composition…", delayMs: 800 },
+        { kind: "response", actor: "registro-civil", text: "2 registered dependents · marital status: married", delayMs: 600 },
+        { kind: "audit", actor: "interop-audit", text: "3 inter-member accesses recorded in hash chain · visible in your MiCR log", delayMs: 700 },
+        { kind: "notify", actor: "notifications", text: "Legal notification prepared · signable draft sent to your email", delayMs: 600 },
+      ],
+      finalSummary: "Prefilled return ready. Estimated refund: ₡412,800. Open MiCR to sign with one tap and submit — zero forms.",
+      emailSubject: "Your 2026 tax return is ready to sign",
+      emailPreview: "Prefilled by Tax with data from Civil Reg. + Healthcare. Due in 18 days. Open MiCR →",
+    },
+  },
+  {
+    id: "receta-medica",
+    accent: "var(--color-cr-red-bright)",
+    es: {
+      cardTag: "CCSS · iduc · farmacia",
+      cardTitle: "Necesito mi receta de hipertensión",
+      cardBody: "La CCSS busca tu historial clínico, el médico firma la receta con Ed25519 y queda disponible en cualquier farmacia del país conectada al ecosistema.",
+      citizenAsk: "Necesito el refill de la receta para hipertensión que me dieron en la CCSS",
+      llmIntro: "Voy a verificar tu aseguramiento, traer tu historial clínico y solicitar la receta firmada por tu médico tratante.",
+      steps: [
+        { kind: "thinking", actor: "llm", text: "Validando aseguramiento activo…", delayMs: 700 },
+        { kind: "request", actor: "ccss", endpoint: "GET /insurance-status/{cedula}", text: "Consultando estado de aseguramiento…", delayMs: 800 },
+        { kind: "response", actor: "ccss", text: "Régimen: asalariado · estado: al día · EBAIS: Hatillo 4", delayMs: 600 },
+        { kind: "request", actor: "ccss", endpoint: "GET /clinical-history/{cedula}", text: "Trayendo historial clínico relevante…", delayMs: 900 },
+        { kind: "response", actor: "ccss", text: "Hipertensión esencial · última consulta hace 27 días · tratamiento vigente: Losartán 50mg", delayMs: 700 },
+        { kind: "request", actor: "iduc-signing", endpoint: "POST /prescriptions (sign Ed25519)", text: "Médico firma receta server-side · clave nunca sale del KMS", delayMs: 900 },
+        { kind: "response", actor: "iduc-signing", text: "JWS detached · sellado RFC 3161 · folio CCSS-RX-7184529", delayMs: 600 },
+        { kind: "audit", actor: "interop-audit", text: "Receta indexada en hash chain · cualquier farmacia del país puede validar firma", delayMs: 700 },
+        { kind: "notify", actor: "notifications", text: "Receta disponible en MiCR + QR para farmacia", delayMs: 600 },
+      ],
+      finalSummary: "Receta lista. Losartán 50mg · 30 tabletas · vence en 90 días. Mostrá el QR en cualquier farmacia conectada — privadas o públicas.",
+      emailSubject: "Receta CCSS-RX-7184529 disponible",
+      emailPreview: "Firmada por Dra. Madrigal · válida 90 días · presentar QR en farmacia. Ver MiCR →",
+    },
+    en: {
+      cardTag: "Healthcare · iduc · pharmacy",
+      cardTitle: "I need my hypertension refill",
+      cardBody: "Healthcare pulls your clinical history, the physician signs the prescription with Ed25519 and it's available at any connected pharmacy in the country.",
+      citizenAsk: "I need the refill for the hypertension prescription I got at Healthcare",
+      llmIntro: "I'll check your insurance status, pull the relevant clinical history and request the signed prescription from your physician.",
+      steps: [
+        { kind: "thinking", actor: "llm", text: "Validating active insurance…", delayMs: 700 },
+        { kind: "request", actor: "ccss", endpoint: "GET /insurance-status/{id}", text: "Checking insurance status…", delayMs: 800 },
+        { kind: "response", actor: "ccss", text: "Regime: salaried · status: current · clinic: Hatillo 4", delayMs: 600 },
+        { kind: "request", actor: "ccss", endpoint: "GET /clinical-history/{id}", text: "Pulling relevant clinical history…", delayMs: 900 },
+        { kind: "response", actor: "ccss", text: "Essential hypertension · last visit 27 days ago · current treatment: Losartan 50mg", delayMs: 700 },
+        { kind: "request", actor: "iduc-signing", endpoint: "POST /prescriptions (sign Ed25519)", text: "Physician signs prescription server-side · key never leaves KMS", delayMs: 900 },
+        { kind: "response", actor: "iduc-signing", text: "Detached JWS · RFC 3161 timestamp · folio CCSS-RX-7184529", delayMs: 600 },
+        { kind: "audit", actor: "interop-audit", text: "Prescription indexed in hash chain · any pharmacy in the country can verify the signature", delayMs: 700 },
+        { kind: "notify", actor: "notifications", text: "Prescription available in MiCR + QR for pharmacy", delayMs: 600 },
+      ],
+      finalSummary: "Prescription ready. Losartan 50mg · 30 tablets · expires in 90 days. Show the QR at any connected pharmacy — public or private.",
+      emailSubject: "Prescription CCSS-RX-7184529 available",
+      emailPreview: "Signed by Dr. Madrigal · valid 90 days · show QR at pharmacy. Open MiCR →",
+    },
+  },
+  {
+    id: "renovar-pasaporte",
+    accent: "var(--color-cr-blue-bright)",
+    es: {
+      cardTag: "Migración · Reg.Civil · Hacienda",
+      cardTitle: "Quiero renovar mi pasaporte",
+      cardBody: "Migración valida identidad, antecedentes y cobra el arancel a Hacienda en una sola conversación. Vos solo agendás la entrega.",
+      citizenAsk: "Quiero renovar mi pasaporte, el actual vence en 3 meses",
+      llmIntro: "Perfecto. Voy a verificar identidad, antecedentes migratorios y procesar el arancel sin que tengas que llenar formularios.",
+      steps: [
+        { kind: "request", actor: "registro-civil", endpoint: "GET /persons/{cedula}", text: "Consultando datos vigentes de identidad…", delayMs: 800 },
+        { kind: "response", actor: "registro-civil", text: "Persona vigente · sin alertas · domicilio actualizado", delayMs: 600 },
+        { kind: "request", actor: "migracion", endpoint: "GET /passport/{cedula}", text: "Verificando pasaporte actual y antecedentes…", delayMs: 900 },
+        { kind: "response", actor: "migracion", text: "Pasaporte vigente vence 2026-08-14 · sin restricciones migratorias", delayMs: 700 },
+        { kind: "request", actor: "hacienda", endpoint: "POST /fees/passport-renewal", text: "Generando arancel ₡36.500…", delayMs: 800 },
+        { kind: "response", actor: "hacienda", text: "Arancel cobrado vía SINPE · comprobante 2026-PR-049281", delayMs: 700 },
+        { kind: "request", actor: "iduc-signing", endpoint: "sign passport application", text: "Firmando solicitud con tu clave Ed25519…", delayMs: 700 },
+        { kind: "audit", actor: "interop-audit", text: "Solicitud sellada · trazabilidad completa para Migración", delayMs: 600 },
+        { kind: "notify", actor: "notifications", text: "Cita asignada · oficina La Uruca · 2026-05-14 09:30", delayMs: 600 },
+      ],
+      finalSummary: "Solicitud aprobada. Cita en La Uruca el 14 de mayo a las 09:30. Llevá solo tu pasaporte actual — todo lo demás ya está procesado.",
+      emailSubject: "Cita de pasaporte confirmada · 2026-05-14",
+      emailPreview: "Solicitud 2026-PR-049281 · arancel pagado · La Uruca 09:30. Agregar al calendario →",
+    },
+    en: {
+      cardTag: "Immigration · Civil Reg. · Tax",
+      cardTitle: "I want to renew my passport",
+      cardBody: "Immigration validates identity, migratory record and collects the fee from Tax in a single conversation. You only book the pickup slot.",
+      citizenAsk: "I want to renew my passport, the current one expires in 3 months",
+      llmIntro: "Got it. I'll verify identity, migratory record and process the fee without you filling out a single form.",
+      steps: [
+        { kind: "request", actor: "registro-civil", endpoint: "GET /persons/{id}", text: "Fetching current identity data…", delayMs: 800 },
+        { kind: "response", actor: "registro-civil", text: "Person active · no alerts · address up to date", delayMs: 600 },
+        { kind: "request", actor: "migracion", endpoint: "GET /passport/{id}", text: "Checking current passport and migratory record…", delayMs: 900 },
+        { kind: "response", actor: "migracion", text: "Passport expires 2026-08-14 · no migratory restrictions", delayMs: 700 },
+        { kind: "request", actor: "hacienda", endpoint: "POST /fees/passport-renewal", text: "Generating ₡36,500 fee…", delayMs: 800 },
+        { kind: "response", actor: "hacienda", text: "Fee collected via SINPE · receipt 2026-PR-049281", delayMs: 700 },
+        { kind: "request", actor: "iduc-signing", endpoint: "sign passport application", text: "Signing application with your Ed25519 key…", delayMs: 700 },
+        { kind: "audit", actor: "interop-audit", text: "Application sealed · full traceability for Immigration", delayMs: 600 },
+        { kind: "notify", actor: "notifications", text: "Appointment booked · La Uruca office · 2026-05-14 09:30", delayMs: 600 },
+      ],
+      finalSummary: "Application approved. Appointment at La Uruca on May 14 at 09:30. Bring only your current passport — everything else is processed.",
+      emailSubject: "Passport appointment confirmed · 2026-05-14",
+      emailPreview: "Request 2026-PR-049281 · fee paid · La Uruca 09:30. Add to calendar →",
+    },
+  },
+  {
+    id: "bono-imas",
+    accent: "var(--color-area-platform)",
+    es: {
+      cardTag: "IMAS · Hacienda · Reg.Civil · CCSS",
+      cardTitle: "¿Califico para el bono familiar?",
+      cardBody: "IMAS calcula tu elegibilidad consultando ingresos en Hacienda, composición familiar en Reg.Civil y aseguramiento en CCSS. Vos no presentás nada.",
+      citizenAsk: "¿Califico para el bono familiar y cómo lo solicito?",
+      llmIntro: "Voy a calcular tu elegibilidad consultando tus datos en IMAS, Hacienda, Reg.Civil y CCSS. No vas a llenar ningún formulario.",
+      steps: [
+        { kind: "request", actor: "registro-civil", endpoint: "GET /persons/{cedula}/household", text: "Consultando composición familiar…", delayMs: 800 },
+        { kind: "response", actor: "registro-civil", text: "Hogar de 4 personas · 2 menores de edad", delayMs: 600 },
+        { kind: "request", actor: "hacienda", endpoint: "GET /tax-status/{cedula}", text: "Validando ingresos declarados…", delayMs: 800 },
+        { kind: "response", actor: "hacienda", text: "Ingreso bruto familiar: ₡685.000/mes", delayMs: 600 },
+        { kind: "request", actor: "ccss", endpoint: "GET /insurance-status/{cedula}", text: "Verificando aseguramiento…", delayMs: 700 },
+        { kind: "response", actor: "ccss", text: "Asegurado · régimen no contributivo elegible", delayMs: 600 },
+        { kind: "request", actor: "imas", endpoint: "GET /eligibility/{cedula}", text: "Calculando elegibilidad…", delayMs: 800 },
+        { kind: "response", actor: "imas", text: "Elegible · monto mensual: ₡52.000 · vigencia 12 meses", delayMs: 700 },
+        { kind: "audit", actor: "interop-audit", text: "Decisión auditada · podés impugnar viendo cada consulta", delayMs: 600 },
+        { kind: "notify", actor: "notifications", text: "Resolución firmada · primer pago en 7 días hábiles", delayMs: 600 },
+      ],
+      finalSummary: "Calificás. Bono de ₡52.000/mes por 12 meses. Primer depósito el 9 de mayo. Cero trámites: la decisión se tomó solo con datos que el Estado ya tenía.",
+      emailSubject: "Bono familiar aprobado · ₡52.000 mensuales",
+      emailPreview: "Resolución IMAS-2026-189442 · primer pago 2026-05-09. Ver MiCR →",
+    },
+    en: {
+      cardTag: "Welfare · Tax · Civil Reg. · Healthcare",
+      cardTitle: "Do I qualify for the family benefit?",
+      cardBody: "Welfare computes your eligibility by querying income at Tax, household at Civil Reg. and insurance at Healthcare. You submit nothing.",
+      citizenAsk: "Do I qualify for the family benefit and how do I apply?",
+      llmIntro: "I'll compute eligibility by querying your data at Welfare, Tax, Civil Reg. and Healthcare. You won't fill out a single form.",
+      steps: [
+        { kind: "request", actor: "registro-civil", endpoint: "GET /persons/{id}/household", text: "Fetching household composition…", delayMs: 800 },
+        { kind: "response", actor: "registro-civil", text: "4-person household · 2 minors", delayMs: 600 },
+        { kind: "request", actor: "hacienda", endpoint: "GET /tax-status/{id}", text: "Validating declared income…", delayMs: 800 },
+        { kind: "response", actor: "hacienda", text: "Gross household income: ₡685,000/mo", delayMs: 600 },
+        { kind: "request", actor: "ccss", endpoint: "GET /insurance-status/{id}", text: "Checking insurance…", delayMs: 700 },
+        { kind: "response", actor: "ccss", text: "Insured · eligible for non-contributory regime", delayMs: 600 },
+        { kind: "request", actor: "imas", endpoint: "GET /eligibility/{id}", text: "Computing eligibility…", delayMs: 800 },
+        { kind: "response", actor: "imas", text: "Eligible · monthly amount: ₡52,000 · 12-month term", delayMs: 700 },
+        { kind: "audit", actor: "interop-audit", text: "Decision audited · you can appeal by inspecting every query", delayMs: 600 },
+        { kind: "notify", actor: "notifications", text: "Signed resolution · first payment in 7 business days", delayMs: 600 },
+      ],
+      finalSummary: "You qualify. ₡52,000/month for 12 months. First deposit on May 9. Zero paperwork: the decision used only data the state already had.",
+      emailSubject: "Family benefit approved · ₡52,000 monthly",
+      emailPreview: "Resolution IMAS-2026-189442 · first payment 2026-05-09. Open MiCR →",
+    },
+  },
+  {
+    id: "cambio-domicilio",
+    accent: "var(--color-area-iduc)",
+    es: {
+      cardTag: "Reg.Civil → Hacienda · CCSS · INS · TSE",
+      cardTitle: "Me mudé · actualizá mi dirección en todo lado",
+      cardBody: "El ciudadano actualiza su dirección en Reg.Civil. El cambio se propaga a Hacienda, CCSS, INS y TSE en tiempo real vía Kafka. Once-only puro.",
+      citizenAsk: "Me mudé. Actualizá mi dirección a San Pedro de Montes de Oca en todo el sistema",
+      llmIntro: "Una sola actualización. La fuente de oro es Reg.Civil — todas las demás instituciones reciben el cambio automáticamente.",
+      steps: [
+        { kind: "request", actor: "registro-civil", endpoint: "PATCH /persons/{cedula}/address", text: "Actualizando dirección en fuente de oro…", delayMs: 900 },
+        { kind: "response", actor: "registro-civil", text: "Dirección actualizada · evento publicado en Kafka", delayMs: 600 },
+        { kind: "response", actor: "hacienda", text: "Hacienda suscripta · domicilio fiscal actualizado", delayMs: 700 },
+        { kind: "response", actor: "ccss", text: "CCSS suscripta · EBAIS reasignado a Montes de Oca", delayMs: 700 },
+        { kind: "response", actor: "ins", text: "INS suscripto · pólizas notificadas para revaluar prima", delayMs: 700 },
+        { kind: "response", actor: "mep", text: "MEP suscripto · centros educativos cercanos actualizados", delayMs: 700 },
+        { kind: "audit", actor: "interop-audit", text: "5 instituciones notificadas · 0 ventanillas visitadas", delayMs: 700 },
+        { kind: "notify", actor: "notifications", text: "Resumen del cambio enviado a tu correo + MiCR", delayMs: 600 },
+      ],
+      finalSummary: "Listo. Tu nueva dirección ya está vigente en 5 instituciones. Tu nuevo EBAIS es Montes de Oca · tu próxima factura del INS reflejará la zona.",
+      emailSubject: "Cambio de domicilio aplicado en 5 instituciones",
+      emailPreview: "San Pedro de Montes de Oca · efectivo desde hoy. Reg.Civil + Hacienda + CCSS + INS + MEP. Ver detalle →",
+    },
+    en: {
+      cardTag: "Civil Reg. → Tax · Healthcare · Insurance · Electoral",
+      cardTitle: "I moved · update my address everywhere",
+      cardBody: "The citizen updates the address at Civil Reg. The change propagates to Tax, Healthcare, Insurance and Electoral in real time over Kafka. Pure once-only.",
+      citizenAsk: "I moved. Update my address to San Pedro de Montes de Oca across the system",
+      llmIntro: "One update. The golden source is Civil Reg. — every other institution receives the change automatically.",
+      steps: [
+        { kind: "request", actor: "registro-civil", endpoint: "PATCH /persons/{id}/address", text: "Updating address at golden source…", delayMs: 900 },
+        { kind: "response", actor: "registro-civil", text: "Address updated · event published to Kafka", delayMs: 600 },
+        { kind: "response", actor: "hacienda", text: "Tax subscribed · fiscal domicile updated", delayMs: 700 },
+        { kind: "response", actor: "ccss", text: "Healthcare subscribed · clinic reassigned to Montes de Oca", delayMs: 700 },
+        { kind: "response", actor: "ins", text: "Insurance subscribed · policies flagged for premium reassessment", delayMs: 700 },
+        { kind: "response", actor: "mep", text: "Education subscribed · nearby schools refreshed", delayMs: 700 },
+        { kind: "audit", actor: "interop-audit", text: "5 institutions notified · 0 counters visited", delayMs: 700 },
+        { kind: "notify", actor: "notifications", text: "Summary sent to your email + MiCR", delayMs: 600 },
+      ],
+      finalSummary: "Done. Your new address is live at 5 institutions. Your new clinic is Montes de Oca · your next insurance bill reflects the zone.",
+      emailSubject: "Address change applied across 5 institutions",
+      emailPreview: "San Pedro de Montes de Oca · effective today. Civil Reg. + Tax + Healthcare + Insurance + Education. See detail →",
+    },
+  },
+  {
+    id: "constancia-soa",
+    accent: "#fbbf24",
+    es: {
+      cardTag: "MOPT · INS · Reg.Civil",
+      cardTitle: "Necesito el SOA y la marchamo de mi carro",
+      cardBody: "MOPT valida tu vehículo, el INS emite el SOA firmado y vos pagás la marchamo desde MiCR. Sin filas, sin INS, sin MOPT.",
+      citizenAsk: "Necesito sacar el SOA y la marchamo de mi carro placa BMD-271",
+      llmIntro: "Vamos a verificar el vehículo en MOPT, emitir el SOA con el INS y procesar la marchamo en una sola transacción.",
+      steps: [
+        { kind: "request", actor: "mopt", endpoint: "GET /vehicles/{placa}", text: "Validando padrón de vehículos…", delayMs: 800 },
+        { kind: "response", actor: "mopt", text: "Vehículo BMD-271 · Toyota Yaris 2022 · titular: vos", delayMs: 600 },
+        { kind: "request", actor: "ins", endpoint: "GET /soa-status/{placa}", text: "Calculando prima y emitiendo SOA…", delayMs: 900 },
+        { kind: "response", actor: "ins", text: "Prima ₡42.180 · SOA emitido y firmado", delayMs: 700 },
+        { kind: "request", actor: "hacienda", endpoint: "POST /fees/marchamo", text: "Cobrando marchamo + SOA · ₡189.420 total…", delayMs: 800 },
+        { kind: "response", actor: "hacienda", text: "Pago procesado vía SINPE · comprobante MAR-2026-44128", delayMs: 700 },
+        { kind: "audit", actor: "interop-audit", text: "Transacción registrada · póliza visible en MiCR", delayMs: 600 },
+        { kind: "notify", actor: "notifications", text: "Marchamo digital + SOA enviados a tu correo", delayMs: 600 },
+      ],
+      finalSummary: "Marchamo y SOA al día hasta diciembre 2026. El sticker digital ya está en MiCR — los oficiales de tránsito lo validan con QR.",
+      emailSubject: "Marchamo 2026 + SOA · BMD-271 vigentes",
+      emailPreview: "₡189.420 · sticker digital y póliza disponibles. Mostrar QR si te paran →",
+    },
+    en: {
+      cardTag: "Transport · Insurance · Civil Reg.",
+      cardTitle: "I need my mandatory auto insurance + tag",
+      cardBody: "Transport validates your vehicle, Insurance issues the signed mandatory policy and you pay the road tag from MiCR. No queues.",
+      citizenAsk: "I need to renew the mandatory insurance and road tag for plate BMD-271",
+      llmIntro: "Let's verify the vehicle at Transport, issue the mandatory policy at Insurance and process the road tag in a single transaction.",
+      steps: [
+        { kind: "request", actor: "mopt", endpoint: "GET /vehicles/{plate}", text: "Validating vehicle registry…", delayMs: 800 },
+        { kind: "response", actor: "mopt", text: "Vehicle BMD-271 · Toyota Yaris 2022 · holder: you", delayMs: 600 },
+        { kind: "request", actor: "ins", endpoint: "GET /soa-status/{plate}", text: "Calculating premium and issuing policy…", delayMs: 900 },
+        { kind: "response", actor: "ins", text: "Premium ₡42,180 · policy issued and signed", delayMs: 700 },
+        { kind: "request", actor: "hacienda", endpoint: "POST /fees/road-tag", text: "Charging road tag + policy · ₡189,420 total…", delayMs: 800 },
+        { kind: "response", actor: "hacienda", text: "Payment processed via SINPE · receipt MAR-2026-44128", delayMs: 700 },
+        { kind: "audit", actor: "interop-audit", text: "Transaction recorded · policy visible in MiCR", delayMs: 600 },
+        { kind: "notify", actor: "notifications", text: "Digital road tag + policy sent to your email", delayMs: 600 },
+      ],
+      finalSummary: "Road tag and mandatory insurance current through December 2026. The digital sticker is in MiCR — traffic officers validate it via QR.",
+      emailSubject: "2026 road tag + insurance · BMD-271 active",
+      emailPreview: "₡189,420 · digital sticker and policy available. Show QR if pulled over →",
+    },
+  },
+];
+
+export const ACTOR_LABELS: Record<DemoActor, { es: string; en: string; tag: string; color: string }> = {
+  "registro-civil": { es: "Reg.Civil", en: "Civil Reg.", tag: "TSE", color: "var(--color-cr-blue-bright)" },
+  hacienda: { es: "Hacienda", en: "Tax", tag: "HAC", color: "var(--color-area-members)" },
+  ccss: { es: "CCSS", en: "Healthcare", tag: "CCSS", color: "var(--color-cr-red-bright)" },
+  ins: { es: "INS", en: "Insurance", tag: "INS", color: "#ff7a59" },
+  mep: { es: "MEP", en: "Education", tag: "MEP", color: "#34d399" },
+  mopt: { es: "MOPT", en: "Transport", tag: "MOPT", color: "#fbbf24" },
+  mtss: { es: "MTSS", en: "Labor", tag: "MTSS", color: "#22d3ee" },
+  ice: { es: "ICE", en: "Utilities", tag: "ICE", color: "#a78bfa" },
+  imas: { es: "IMAS", en: "Welfare", tag: "IMAS", color: "#f472b6" },
+  migracion: { es: "Migración", en: "Immigration", tag: "MIG", color: "#94a3b8" },
+  "iduc-identity": { es: "iduc-identity", en: "iduc-identity", tag: "IDUC", color: "var(--color-area-iduc)" },
+  "iduc-keys": { es: "iduc-keys", en: "iduc-keys", tag: "KMS", color: "var(--color-area-iduc)" },
+  "iduc-signing": { es: "iduc-signing", en: "iduc-signing", tag: "SIGN", color: "var(--color-area-iduc)" },
+  "interop-router": { es: "Conecta", en: "Conecta", tag: "ROUTE", color: "var(--color-area-interop)" },
+  "interop-audit": { es: "Bitácora", en: "Audit", tag: "AUDIT", color: "var(--color-area-interop)" },
+  notifications: { es: "Notificaciones", en: "Notifications", tag: "MAIL", color: "var(--color-area-platform)" },
+  llm: { es: "CR LLM", en: "CR LLM", tag: "LLM", color: "var(--color-cr-blue-bright)" },
+};
+
+export const localizedCase = (def: DemoCaseDef, lang: Lang): DemoCaseLocale =>
+  lang === "es" ? def.es : def.en;
