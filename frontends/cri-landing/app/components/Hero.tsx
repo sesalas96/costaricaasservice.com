@@ -54,6 +54,28 @@ export default function Hero() {
             <span aria-hidden>→</span>
           </a>
           <a
+            href="#demo"
+            className="group inline-flex items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-medium transition-transform hover:-translate-y-0.5"
+            style={{
+              border: "1px solid var(--color-cr-red-bright)",
+              color: "var(--color-cr-red-bright)",
+              background:
+                "linear-gradient(120deg, rgba(216,28,33,0.08) 0%, rgba(216,28,33,0.02) 100%)",
+              boxShadow: "0 8px 24px -10px rgba(216,28,33,0.45)",
+            }}
+          >
+            <span
+              aria-hidden
+              className="inline-block h-1.5 w-1.5 rounded-full"
+              style={{
+                background: "var(--color-cr-red-bright)",
+                boxShadow: "0 0 0 4px rgba(216,28,33,0.18)",
+              }}
+            />
+            {t.hero.ctaDemo}
+            <span aria-hidden className="transition-transform group-hover:translate-x-0.5">→</span>
+          </a>
+          <a
             href="#garantias"
             className="inline-flex items-center justify-center gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-3 text-sm font-medium text-[var(--color-text)] transition-colors hover:bg-[var(--color-surface-2)]"
           >

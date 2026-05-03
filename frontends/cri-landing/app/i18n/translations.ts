@@ -13,6 +13,7 @@ export type Translations = {
     descBold3: string;
     descAfter: string;
     ctaPrimary: string;
+    ctaDemo: string;
     ctaSecondary: string;
   };
   guarantees: {
@@ -63,6 +64,7 @@ export type Translations = {
       technical: string;
       hint: string;
       activeBadge: string;
+      aria: string;
     };
     modulesHeading: string;
     modules: {
@@ -87,6 +89,7 @@ export type Translations = {
       technical: string;
       hint: string;
       activeBadge: string;
+      aria: string;
     };
     business: {
       intro: string;
@@ -368,6 +371,7 @@ export const translations: Record<Lang, Translations> = {
       descBold3: "Ves quién consulta tus datos",
       descAfter: " y por qué.",
       ctaPrimary: "Ver cómo se conecta el Estado",
+      ctaDemo: "Ver demos",
       ctaSecondary: "Las 4 garantías que lo sostienen",
     },
     guarantees: {
@@ -521,6 +525,7 @@ export const translations: Record<Lang, Translations> = {
         technical: "Vista técnica",
         hint: "Cambiá entre lenguaje cotidiano y la implementación real.",
         activeBadge: "activa",
+        aria: "Cambiar audiencia del diagrama",
       },
       modulesHeading: "Módulos",
       modules: {
@@ -581,6 +586,7 @@ export const translations: Record<Lang, Translations> = {
         technical: "Vista técnica",
         hint: "Cambiá entre qué te llevás y qué hay adentro.",
         activeBadge: "activa",
+        aria: "Cambiar vista de entregables",
       },
       business: {
         intro:
@@ -1093,6 +1099,7 @@ export const translations: Record<Lang, Translations> = {
       descBold3: "See who looks at your data",
       descAfter: " and why.",
       ctaPrimary: "See the state connect",
+      ctaDemo: "See live demos",
       ctaSecondary: "The 4 guarantees behind it",
     },
     guarantees: {
@@ -1246,6 +1253,7 @@ export const translations: Record<Lang, Translations> = {
         technical: "Technical view",
         hint: "Switch between everyday language and the actual implementation.",
         activeBadge: "active",
+        aria: "Switch diagram audience",
       },
       modulesHeading: "Modules",
       modules: {
@@ -1306,6 +1314,7 @@ export const translations: Record<Lang, Translations> = {
         technical: "Technical view",
         hint: "Switch between what you get and what is inside.",
         activeBadge: "active",
+        aria: "Switch deliverables view",
       },
       business: {
         intro:
