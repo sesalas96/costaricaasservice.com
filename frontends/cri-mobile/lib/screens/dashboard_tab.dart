@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../api.dart';
 import '../format.dart';
+import '../theme.dart';
 
 class DashboardTab extends StatefulWidget {
   final String cedula;
@@ -34,7 +35,12 @@ class _DashboardTabState extends State<DashboardTab> {
             return const Center(child: CircularProgressIndicator());
           }
           if (snap.hasError) {
-            return _ErrorView(error: snap.error.toString(), onRetry: _refresh);
+            return ListView(
+              padding: const EdgeInsets.all(16),
+              children: [
+                ApiErrorView(error: snap.error!, onRetry: _refresh),
+              ],
+            );
           }
           final d = snap.data!;
           final tax = d.taxPrefilled;
@@ -45,15 +51,17 @@ class _DashboardTabState extends State<DashboardTab> {
           return ListView(
             padding: const EdgeInsets.all(16),
             children: [
-              const Text('Mi escritorio', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700)),
+              const Text('Mi escritorio',
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: CrColors.text)),
               Text('Año fiscal ${d.year} · cédula ${d.cedula}',
-                  style: const TextStyle(fontSize: 12, color: Colors.black54)),
+                  style: const TextStyle(fontSize: 12, color: CrColors.muted)),
               const SizedBox(height: 18),
 
-              // Card 1: Mis datos (de Registro Civil)
               _Card(
                 title: 'Mis datos',
-                badge: ('Registro Civil', const Color(0xFFD1FAE5), const Color(0xFF065F46)),
+                badge: ('Registro Civil', CrColors.areaIducDim, CrColors.areaIduc),
+                footer:
+                    'Estos datos viajan firmados desde Registro Civil. Hacienda los consulta cada vez sin guardarlos (once-only).',
                 child: tax?.person != null
                     ? Column(
                         children: [
@@ -63,15 +71,12 @@ class _DashboardTabState extends State<DashboardTab> {
                           _Row(label: 'Email', value: tax.person.email),
                         ],
                       )
-                    : const Text('Sin datos disponibles', style: TextStyle(color: Colors.black54)),
-                footer:
-                    'Estos datos viajan firmados desde Registro Civil. Hacienda los consulta cada vez sin guardarlos (once-only).',
+                    : const Text('Sin datos disponibles', style: TextStyle(color: CrColors.muted)),
               ),
 
-              // Card 2: Mi declaración
               _Card(
                 title: 'Mi declaración 2025',
-                badge: ('Hacienda', const Color(0xFFDBEAFE), const Color(0xFF1E3A8A)),
+                badge: ('Hacienda', CrColors.crBlueBrightDim, CrColors.crBlueBright),
                 child: tax != null
                     ? Column(
                         children: [
@@ -82,47 +87,57 @@ class _DashboardTabState extends State<DashboardTab> {
                           _Row(label: 'Dependientes', value: tax.hasDependents ? 'Sí' : 'No'),
                         ],
                       )
-                    : const Text('Sin declaración', style: TextStyle(color: Colors.black54)),
+                    : const Text('Sin declaración', style: TextStyle(color: CrColors.muted)),
               ),
 
-              // Card 3: Mi salud (CCSS)
               _Card(
                 title: 'Mi salud',
-                badge: ('CCSS', const Color(0xFFFFE4E6), const Color(0xFF9F1239)),
+                badge: ('CCSS', CrColors.crRedBrightDim, CrColors.crRedBright),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('${health?.activePrescriptions.length ?? 0}',
-                        style: const TextStyle(fontSize: 32, fontWeight: FontWeight.w700)),
-                    const Text('recetas activas', style: TextStyle(color: Colors.black54)),
+                        style: const TextStyle(
+                            fontSize: 32, fontWeight: FontWeight.w700, color: CrColors.text)),
+                    const Text('recetas activas', style: TextStyle(color: CrColors.muted)),
                     if (health != null) ...[
                       const SizedBox(height: 8),
                       ...health.activePrescriptions.take(2).map((rx) => Container(
                             margin: const EdgeInsets.only(top: 6),
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFF1F5F9),
+                              color: CrColors.surface2,
                               borderRadius: BorderRadius.circular(6),
+                              border: Border.all(color: CrColors.border),
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(rx.drug, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
-                                Text(rx.dosage, style: const TextStyle(fontSize: 11, color: Colors.black54)),
+                                Text(rx.drug,
+                                    style: const TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: CrColors.text)),
+                                Text(rx.dosage,
+                                    style: const TextStyle(
+                                        fontSize: 11, color: CrColors.muted)),
                               ],
                             ),
                           )),
                       if (health.nextAppointment != null) ...[
                         const SizedBox(height: 12),
-                        const Divider(height: 1),
+                        const Divider(height: 1, color: CrColors.border),
                         const SizedBox(height: 8),
                         const Text('Próxima cita',
-                            style: TextStyle(fontSize: 11, color: Colors.black54)),
+                            style: TextStyle(fontSize: 11, color: CrColors.muted)),
                         Text(health.nextAppointment!.specialty,
-                            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
+                            style: const TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                color: CrColors.text)),
                         Text(
                           '${health.nextAppointment!.when} · ${health.nextAppointment!.hospital}',
-                          style: const TextStyle(fontSize: 11, color: Colors.black54),
+                          style: const TextStyle(fontSize: 11, color: CrColors.muted),
                         ),
                       ],
                     ],
@@ -130,35 +145,40 @@ class _DashboardTabState extends State<DashboardTab> {
                 ),
               ),
 
-              // Card 4: Mi bitácora
               _Card(
                 title: 'Mi bitácora',
-                badge: ('Audit chain', const Color(0xFFEDE9FE), const Color(0xFF6D28D9)),
+                badge: ('Audit chain', CrColors.areaPlatformDim, CrColors.areaPlatform),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('${log?.count ?? 0}',
-                        style: const TextStyle(fontSize: 32, fontWeight: FontWeight.w700)),
-                    const Text('accesos a sus datos', style: TextStyle(color: Colors.black54)),
+                        style: const TextStyle(
+                            fontSize: 32, fontWeight: FontWeight.w700, color: CrColors.text)),
+                    const Text('accesos a sus datos',
+                        style: TextStyle(color: CrColors.muted)),
                     if (last != null) ...[
                       const SizedBox(height: 12),
                       Container(
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFF1F5F9),
+                          color: CrColors.surface2,
                           borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: CrColors.border),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text('Último acceso', style: TextStyle(fontWeight: FontWeight.w600)),
+                            const Text('Último acceso',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600, color: CrColors.text)),
                             const SizedBox(height: 4),
-                            Text('${last.requesterMember} consultó ${last.service} en ${last.targetMember}',
-                                style: const TextStyle(fontSize: 12)),
+                            Text(
+                                '${last.requesterMember} consultó ${last.service} en ${last.targetMember}',
+                                style: const TextStyle(fontSize: 12, color: CrColors.text)),
                             Text(formatDateTime(last.ts),
-                                style: const TextStyle(fontSize: 12, color: Colors.black54)),
+                                style: const TextStyle(fontSize: 12, color: CrColors.muted)),
                             Text('propósito: ${last.purpose}',
-                                style: const TextStyle(fontSize: 12, color: Colors.black54)),
+                                style: const TextStyle(fontSize: 12, color: CrColors.muted)),
                           ],
                         ),
                       ),
@@ -171,12 +191,12 @@ class _DashboardTabState extends State<DashboardTab> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFEF3C7),
+                    color: const Color(0x33F59E0B),
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: const Color(0xFFFCD34D)),
+                    border: Border.all(color: CrColors.areaMembers),
                   ),
                   child: Text('Avisos: ${d.upstreamErrors.join('; ')}',
-                      style: const TextStyle(color: Color(0xFF92400E), fontSize: 12)),
+                      style: const TextStyle(color: CrColors.areaMembers, fontSize: 12)),
                 ),
             ],
           );
@@ -199,9 +219,9 @@ class _Card extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 14),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: CrColors.surface,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: CrColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -209,7 +229,9 @@ class _Card extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+              Text(title,
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w600, color: CrColors.text)),
               if (badge != null)
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
@@ -218,7 +240,8 @@ class _Card extends StatelessWidget {
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(badge!.$1,
-                      style: TextStyle(color: badge!.$3, fontSize: 11, fontWeight: FontWeight.w600)),
+                      style: TextStyle(
+                          color: badge!.$3, fontSize: 11, fontWeight: FontWeight.w600)),
                 ),
             ],
           ),
@@ -226,7 +249,7 @@ class _Card extends StatelessWidget {
           child,
           if (footer != null) ...[
             const SizedBox(height: 12),
-            Text(footer!, style: const TextStyle(fontSize: 11, color: Color(0xFF94A3B8))),
+            Text(footer!, style: const TextStyle(fontSize: 11, color: CrColors.muted)),
           ],
         ],
       ),
@@ -247,7 +270,7 @@ class _Row extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: const TextStyle(color: Colors.black54)),
+          Text(label, style: const TextStyle(color: CrColors.muted)),
           Flexible(
             child: Text(
               value,
@@ -255,6 +278,7 @@ class _Row extends StatelessWidget {
               style: TextStyle(
                 fontFamily: mono ? 'monospace' : null,
                 fontWeight: bold ? FontWeight.w700 : null,
+                color: CrColors.text,
               ),
             ),
           ),
@@ -264,36 +288,3 @@ class _Row extends StatelessWidget {
   }
 }
 
-class _ErrorView extends StatelessWidget {
-  final String error;
-  final VoidCallback onRetry;
-  const _ErrorView({required this.error, required this.onRetry});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(20),
-      children: [
-        Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: const Color(0xFFFEE2E2),
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: const Color(0xFFFCA5A5)),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text('No se pudo cargar el escritorio',
-                  style: TextStyle(fontWeight: FontWeight.w600, color: Color(0xFF991B1B))),
-              const SizedBox(height: 4),
-              Text(error, style: const TextStyle(color: Color(0xFF991B1B), fontSize: 12)),
-              const SizedBox(height: 8),
-              FilledButton(onPressed: onRetry, child: const Text('Reintentar')),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}

@@ -4,6 +4,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'screens/home.dart';
 import 'screens/landing.dart';
 import 'session.dart';
+import 'theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,11 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'MiCR',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF1D4ED8)),
-        scaffoldBackgroundColor: const Color(0xFFF8FAFC),
-        useMaterial3: true,
-      ),
+      theme: crTheme(),
       home: initialCedula != null ? const HomeScreen() : const LandingScreen(),
     );
   }

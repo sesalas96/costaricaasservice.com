@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../session.dart';
+import '../theme.dart';
 import 'access_log_tab.dart';
 import 'dashboard_tab.dart';
 import 'landing.dart';
@@ -51,15 +52,15 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0F172A),
-        foregroundColor: Colors.white,
+        backgroundColor: CrColors.bg,
+        foregroundColor: CrColors.text,
         title: Row(
           children: [
             Container(
               width: 32,
               height: 32,
               decoration: BoxDecoration(
-                color: const Color(0xFF1D4ED8),
+                color: CrColors.crBlueBright,
                 borderRadius: BorderRadius.circular(6),
               ),
               alignment: Alignment.center,
@@ -72,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Text('MiCR', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
-                Text(cedula, style: const TextStyle(fontSize: 11, color: Color(0xFFCBD5E1))),
+                Text(cedula, style: const TextStyle(fontSize: 11, color: CrColors.muted)),
               ],
             ),
           ],
