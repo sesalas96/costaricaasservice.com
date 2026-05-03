@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useT } from "../i18n/LanguageProvider";
 import {
   ACTOR_LABELS,
@@ -68,6 +68,77 @@ function actorTag(actor: DemoActor): string {
   return ACTOR_LABELS[actor]?.tag ?? actor.toUpperCase();
 }
 
+function useReducedMotion(): boolean {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduced(mq.matches);
+    const onChange = (e: MediaQueryListEvent) => setReduced(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+  return reduced;
+}
+
+function Typewriter({
+  text,
+  speedMs = 14,
+  cursor = false,
+  onTick,
+}: {
+  text: string;
+  speedMs?: number;
+  cursor?: boolean;
+  onTick?: () => void;
+}) {
+  const reduced = useReducedMotion();
+  const [count, setCount] = useState(0);
+  const onTickRef = useRef(onTick);
+  useEffect(() => {
+    onTickRef.current = onTick;
+  }, [onTick]);
+
+  useEffect(() => {
+    if (reduced) {
+      setCount(text.length);
+      return;
+    }
+    setCount(0);
+    let i = 0;
+    let cancelled = false;
+    let timeout: ReturnType<typeof setTimeout>;
+    const tick = () => {
+      if (cancelled) return;
+      i += 1;
+      setCount(i);
+      onTickRef.current?.();
+      if (i < text.length) {
+        timeout = setTimeout(tick, speedMs);
+      }
+    };
+    timeout = setTimeout(tick, speedMs);
+    return () => {
+      cancelled = true;
+      clearTimeout(timeout);
+    };
+  }, [text, speedMs, reduced]);
+
+  const done = count >= text.length;
+  return (
+    <span>
+      {text.slice(0, count)}
+      {cursor && !done ? (
+        <span
+          aria-hidden
+          className="ml-0.5 inline-block w-[2px] animate-pulse align-[-0.1em] bg-current"
+          style={{ height: "0.95em" }}
+        />
+      ) : null}
+    </span>
+  );
+}
+
 function StepBadge({ kind, label }: { kind: DemoStepKind; label: string }) {
   const tone =
     kind === "request"
@@ -113,11 +184,14 @@ export default function DemoChat() {
     if (mounted) writeUsage(usage);
   }, [usage, mounted]);
 
+  const scrollToBottom = useCallback(() => {
+    const el = chatScrollRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }, []);
+
   useEffect(() => {
-    if (chatScrollRef.current) {
-      chatScrollRef.current.scrollTop = chatScrollRef.current.scrollHeight;
-    }
-  }, [messages]);
+    scrollToBottom();
+  }, [messages, scrollToBottom]);
 
   useEffect(
     () => () => {
@@ -443,7 +517,12 @@ export default function DemoChat() {
                               {d.llmLabel}
                             </span>
                             <div className="rounded-2xl rounded-bl-sm border border-[var(--color-border)] bg-[var(--color-surface-2)] px-4 py-2.5 text-sm leading-relaxed text-[var(--color-text)]">
-                              {m.text}
+                              <Typewriter
+                                text={m.text}
+                                speedMs={14}
+                                cursor
+                                onTick={scrollToBottom}
+                              />
                             </div>
                           </div>
                         </div>
@@ -492,7 +571,11 @@ export default function DemoChat() {
                                 ) : null}
                               </div>
                               <p className="text-[13px] leading-relaxed text-[var(--color-muted)]">
-                                {step.text}
+                                <Typewriter
+                                  text={step.text}
+                                  speedMs={9}
+                                  onTick={scrollToBottom}
+                                />
                               </p>
                             </div>
                           </div>
@@ -515,10 +598,18 @@ export default function DemoChat() {
                               </span>
                             </div>
                             <h4 className="text-sm font-semibold leading-snug">
-                              {m.subject}
+                              <Typewriter
+                                text={m.subject}
+                                speedMs={16}
+                                onTick={scrollToBottom}
+                              />
                             </h4>
                             <p className="text-[13px] leading-relaxed text-[var(--color-muted)]">
-                              {m.preview}
+                              <Typewriter
+                                text={m.preview}
+                                speedMs={9}
+                                onTick={scrollToBottom}
+                              />
                             </p>
                           </div>
                         </div>
