@@ -15,6 +15,13 @@ use (
 	./members/cri-svc-bcr
 	./members/cri-svc-ccss
 	./members/cri-svc-hacienda
+	./members/cri-svc-ins
+	./members/cri-svc-mep
+	./members/cri-svc-migracion
+	./members/cri-svc-minsa
+	./members/cri-svc-mopt
+	./members/cri-svc-mtss
 	./members/cri-svc-registro-civil
+	./members/cri-svc-registro-nacional
 	./platform/cri-templates-service
 )

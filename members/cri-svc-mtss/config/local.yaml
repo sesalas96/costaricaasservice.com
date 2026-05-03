@@ -1,0 +1,20 @@
+env: local
+service_name: cri-svc-mtss
+port: "18308"
+log_level: debug
+base_host: ""
+
+# MTSS habla con su SS local en :18290 cuando consume servicios de otros
+# members (ej. registro-civil para nombre del trabajador).
+security_server: http://localhost:18290
+
+database:
+  url: postgres://postgres:postgres@localhost:5432/cri_mtss?sslmode=disable
+  max_conns: 10
+  min_conns: 2
+
+server:
+  read_timeout: 10s
+  write_timeout: 30s
+  idle_timeout: 60s
+  shutdown_timeout: 15s

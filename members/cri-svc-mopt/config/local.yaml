@@ -1,0 +1,20 @@
+env: local
+service_name: cri-svc-mopt
+port: "18307"
+log_level: debug
+base_host: ""
+
+# MOPT habla con su SS local en :18280 cuando consume servicios de otros
+# members (ej. registro-civil para nombre del conductor).
+security_server: http://localhost:18280
+
+database:
+  url: postgres://postgres:postgres@localhost:5432/cri_mopt?sslmode=disable
+  max_conns: 10
+  min_conns: 2
+
+server:
+  read_timeout: 10s
+  write_timeout: 30s
+  idle_timeout: 60s
+  shutdown_timeout: 15s

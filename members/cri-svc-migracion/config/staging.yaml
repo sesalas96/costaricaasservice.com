@@ -1,0 +1,15 @@
+env: staging
+service_name: cri-svc-migracion
+port: "18310"
+log_level: info
+
+database:
+  url: ${DATABASE_URL}
+  max_conns: 30
+  min_conns: 10
+
+server:
+  read_timeout: 10s
+  write_timeout: 30s
+  idle_timeout: 60s
+  shutdown_timeout: 30s
