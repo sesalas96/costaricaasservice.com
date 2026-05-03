@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
 import '../theme.dart';
 
 enum StepKind { thinking, request, response, audit, notify }
@@ -10,6 +11,7 @@ class PromptStep {
   final Color color;
   final StepKind kind;
   final String text;
+  final List<({String k, String v})>? data;
   final String? endpoint;
   final int delayMs;
 
@@ -19,6 +21,7 @@ class PromptStep {
     required this.color,
     required this.kind,
     required this.text,
+    this.data,
     this.endpoint,
     this.delayMs = 900,
   });
@@ -101,8 +104,15 @@ const _categories = <PromptCategory>[
             actorTag: 'HAC',
             color: CrColors.crBlueBright,
             kind: StepKind.response,
-            text:
-                'Devuelve: ingreso bruto ₡18.000.000, retenido ₡2.700.000, deducciones ₡540.000, a pagar ₡180.000.',
+            text: '',
+            data: [
+              (k: 'periodo', v: '2025'),
+              (k: 'ingreso_bruto', v: '₡18.000.000'),
+              (k: 'retenido', v: '₡2.700.000'),
+              (k: 'deducciones', v: '₡540.000'),
+              (k: 'a_pagar', v: '₡180.000'),
+              (k: 'vence', v: '15-mar-2026'),
+            ],
           ),
         ],
         finalSummary:
@@ -139,8 +149,12 @@ const _categories = <PromptCategory>[
             actorTag: 'HAC',
             color: CrColors.crBlueBright,
             kind: StepKind.response,
-            text:
-                '2024: pagaste ₡220.000 · 2023: ₡165.000 · 2022: ₡98.000. Todas presentadas a tiempo.',
+            text: 'Todas presentadas a tiempo, sin moras.',
+            data: [
+              (k: '2024', v: '₡220.000'),
+              (k: '2023', v: '₡165.000'),
+              (k: '2022', v: '₡98.000'),
+            ],
           ),
         ],
         finalSummary:
@@ -172,7 +186,13 @@ const _categories = <PromptCategory>[
             actorTag: 'MUNI',
             color: CrColors.areaMembers,
             kind: StepKind.response,
-            text: 'Saldo al día. Próximo cobro de bienes inmuebles: 31-mar-2026 (₡42.300).',
+            text: 'Saldo al día.',
+            data: [
+              (k: 'bienes_inmuebles', v: '₡0 vencido'),
+              (k: 'basura', v: '₡0 vencido'),
+              (k: 'patente', v: '₡0 vencido'),
+              (k: 'próximo_cobro', v: '31-mar-2026 · ₡42.300'),
+            ],
           ),
         ],
         finalSummary:
@@ -212,8 +232,12 @@ const _categories = <PromptCategory>[
             actorTag: 'CCSS',
             color: CrColors.crRedBright,
             kind: StepKind.response,
-            text:
-                'Tenés 2 recetas activas: Losartán 50mg (1×día) y Atorvastatina 20mg (1×noche).',
+            text: '',
+            data: [
+              (k: 'losartán_50mg', v: '1× día (mañana)'),
+              (k: 'atorvastatina_20mg', v: '1× día (noche)'),
+              (k: 'próximo_retiro', v: '03-may-2026'),
+            ],
           ),
         ],
         finalSummary:
@@ -238,7 +262,13 @@ const _categories = <PromptCategory>[
             actorTag: 'CCSS',
             color: CrColors.crRedBright,
             kind: StepKind.response,
-            text: 'Cardiología, Hospital México, 18-mayo-2026 a las 8:30 AM.',
+            text: '',
+            data: [
+              (k: 'especialidad', v: 'Cardiología'),
+              (k: 'hospital', v: 'Hospital México'),
+              (k: 'fecha', v: '18-may-2026 · 08:30'),
+              (k: 'preparativos', v: 'Ayuno 8h'),
+            ],
           ),
         ],
         finalSummary:
@@ -276,7 +306,12 @@ const _categories = <PromptCategory>[
             actorTag: 'CCSS',
             color: CrColors.crRedBright,
             kind: StepKind.response,
-            text: 'Cita asignada: 04-may-2026 10:00 AM, EBAIS Curridabat.',
+            text: '',
+            data: [
+              (k: 'cita_asignada', v: '04-may-2026 · 10:00'),
+              (k: 'lugar', v: 'EBAIS Curridabat'),
+              (k: 'evaluación', v: 'Médico tratante'),
+            ],
           ),
         ],
         finalSummary:
@@ -301,8 +336,12 @@ const _categories = <PromptCategory>[
             actorTag: 'CCSS',
             color: CrColors.crRedBright,
             kind: StepKind.response,
-            text:
-                'Esquema completo: COVID-19 (3), Influenza 2025, Td 2022. Próxima refuerzo Td: 2027.',
+            text: 'Esquema completo.',
+            data: [
+              (k: 'covid_19', v: '3 dosis · al día'),
+              (k: 'influenza', v: '2025 · al día'),
+              (k: 'td', v: '2022 · refuerzo en 2027'),
+            ],
           ),
         ],
         finalSummary:
@@ -343,8 +382,14 @@ const _categories = <PromptCategory>[
             actorTag: 'RC',
             color: CrColors.areaIduc,
             kind: StepKind.response,
-            text:
-                'Nombre, cédula, fecha de nacimiento, estado civil, domicilio. Todo firmado.',
+            text: 'Datos firmados con clave X.509 del Registro Civil.',
+            data: [
+              (k: 'nombre_completo', v: '[Tu nombre]'),
+              (k: 'cédula', v: '[Tu cédula]'),
+              (k: 'fecha_nacimiento', v: '[Fecha]'),
+              (k: 'estado_civil', v: '[Estado]'),
+              (k: 'domicilio', v: '[Dirección]'),
+            ],
           ),
         ],
         finalSummary:
@@ -425,7 +470,7 @@ const _categories = <PromptCategory>[
             actorTag: 'TSE',
             color: CrColors.areaIduc,
             kind: StepKind.request,
-            text: 'Junta asignada.',
+            text: 'Consulta junta asignada.',
             endpoint: 'GET /electoral/poll-station/{cedula}',
           ),
           PromptStep(
@@ -433,7 +478,12 @@ const _categories = <PromptCategory>[
             actorTag: 'TSE',
             color: CrColors.areaIduc,
             kind: StepKind.response,
-            text: 'Junta 4521, Escuela República de Argentina, San José.',
+            text: '',
+            data: [
+              (k: 'junta', v: '4521'),
+              (k: 'centro_votación', v: 'Esc. República de Argentina'),
+              (k: 'cantón', v: 'San José'),
+            ],
           ),
         ],
         finalSummary: 'Aplica para las próximas elecciones nacionales.',
@@ -634,14 +684,24 @@ const _categories = <PromptCategory>[
             actorTag: 'RN',
             color: CrColors.areaMembers,
             kind: StepKind.response,
-            text: 'Finca 1-12345 libre de gravámenes. Propietario actual: Mora & Asociados S.A.',
+            text: '',
+            data: [
+              (k: 'finca', v: '1-12345'),
+              (k: 'gravámenes', v: 'Ninguno'),
+              (k: 'propietario', v: 'Mora & Asociados S.A.'),
+              (k: 'área', v: '320 m²'),
+            ],
           ),
           PromptStep(
             actor: 'Municipalidad',
             actorTag: 'MUNI',
             color: CrColors.areaMembers,
             kind: StepKind.response,
-            text: 'Bienes inmuebles al día. Sin deuda municipal.',
+            text: '',
+            data: [
+              (k: 'bienes_inmuebles', v: 'Al día'),
+              (k: 'deuda_municipal', v: '₡0'),
+            ],
           ),
         ],
         finalSummary:
@@ -705,14 +765,24 @@ const _categories = <PromptCategory>[
             actorTag: 'INS',
             color: CrColors.areaMembers,
             kind: StepKind.response,
-            text: 'Placa BLP-123: SOA ₡18.500. Sin multas pendientes.',
+            text: 'Sin multas pendientes.',
+            data: [
+              (k: 'placa', v: 'BLP-123'),
+              (k: 'soa_2026', v: '₡18.500'),
+              (k: 'multas_inv', v: '0'),
+            ],
           ),
           PromptStep(
             actor: 'MOPT',
             actorTag: 'MOPT',
             color: CrColors.areaMembers,
             kind: StepKind.response,
-            text: 'Impuesto de circulación: ₡126.400. Total marchamo: ₡144.900.',
+            text: '',
+            data: [
+              (k: 'impuesto_circ', v: '₡126.400'),
+              (k: 'total_marchamo', v: '₡144.900'),
+              (k: 'vence', v: '31-dic-2026'),
+            ],
           ),
         ],
         finalSummary:
@@ -729,7 +799,13 @@ const _categories = <PromptCategory>[
             actorTag: 'MOPT',
             color: CrColors.areaMembers,
             kind: StepKind.response,
-            text: '1 multa pendiente: ₡52.000 por exceso de velocidad (12-feb-2026).',
+            text: 'Aún podés impugnar dentro de 5 días hábiles.',
+            data: [
+              (k: 'tipo_infracción', v: 'Exceso de velocidad'),
+              (k: 'fecha', v: '12-feb-2026'),
+              (k: 'monto', v: '₡52.000'),
+              (k: 'estado', v: 'Pendiente'),
+            ],
           ),
         ],
         finalSummary: 'Podés pagarla acá o impugnarla en línea.',
@@ -753,14 +829,23 @@ const _categories = <PromptCategory>[
             actorTag: 'CCSS',
             color: CrColors.crRedBright,
             kind: StepKind.response,
-            text: 'Cotización activa, salario reportado ₡1.350.000/mes.',
+            text: '',
+            data: [
+              (k: 'estado', v: 'Activa'),
+              (k: 'salario_reportado', v: '₡1.350.000/mes'),
+              (k: 'última_planilla', v: 'abr-2026'),
+            ],
           ),
           PromptStep(
             actor: 'MTSS',
             actorTag: 'MTSS',
             color: CrColors.areaMembers,
             kind: StepKind.response,
-            text: 'Patrono al día con cargas sociales.',
+            text: '',
+            data: [
+              (k: 'patrono', v: 'Al día'),
+              (k: 'cargas_sociales', v: '0 vencidas'),
+            ],
           ),
         ],
         finalSummary: 'Todo en orden con tu patrono.',
@@ -846,7 +931,12 @@ const _categories = <PromptCategory>[
             actorTag: 'PJ',
             color: CrColors.areaGateway,
             kind: StepKind.response,
-            text: 'Hoja de delincuencia limpia. Documento firmado con sello de tiempo.',
+            text: 'Documento firmado con sello de tiempo RFC 3161.',
+            data: [
+              (k: 'estado', v: 'Limpia'),
+              (k: 'antecedentes', v: '0 registros'),
+              (k: 'vigencia', v: '90 días'),
+            ],
           ),
         ],
         finalSummary: 'Te lo envío al correo registrado.',
@@ -874,8 +964,14 @@ const _categories = <PromptCategory>[
             actorTag: 'AUD',
             color: CrColors.areaPlatform,
             kind: StepKind.response,
-            text:
-                '12 accesos en 7 días: Hacienda (4), CCSS (5), IMAS (1), Municipalidad (1), Reg.Civil (1).',
+            text: 'Total: 12 accesos en 7 días.',
+            data: [
+              (k: 'CCSS', v: '5 accesos'),
+              (k: 'Hacienda', v: '4 accesos'),
+              (k: 'IMAS', v: '1 acceso'),
+              (k: 'Municipalidad', v: '1 acceso'),
+              (k: 'Reg.Civil', v: '1 acceso'),
+            ],
           ),
         ],
         finalSummary:
@@ -892,8 +988,13 @@ const _categories = <PromptCategory>[
             actorTag: 'AUD',
             color: CrColors.areaPlatform,
             kind: StepKind.response,
-            text:
-                'Hash chain íntegro. Merkle root del epoch coincide con el publicado: 0x9f3a…b2c1.',
+            text: 'Hash chain íntegro · Merkle root coincide con el publicado.',
+            data: [
+              (k: 'merkle_root', v: '0x9f3a…b2c1'),
+              (k: 'epoch', v: '4521'),
+              (k: 'entries', v: '10.000'),
+              (k: 'estado', v: 'OK'),
+            ],
           ),
         ],
         finalSummary:
@@ -903,7 +1004,7 @@ const _categories = <PromptCategory>[
   ),
 ];
 
-const promptCategories = _categories;
+List<PromptCategory> promptCategoriesFor(AppLocalizations t) => _categories;
 
 QuickPrompt? promptById(String id) {
   for (final c in _categories) {

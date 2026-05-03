@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../data/quick_prompts.dart';
+import '../l10n/app_localizations.dart';
 import '../theme.dart';
 
 sealed class ChatMessage {
@@ -218,14 +219,15 @@ class _EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return ListView(
       padding: const EdgeInsets.fromLTRB(20, 24, 20, 16),
       children: [
-        const Eyebrow('Asistente ciudadano'),
+        Eyebrow(t.chat_eyebrow),
         const SizedBox(height: 12),
-        const Text(
-          'Resolvé cualquier consulta del Estado',
-          style: TextStyle(
+        Text(
+          t.chat_empty_title,
+          style: const TextStyle(
             color: CrColors.text,
             fontSize: 22,
             fontWeight: FontWeight.w700,
@@ -233,15 +235,15 @@ class _EmptyState extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        const Text(
-          'Tocá una categoría para ver consultas frecuentes, o escribí tu pregunta abajo. Cada consulta se firma, se enruta por Conecta CR y queda en tu bitácora.',
-          style: TextStyle(color: CrColors.muted, fontSize: 13, height: 1.5),
+        Text(
+          t.chat_empty_body,
+          style: const TextStyle(color: CrColors.muted, fontSize: 13, height: 1.5),
         ),
         const SizedBox(height: 22),
         Wrap(
           spacing: 10,
           runSpacing: 10,
-          children: promptCategories
+          children: promptCategoriesFor(t)
               .map(
                 (c) => InkWell(
                   borderRadius: BorderRadius.circular(10),
@@ -331,21 +333,14 @@ class _LlmBubble extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 28,
-            height: 28,
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [CrColors.crBlue, CrColors.crBlueBright],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(14),
-            ),
-            alignment: Alignment.center,
-            child: const Text(
-              'cr',
-              style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w700),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(6),
+            child: Image.asset(
+              'assets/app_icon.png',
+              width: 28,
+              height: 28,
+              fit: BoxFit.cover,
+              filterQuality: FilterQuality.medium,
             ),
           ),
           const SizedBox(width: 8),
@@ -392,6 +387,7 @@ class _StepRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = step.color;
+    final isResponse = step.kind == StepKind.response;
     return Padding(
       padding: const EdgeInsets.only(bottom: 10, left: 4, right: 4),
       child: Row(
@@ -465,13 +461,151 @@ class _StepRow extends StatelessWidget {
                       ),
                   ],
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 6),
+                if (isResponse)
+                  _ResponseCard(step: step)
+                else
+                  Text(
+                    step.text,
+                    style: const TextStyle(
+                      color: CrColors.muted,
+                      fontSize: 12.5,
+                      height: 1.45,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ResponseCard extends StatelessWidget {
+  final PromptStep step;
+  const _ResponseCard({required this.step});
+
+  @override
+  Widget build(BuildContext context) {
+    final color = step.color;
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: CrColors.surface2,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: CrColors.border),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.fromLTRB(10, 6, 10, 6),
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.08),
+              border: const Border(
+                bottom: BorderSide(color: CrColors.border),
+              ),
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(8),
+                topRight: Radius.circular(8),
+              ),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 6,
+                  height: 6,
+                  decoration: BoxDecoration(
+                    color: color,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 6),
                 Text(
-                  step.text,
-                  style: const TextStyle(color: CrColors.muted, fontSize: 12.5, height: 1.45),
+                  '200 OK · payload',
+                  style: TextStyle(
+                    color: color,
+                    fontFamily: 'monospace',
+                    fontSize: 9.5,
+                    letterSpacing: 1.3,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ],
             ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
+            child: step.data != null && step.data!.isNotEmpty
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      for (var i = 0; i < step.data!.length; i++) ...[
+                        if (i > 0)
+                          const Divider(
+                            height: 8,
+                            thickness: 1,
+                            color: CrColors.border,
+                          ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 3),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: 110,
+                                child: Text(
+                                  step.data![i].k,
+                                  style: const TextStyle(
+                                    color: CrColors.muted,
+                                    fontFamily: 'monospace',
+                                    fontSize: 11,
+                                    letterSpacing: 0.3,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  step.data![i].v,
+                                  style: const TextStyle(
+                                    color: CrColors.text,
+                                    fontSize: 12.5,
+                                    fontFamily: 'monospace',
+                                    fontWeight: FontWeight.w500,
+                                    height: 1.35,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                      if (step.text.isNotEmpty) ...[
+                        const SizedBox(height: 6),
+                        const Divider(height: 1, thickness: 1, color: CrColors.border),
+                        const SizedBox(height: 6),
+                        Text(
+                          step.text,
+                          style: const TextStyle(
+                            color: CrColors.muted,
+                            fontSize: 11.5,
+                            height: 1.45,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                      ],
+                    ],
+                  )
+                : Text(
+                    step.text,
+                    style: const TextStyle(
+                      color: CrColors.text,
+                      fontSize: 12.5,
+                      height: 1.5,
+                      fontFamily: 'monospace',
+                    ),
+                  ),
           ),
         ],
       ),
@@ -502,8 +636,8 @@ class _EmailCard extends StatelessWidget {
                 const Icon(Icons.mail_outline, size: 14, color: CrColors.areaPlatform),
                 const SizedBox(width: 6),
                 Text(
-                  'NOTIFICACIÓN ELECTRÓNICA',
-                  style: TextStyle(
+                  AppLocalizations.of(context).chat_email_eyebrow,
+                  style: const TextStyle(
                     color: CrColors.areaPlatform,
                     fontFamily: 'monospace',
                     fontSize: 9.5,
@@ -512,9 +646,9 @@ class _EmailCard extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                const Text(
-                  'tu@correo.cr',
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context).chat_email_to,
+                  style: const TextStyle(
                     color: CrColors.muted,
                     fontFamily: 'monospace',
                     fontSize: 10,
@@ -617,11 +751,12 @@ class _PromptsPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cats = promptCategoriesFor(AppLocalizations.of(context));
     final activeCat = activeCategoryId == null
         ? null
-        : promptCategories.firstWhere(
+        : cats.firstWhere(
             (c) => c.id == activeCategoryId,
-            orElse: () => promptCategories.first,
+            orElse: () => cats.first,
           );
 
     return Container(
@@ -637,10 +772,10 @@ class _PromptsPanel extends StatelessWidget {
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              itemCount: promptCategories.length,
+              itemCount: cats.length,
               separatorBuilder: (_, _) => const SizedBox(width: 8),
               itemBuilder: (ctx, i) {
-                final c = promptCategories[i];
+                final c = cats[i];
                 final isActive = c.id == activeCategoryId && expanded;
                 return _CategoryChip(
                   category: c,
@@ -806,7 +941,7 @@ class _Composer extends StatelessWidget {
             IconButton(
               onPressed: onReset,
               icon: const Icon(Icons.refresh_rounded, size: 18, color: CrColors.muted),
-              tooltip: 'Reiniciar conversación',
+              tooltip: AppLocalizations.of(context).chat_reset_tooltip,
               padding: const EdgeInsets.all(8),
               constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
             ),
@@ -826,12 +961,12 @@ class _Composer extends StatelessWidget {
                 onSubmitted: (_) => onSend(),
                 textInputAction: TextInputAction.send,
                 style: const TextStyle(color: CrColors.text, fontSize: 14),
-                decoration: const InputDecoration(
-                  hintText: 'Escribí tu consulta…',
-                  hintStyle: TextStyle(color: CrColors.muted, fontSize: 14),
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context).chat_compose_hint,
+                  hintStyle: const TextStyle(color: CrColors.muted, fontSize: 14),
                   border: InputBorder.none,
                   isCollapsed: true,
-                  contentPadding: EdgeInsets.symmetric(vertical: 10),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 10),
                 ),
               ),
             ),
