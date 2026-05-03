@@ -14,6 +14,7 @@ import "@xyflow/react/dist/style.css";
 import { useT } from "../../i18n/LanguageProvider";
 import { nodeTypes, type AreaKey } from "./nodes";
 import { HANDLES, type Audience } from "./types";
+import { alignFirstNodeLeft, isMobileViewport } from "./viewport";
 
 const svc = (
   id: string,
@@ -269,8 +270,13 @@ export default function EcosystemDiagram({
       nodes={nodes}
       edges={edges}
       nodeTypes={nodeTypes}
-      fitView
-      fitViewOptions={{ padding: 0.12 }}
+      onInit={(instance) => {
+        if (isMobileViewport()) {
+          alignFirstNodeLeft(instance);
+        } else {
+          instance.fitView({ padding: 0.12 });
+        }
+      }}
       minZoom={0.25}
       maxZoom={1.4}
       proOptions={{ hideAttribution: true }}

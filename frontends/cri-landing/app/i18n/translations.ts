@@ -109,6 +109,42 @@ export type Translations = {
   };
   footer: {
     coreOf: string;
+    tagline: string;
+    statusBadge: string;
+    cols: {
+      platform: {
+        heading: string;
+        gateway: string;
+        iduc: string;
+        interop: string;
+        members: string;
+        platform: string;
+        frontends: string;
+      };
+      audiences: {
+        heading: string;
+        citizen: string;
+        member: string;
+        realm: string;
+        admin: string;
+      };
+      ecosystem: {
+        heading: string;
+        cases: string;
+        diagrams: string;
+        demo: string;
+        deliverables: string;
+      };
+    };
+    domains: {
+      heading: string;
+      hint: string;
+      soon: string;
+    };
+    bottom: {
+      madeIn: string;
+      disclaimer: string;
+    };
   };
   langSwitch: {
     aria: string;
@@ -324,7 +360,7 @@ export type Translations = {
 export const translations: Record<Lang, Translations> = {
   es: {
     hero: {
-      eyebrow: "costaricaasservice · núcleo de Conecta CR",
+      eyebrow: "costaricaasservice · núcleo del ecosistema",
       titleStart: "Gobierno digital,",
       titleHighlight: "como producto.",
       descBefore:
@@ -335,8 +371,8 @@ export const translations: Record<Lang, Translations> = {
       descMid2: " con valor legal. ",
       descBold3: "Ves quién consulta tus datos",
       descAfter: " y por qué.",
-      ctaPrimary: "Ver el ecosistema",
-      ctaSecondary: "Garantías estonias",
+      ctaPrimary: "Ver cómo se conecta el Estado",
+      ctaSecondary: "Las 4 garantías que lo sostienen",
     },
     guarantees: {
       eyebrow: "Propuesta de valor",
@@ -677,7 +713,45 @@ export const translations: Record<Lang, Translations> = {
       },
     },
     footer: {
-      coreOf: "núcleo de Conecta CR",
+      coreOf: "núcleo del ecosistema",
+      tagline:
+        "El sistema operativo del Estado digital. Una capa, todas las instituciones, las cuatro garantías estonias por construcción.",
+      statusBadge: "Sprint 0 · cimentación",
+      cols: {
+        platform: {
+          heading: "Plataforma",
+          gateway: "gateway · entrada",
+          iduc: "iduc · identidad",
+          interop: "interop · Conecta",
+          members: "members · instituciones",
+          platform: "platform · transversal",
+          frontends: "frontends · MiCR",
+        },
+        audiences: {
+          heading: "Audiencias",
+          citizen: "Ciudadano · MiCR",
+          member: "Institución · operador",
+          realm: "Jurisdicción · realm admin",
+          admin: "Control plane",
+        },
+        ecosystem: {
+          heading: "En esta página",
+          cases: "Catálogo de casos",
+          diagrams: "Diagramas interactivos",
+          demo: "Demo CR LLM",
+          deliverables: "Entregables",
+        },
+      },
+      domains: {
+        heading: "Subdominios",
+        hint: "una superficie por audiencia",
+        soon: "próximamente",
+      },
+      bottom: {
+        madeIn: "Hecho en Costa Rica",
+        disclaimer:
+          "Iniciativa privada inspirada en e-Estonia. Sin afiliación oficial con e-Estonia, el Estado costarricense ni las instituciones referenciadas. Los servicios mostrados son demos ilustrativos de una propuesta — no constituyen un producto certificado.",
+      },
     },
     langSwitch: { aria: "Cambiar idioma" },
     ecosystem: {
@@ -847,7 +921,7 @@ export const translations: Record<Lang, Translations> = {
         sub: "En el celular o en la web",
       },
       conecta: {
-        title: "Conecta CR",
+        title: "Conecta",
         sub: "El cartero digital que conecta a las instituciones",
       },
       institutions: {
@@ -877,7 +951,7 @@ export const translations: Record<Lang, Translations> = {
         sub: "Ej: Hacienda armando tu declaración",
       },
       bridge: {
-        title: "Conecta CR",
+        title: "Conecta",
         sub: "El cartero digital del Estado",
       },
       institutionB: {
@@ -903,7 +977,7 @@ export const translations: Record<Lang, Translations> = {
         sub: "Te la arma sin que vos cargues nada",
       },
       bridge: {
-        title: "Conecta CR",
+        title: "Conecta",
         sub: "El cartero digital",
       },
       rc: {
@@ -958,7 +1032,7 @@ export const translations: Record<Lang, Translations> = {
       badgePlanned: "próximamente",
       listHeading: "Catálogo de instituciones",
       listSub:
-        "Cualquier institución del Estado se conecta vía Conecta CR con las mismas garantías de identidad, trazabilidad y firma. Esto es lo que cada una expone — o expondrá — al ecosistema.",
+        "Cualquier institución del Estado se conecta vía Conecta con las mismas garantías de identidad, trazabilidad y firma. Esto es lo que cada una expone — o expondrá — al ecosistema.",
       listCount: "{n} instituciones · {l} live · {p} próximamente",
       backToList: "← Volver al catálogo",
       sectionCustodia: "Datos que custodia",
@@ -1014,7 +1088,7 @@ export const translations: Record<Lang, Translations> = {
   },
   en: {
     hero: {
-      eyebrow: "costaricaasservice · core of Conecta CR",
+      eyebrow: "costaricaasservice · core of the ecosystem",
       titleStart: "Digital government,",
       titleHighlight: "as a product.",
       descBefore:
@@ -1025,8 +1099,8 @@ export const translations: Record<Lang, Translations> = {
       descMid2: " with full legal weight. ",
       descBold3: "See who looks at your data",
       descAfter: " and why.",
-      ctaPrimary: "Explore the ecosystem",
-      ctaSecondary: "Estonian guarantees",
+      ctaPrimary: "See the state connect",
+      ctaSecondary: "The 4 guarantees behind it",
     },
     guarantees: {
       eyebrow: "Value proposition",
@@ -1367,7 +1441,45 @@ export const translations: Record<Lang, Translations> = {
       },
     },
     footer: {
-      coreOf: "core of Conecta CR",
+      coreOf: "core of the ecosystem",
+      tagline:
+        "The operating system of the digital state. One layer, every institution, all four Estonian guarantees by construction.",
+      statusBadge: "Sprint 0 · foundations",
+      cols: {
+        platform: {
+          heading: "Platform",
+          gateway: "gateway · ingress",
+          iduc: "iduc · identity",
+          interop: "interop · Conecta",
+          members: "members · institutions",
+          platform: "platform · cross-cutting",
+          frontends: "frontends · MiCR",
+        },
+        audiences: {
+          heading: "Audiences",
+          citizen: "Citizen · MiCR",
+          member: "Institution · operator",
+          realm: "Jurisdiction · realm admin",
+          admin: "Control plane",
+        },
+        ecosystem: {
+          heading: "On this page",
+          cases: "Use case catalog",
+          diagrams: "Interactive diagrams",
+          demo: "CR LLM demo",
+          deliverables: "Deliverables",
+        },
+      },
+      domains: {
+        heading: "Subdomains",
+        hint: "one surface per audience",
+        soon: "coming soon",
+      },
+      bottom: {
+        madeIn: "Made in Costa Rica",
+        disclaimer:
+          "Private initiative inspired by e-Estonia. Not affiliated with e-Estonia, the Costa Rican government, or any of the institutions referenced. Services shown are illustrative demos of a proposal — not a certified product.",
+      },
     },
     langSwitch: { aria: "Change language" },
     ecosystem: {
@@ -1537,7 +1649,7 @@ export const translations: Record<Lang, Translations> = {
         sub: "On your phone or in a browser",
       },
       conecta: {
-        title: "Conecta CR",
+        title: "Conecta",
         sub: "The digital postman that connects every institution",
       },
       institutions: {
@@ -1567,7 +1679,7 @@ export const translations: Record<Lang, Translations> = {
         sub: "e.g. Tax putting your return together",
       },
       bridge: {
-        title: "Conecta CR",
+        title: "Conecta",
         sub: "The digital postman of the state",
       },
       institutionB: {
@@ -1593,7 +1705,7 @@ export const translations: Record<Lang, Translations> = {
         sub: "Builds your return without you uploading anything",
       },
       bridge: {
-        title: "Conecta CR",
+        title: "Conecta",
         sub: "The digital postman",
       },
       rc: {
@@ -1648,7 +1760,7 @@ export const translations: Record<Lang, Translations> = {
       badgePlanned: "coming soon",
       listHeading: "Institutions catalog",
       listSub:
-        "Any institution of the state plugs into Conecta CR with the same guarantees of identity, traceability and signature. Here is what each one exposes — or will expose — to the ecosystem.",
+        "Any institution of the state plugs into Conecta with the same guarantees of identity, traceability and signature. Here is what each one exposes — or will expose — to the ecosystem.",
       listCount: "{n} institutions · {l} live · {p} coming soon",
       backToList: "← Back to catalog",
       sectionCustodia: "Data it custodies",
