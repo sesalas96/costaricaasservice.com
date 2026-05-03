@@ -35,7 +35,7 @@ export const INSTITUTIONS: InstitutionDef[] = [
   {
     id: "registro-civil",
     tag: "tse",
-    status: "live",
+    status: "planned",
     accent: "var(--color-cr-blue-bright)",
     es: {
       name: "Registro Civil",
@@ -73,7 +73,7 @@ export const INSTITUTIONS: InstitutionDef[] = [
   {
     id: "hacienda",
     tag: "hac",
-    status: "live",
+    status: "planned",
     accent: "var(--color-area-members)",
     es: {
       name: "Ministerio de Hacienda",
