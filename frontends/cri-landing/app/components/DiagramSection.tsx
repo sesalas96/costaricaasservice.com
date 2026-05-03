@@ -24,13 +24,13 @@ function AudienceSwitch({
 }: {
   value: Audience;
   onChange: (a: Audience) => void;
-  label: { citizen: string; technical: string };
+  label: { citizen: string; technical: string; aria: string };
 }) {
   const opts: Audience[] = ["citizen", "technical"];
   return (
     <div
       role="radiogroup"
-      aria-label="Audience"
+      aria-label={label.aria}
       className="relative inline-flex rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] p-1"
     >
       {/* Pastilla deslizante */}
@@ -183,6 +183,7 @@ export default function DiagramSection() {
               label={{
                 citizen: t.diagrams.audience.citizen,
                 technical: t.diagrams.audience.technical,
+                aria: t.diagrams.audience.aria,
               }}
             />
             <p className="font-mono text-[11px] text-[var(--color-muted)] lg:text-right">

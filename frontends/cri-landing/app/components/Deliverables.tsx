@@ -28,13 +28,13 @@ function ViewSwitch({
 }: {
   value: View;
   onChange: (v: View) => void;
-  label: { business: string; technical: string };
+  label: { business: string; technical: string; aria: string };
 }) {
   const opts: View[] = ["business", "technical"];
   return (
     <div
       role="radiogroup"
-      aria-label="Vista entregables"
+      aria-label={label.aria}
       className="relative inline-flex rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] p-1"
     >
       <span
@@ -104,6 +104,7 @@ export default function Deliverables() {
               label={{
                 business: d.view.business,
                 technical: d.view.technical,
+                aria: d.view.aria,
               }}
             />
             <p className="font-mono text-[11px] text-[var(--color-muted)] lg:text-right">
