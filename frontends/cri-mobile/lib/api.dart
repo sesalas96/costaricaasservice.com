@@ -9,6 +9,8 @@ import 'dart:io' show Platform;
 
 import 'package:http/http.dart' as http;
 
+import 'mock.dart';
+
 /// Base URL del BFF. Se resuelve en tiempo de runtime según plataforma:
 ///   - iOS Simulator / macOS: http://localhost:18001
 ///   - Android Emulator: http://10.0.2.2:18001
@@ -239,16 +241,19 @@ class Dashboard {
 
 class Api {
   static Future<Dashboard> dashboard(String cedula, {int year = 2025}) async {
+    if (kUseMock) return MockApi.dashboard(cedula, year: year);
     final data = await _fetchEnvelope('/v1/citizens/${Uri.encodeComponent(cedula)}/dashboard?year=$year');
     return Dashboard.fromJson(data);
   }
 
   static Future<AccessLog> accessLog(String cedula) async {
+    if (kUseMock) return MockApi.accessLog(cedula);
     final data = await _fetchEnvelope('/v1/citizens/${Uri.encodeComponent(cedula)}/access-log');
     return AccessLog.fromJson(data);
   }
 
   static Future<TaxPrefilled> taxPrefilled(String cedula, {int year = 2025}) async {
+    if (kUseMock) return MockApi.taxPrefilled(cedula, year: year);
     final data = await _fetchEnvelope('/v1/citizens/${Uri.encodeComponent(cedula)}/tax/prefilled?year=$year');
     return TaxPrefilled.fromJson(data);
   }
