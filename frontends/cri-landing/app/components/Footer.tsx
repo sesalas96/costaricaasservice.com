@@ -11,15 +11,6 @@ const PLATFORM_ROWS = [
   { key: "frontends", color: "var(--color-area-frontend)" },
 ] as const;
 
-const SUBDOMAINS = [
-  "app",
-  "members",
-  "admin",
-  "api",
-  "interop",
-  "docs",
-] as const;
-
 const ECOSYSTEM_LINKS = [
   { key: "cases", href: "/casos" },
   { key: "diagrams", href: "#diagramas" },
@@ -124,46 +115,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)]/60 p-5 sm:p-6">
-          <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
-            <div className="flex items-baseline gap-3">
-              <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-muted)]">
-                {t.footer.domains.heading}
-              </span>
-              <span className="font-mono text-sm text-[var(--color-text)]">
-                costaricaasservice.com
-              </span>
-            </div>
-            <span className="font-mono text-[11px] text-[var(--color-muted)]">
-              {t.footer.domains.hint}
-            </span>
-          </div>
-          <ul className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-6">
-            {SUBDOMAINS.map((sub) => (
-              <li
-                key={sub}
-                className="rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2"
-              >
-                <div className="font-mono text-xs">
-                  <span className="text-[var(--color-text)]">{sub}</span>
-                  <span className="text-[var(--color-muted)]">
-                    .costaricaasservice.com
-                  </span>
-                </div>
-                <div className="mt-1 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-[var(--color-muted)]">
-                  <span
-                    aria-hidden
-                    className="inline-block h-1.5 w-1.5 rounded-full"
-                    style={{ background: "var(--color-cr-red-bright)" }}
-                  />
-                  {t.footer.domains.soon}
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="mt-10 flex flex-col gap-3 border-t border-[var(--color-border)] pt-6 text-[var(--color-muted)] md:flex-row md:items-center md:justify-between">
+        <div className="mt-12 flex flex-col gap-3 border-t border-[var(--color-border)] pt-6 text-[var(--color-muted)] md:flex-row md:items-center md:justify-between">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-widest">
             <span>© {year} costaricaasservice</span>
             <span aria-hidden>·</span>

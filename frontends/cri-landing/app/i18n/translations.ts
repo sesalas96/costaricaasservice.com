@@ -136,11 +136,6 @@ export type Translations = {
         deliverables: string;
       };
     };
-    domains: {
-      heading: string;
-      hint: string;
-      soon: string;
-    };
     bottom: {
       madeIn: string;
       disclaimer: string;
@@ -321,6 +316,7 @@ export type Translations = {
     plannedLabel: string;
     hint: string;
     cta: string;
+    disclaimer: string;
   };
   demo: {
     eyebrow: string;
@@ -742,11 +738,6 @@ export const translations: Record<Lang, Translations> = {
           deliverables: "Entregables",
         },
       },
-      domains: {
-        heading: "Subdominios",
-        hint: "una superficie por audiencia",
-        soon: "próximamente",
-      },
       bottom: {
         madeIn: "Hecho en Costa Rica",
         disclaimer:
@@ -1051,6 +1042,8 @@ export const translations: Record<Lang, Translations> = {
       plannedLabel: "próximamente",
       hint: "tip: pasá el mouse para pausar · tocá una para ver detalle",
       cta: "ver catálogo completo",
+      disclaimer:
+        "Iniciativa privada inspirada en el modelo e-Estonia. Los nombres, logos y servicios mostrados son ilustrativos para fines de demostración técnica y no implican afiliación, respaldo ni vínculo oficial con las instituciones referenciadas.",
     },
     demo: {
       eyebrow: "Demo · CR LLM",
@@ -1470,11 +1463,6 @@ export const translations: Record<Lang, Translations> = {
           deliverables: "Deliverables",
         },
       },
-      domains: {
-        heading: "Subdomains",
-        hint: "one surface per audience",
-        soon: "coming soon",
-      },
       bottom: {
         madeIn: "Made in Costa Rica",
         disclaimer:
@@ -1778,6 +1766,8 @@ export const translations: Record<Lang, Translations> = {
       plannedLabel: "coming soon",
       hint: "tip: hover to pause · tap one to see details",
       cta: "see full catalog",
+      disclaimer:
+        "Private initiative inspired by the e-Estonia model. The names, logos and services shown are illustrative for technical demonstration and do not imply official affiliation, endorsement or association with the institutions referenced.",
     },
     demo: {
       eyebrow: "Demo · CR LLM",

@@ -12,7 +12,20 @@ export type InstitutionId =
   | "mtss"
   | "ice"
   | "imas"
-  | "migracion";
+  | "migracion"
+  | "bccr"
+  | "registro-nacional"
+  | "poder-judicial"
+  | "muni-sjo"
+  | "aya"
+  | "micitt"
+  | "minae"
+  | "minsa"
+  | "pani"
+  | "sugef"
+  | "fuerza-publica"
+  | "bomberos"
+  | "procomer";
 
 export type InstitutionLocale = {
   name: string;
@@ -35,7 +48,7 @@ export const INSTITUTIONS: InstitutionDef[] = [
   {
     id: "registro-civil",
     tag: "tse",
-    status: "planned",
+    status: "live",
     accent: "var(--color-cr-blue-bright)",
     es: {
       name: "Registro Civil",
@@ -73,7 +86,7 @@ export const INSTITUTIONS: InstitutionDef[] = [
   {
     id: "hacienda",
     tag: "hac",
-    status: "planned",
+    status: "live",
     accent: "var(--color-area-members)",
     es: {
       name: "Ministerio de Hacienda",
@@ -90,7 +103,8 @@ export const INSTITUTIONS: InstitutionDef[] = [
       ],
       consume: [
         "registro-civil · GET /persons/{cedula} (composición familiar)",
-        "ccss · GET /contributions/{cedula} (cargas sociales) — planificado",
+        "ccss · GET /contributions/{cedula} (cargas sociales)",
+        "bccr · POST /sinpe/charge (cobro de aranceles)",
       ],
     },
     en: {
@@ -108,7 +122,54 @@ export const INSTITUTIONS: InstitutionDef[] = [
       ],
       consume: [
         "registro-civil · GET /persons/{id} (household composition)",
-        "ccss · GET /contributions/{id} (social charges) — planned",
+        "ccss · GET /contributions/{id} (social charges)",
+        "bccr · POST /sinpe/charge (fee collection)",
+      ],
+    },
+  },
+  {
+    id: "bccr",
+    tag: "bcr",
+    status: "live",
+    accent: "#10b981",
+    es: {
+      name: "Banco Central · SINPE",
+      short: "Rails financieros del Estado · pagos en tiempo real",
+      custodia: [
+        "Cuentas SINPE Móvil por cédula",
+        "Identificadores de cuenta cliente (IBAN)",
+        "Tipos de cambio oficiales",
+        "Padrón financiero (KYC base)",
+      ],
+      expone: [
+        "POST /sinpe/charge (cobro instantáneo)",
+        "POST /sinpe/transfer (acreditación)",
+        "GET /accounts/{cedula}",
+        "GET /fx/{date}",
+      ],
+      consume: [
+        "registro-civil · GET /persons/{cedula} (KYC)",
+        "sugef · GET /aml-flags/{cedula} (pre-cobro)",
+      ],
+    },
+    en: {
+      name: "Central Bank · SINPE",
+      short: "State financial rails · real-time payments",
+      custodia: [
+        "SINPE Mobile accounts per ID",
+        "Customer account identifiers (IBAN)",
+        "Official FX rates",
+        "Base KYC roster",
+      ],
+      expone: [
+        "POST /sinpe/charge (instant collection)",
+        "POST /sinpe/transfer (credit)",
+        "GET /accounts/{id}",
+        "GET /fx/{date}",
+      ],
+      consume: [
+        "registro-civil · GET /persons/{id} (KYC)",
+        "sugef · GET /aml-flags/{id} (pre-charge)",
       ],
     },
   },
@@ -135,6 +196,7 @@ export const INSTITUTIONS: InstitutionDef[] = [
       consume: [
         "registro-civil · GET /persons/{cedula} (validar identidad)",
         "iduc-signing · firma de recetas (Ed25519)",
+        "minsa · GET /vaccination-record/{cedula}",
       ],
     },
     en: {
@@ -155,6 +217,7 @@ export const INSTITUTIONS: InstitutionDef[] = [
       consume: [
         "registro-civil · GET /persons/{id} (identity check)",
         "iduc-signing · prescription signature (Ed25519)",
+        "minsa · GET /vaccination-record/{id}",
       ],
     },
   },
@@ -178,7 +241,8 @@ export const INSTITUTIONS: InstitutionDef[] = [
       ],
       consume: [
         "registro-civil · GET /persons/{cedula}",
-        "mopt · GET /vehicles/{placa} — planificado",
+        "mopt · GET /vehicles/{placa}",
+        "bomberos · GET /inspections/{placa-comercio}",
       ],
     },
     en: {
@@ -196,7 +260,8 @@ export const INSTITUTIONS: InstitutionDef[] = [
       ],
       consume: [
         "registro-civil · GET /persons/{id}",
-        "mopt · GET /vehicles/{plate} — planned",
+        "mopt · GET /vehicles/{plate}",
+        "bomberos · GET /inspections/{business-id}",
       ],
     },
   },
@@ -220,7 +285,8 @@ export const INSTITUTIONS: InstitutionDef[] = [
       ],
       consume: [
         "registro-civil · GET /persons/{cedula}",
-        "imas · GET /eligibility/{cedula} (becas) — planificado",
+        "imas · GET /eligibility/{cedula} (becas)",
+        "minsa · GET /vaccination-record/{cedula} (matrícula)",
       ],
     },
     en: {
@@ -238,7 +304,8 @@ export const INSTITUTIONS: InstitutionDef[] = [
       ],
       consume: [
         "registro-civil · GET /persons/{id}",
-        "imas · GET /eligibility/{id} (scholarships) — planned",
+        "imas · GET /eligibility/{id} (scholarships)",
+        "minsa · GET /vaccination-record/{id} (enrollment)",
       ],
     },
   },
@@ -263,6 +330,7 @@ export const INSTITUTIONS: InstitutionDef[] = [
       consume: [
         "registro-civil · GET /persons/{cedula}",
         "ins · GET /soa-status/{placa}",
+        "registro-nacional · GET /property/vehicle/{placa}",
       ],
     },
     en: {
@@ -281,6 +349,7 @@ export const INSTITUTIONS: InstitutionDef[] = [
       consume: [
         "registro-civil · GET /persons/{id}",
         "ins · GET /soa-status/{plate}",
+        "registro-nacional · GET /property/vehicle/{plate}",
       ],
     },
   },
@@ -305,6 +374,7 @@ export const INSTITUTIONS: InstitutionDef[] = [
       consume: [
         "registro-civil · GET /persons/{cedula}",
         "ccss · GET /contributions/{cedula}",
+        "registro-nacional · GET /entity/{cedula-juridica}",
       ],
     },
     en: {
@@ -323,6 +393,7 @@ export const INSTITUTIONS: InstitutionDef[] = [
       consume: [
         "registro-civil · GET /persons/{id}",
         "ccss · GET /contributions/{id}",
+        "registro-nacional · GET /entity/{legal-entity-id}",
       ],
     },
   },
@@ -342,8 +413,13 @@ export const INSTITUTIONS: InstitutionDef[] = [
       expone: [
         "GET /power-account/{nis}",
         "GET /consumption/{nis}/{period}",
+        "POST /service-requests",
       ],
-      consume: ["registro-civil · GET /persons/{cedula}"],
+      consume: [
+        "registro-civil · GET /persons/{cedula}",
+        "muni-sjo · GET /property/{cedula}",
+        "minae · GET /environmental-clearance/{folio}",
+      ],
     },
     en: {
       name: "Costa Rican Institute of Electricity",
@@ -356,8 +432,13 @@ export const INSTITUTIONS: InstitutionDef[] = [
       expone: [
         "GET /power-account/{nis}",
         "GET /consumption/{nis}/{period}",
+        "POST /service-requests",
       ],
-      consume: ["registro-civil · GET /persons/{id}"],
+      consume: [
+        "registro-civil · GET /persons/{id}",
+        "muni-sjo · GET /property/{id}",
+        "minae · GET /environmental-clearance/{folio}",
+      ],
     },
   },
   {
@@ -381,6 +462,7 @@ export const INSTITUTIONS: InstitutionDef[] = [
         "registro-civil · GET /persons/{cedula} (familia)",
         "hacienda · GET /tax-status/{cedula} (ingresos)",
         "ccss · GET /insurance-status/{cedula}",
+        "pani · GET /minors/{cedula} (menores en hogar)",
       ],
     },
     en: {
@@ -399,6 +481,7 @@ export const INSTITUTIONS: InstitutionDef[] = [
         "registro-civil · GET /persons/{id} (household)",
         "hacienda · GET /tax-status/{id} (income)",
         "ccss · GET /insurance-status/{id}",
+        "pani · GET /minors/{id} (minors in household)",
       ],
     },
   },
@@ -423,6 +506,7 @@ export const INSTITUTIONS: InstitutionDef[] = [
       consume: [
         "registro-civil · GET /persons/{cedula}",
         "hacienda · GET /tax-status/{cedula} (cobro arancel)",
+        "poder-judicial · GET /criminal-record/{cedula}",
       ],
     },
     en: {
@@ -441,6 +525,561 @@ export const INSTITUTIONS: InstitutionDef[] = [
       consume: [
         "registro-civil · GET /persons/{id}",
         "hacienda · GET /tax-status/{id} (fee collection)",
+        "poder-judicial · GET /criminal-record/{id}",
+      ],
+    },
+  },
+  {
+    id: "registro-nacional",
+    tag: "rn",
+    status: "planned",
+    accent: "#6366f1",
+    es: {
+      name: "Registro Nacional",
+      short: "Propiedades, mercantil, prendas y vehículos titulares",
+      custodia: [
+        "Propiedades inmuebles (folio real)",
+        "Padrón mercantil de personas jurídicas",
+        "Prendas y gravámenes",
+        "Titularidad vehicular (parte registral, distinto a MOPT)",
+        "Marcas y patentes",
+      ],
+      expone: [
+        "GET /property/{folio-real}",
+        "GET /entity/{cedula-juridica}",
+        "GET /property/vehicle/{placa}",
+        "POST /property/transfer (escritura firmada)",
+      ],
+      consume: [
+        "registro-civil · GET /persons/{cedula}",
+        "iduc-signing · firma de escrituras (Ed25519)",
+        "hacienda · POST /fees/transfer-tax (impuesto traspaso)",
+      ],
+    },
+    en: {
+      name: "National Registry",
+      short: "Property, commercial entities, liens and titled vehicles",
+      custodia: [
+        "Real estate (folio real)",
+        "Commercial roster of legal entities",
+        "Liens and encumbrances",
+        "Vehicle titling (registral, distinct from MOPT)",
+        "Trademarks and patents",
+      ],
+      expone: [
+        "GET /property/{folio-real}",
+        "GET /entity/{legal-entity-id}",
+        "GET /property/vehicle/{plate}",
+        "POST /property/transfer (signed deed)",
+      ],
+      consume: [
+        "registro-civil · GET /persons/{id}",
+        "iduc-signing · deed signature (Ed25519)",
+        "hacienda · POST /fees/transfer-tax",
+      ],
+    },
+  },
+  {
+    id: "poder-judicial",
+    tag: "pju",
+    status: "planned",
+    accent: "#facc15",
+    es: {
+      name: "Poder Judicial",
+      short: "Antecedentes, expedientes y resoluciones",
+      custodia: [
+        "Hoja de delincuencia (antecedentes penales)",
+        "Expedientes judiciales activos",
+        "Sentencias firmes",
+        "Pensiones alimentarias",
+      ],
+      expone: [
+        "GET /criminal-record/{cedula}",
+        "GET /cases/{cedula}",
+        "GET /alimony/{cedula}",
+        "POST /complaints",
+      ],
+      consume: [
+        "registro-civil · GET /persons/{cedula}",
+        "fuerza-publica · GET /reports/{cedula}",
+        "iduc-signing · firma de demandas",
+      ],
+    },
+    en: {
+      name: "Judicial Branch",
+      short: "Criminal records, case files and rulings",
+      custodia: [
+        "Criminal background record",
+        "Active judicial case files",
+        "Final rulings",
+        "Alimony orders",
+      ],
+      expone: [
+        "GET /criminal-record/{id}",
+        "GET /cases/{id}",
+        "GET /alimony/{id}",
+        "POST /complaints",
+      ],
+      consume: [
+        "registro-civil · GET /persons/{id}",
+        "fuerza-publica · GET /reports/{id}",
+        "iduc-signing · complaint signature",
+      ],
+    },
+  },
+  {
+    id: "muni-sjo",
+    tag: "sjo",
+    status: "planned",
+    accent: "#f97316",
+    es: {
+      name: "Municipalidad de San José",
+      short: "Bienes inmuebles, patentes y permisos territoriales",
+      custodia: [
+        "Catastro municipal (bienes inmuebles)",
+        "Patentes comerciales",
+        "Permisos de construcción",
+        "Servicios urbanos (basura, alcantarillado pluvial)",
+      ],
+      expone: [
+        "GET /property/{cedula}",
+        "GET /patents/{cedula}",
+        "POST /construction-permits",
+        "GET /municipal-bills/{cedula}",
+      ],
+      consume: [
+        "registro-nacional · GET /property/{folio-real}",
+        "bomberos · GET /inspections/{folio-real}",
+        "minae · GET /environmental-clearance/{folio}",
+        "bccr · POST /sinpe/charge (servicios)",
+      ],
+    },
+    en: {
+      name: "San José Municipality",
+      short: "Real estate tax, business permits and territorial filings",
+      custodia: [
+        "Municipal cadaster (real estate)",
+        "Business patents",
+        "Construction permits",
+        "Urban services (waste, storm drainage)",
+      ],
+      expone: [
+        "GET /property/{id}",
+        "GET /patents/{id}",
+        "POST /construction-permits",
+        "GET /municipal-bills/{id}",
+      ],
+      consume: [
+        "registro-nacional · GET /property/{folio-real}",
+        "bomberos · GET /inspections/{folio-real}",
+        "minae · GET /environmental-clearance/{folio}",
+        "bccr · POST /sinpe/charge (services)",
+      ],
+    },
+  },
+  {
+    id: "aya",
+    tag: "aya",
+    status: "planned",
+    accent: "#06b6d4",
+    es: {
+      name: "Acueductos y Alcantarillados",
+      short: "Agua potable y saneamiento",
+      custodia: [
+        "Conexiones de agua por NIS",
+        "Consumos por periodo",
+        "Calidad y disponibilidad por zona",
+        "Cortes programados",
+      ],
+      expone: [
+        "GET /water-account/{nis}",
+        "GET /consumption/{nis}/{period}",
+        "POST /service-requests",
+        "GET /quality/{cantón-distrito}",
+      ],
+      consume: [
+        "registro-civil · GET /persons/{cedula}",
+        "muni-sjo · GET /property/{cedula}",
+        "minae · GET /water-concessions/{folio}",
+      ],
+    },
+    en: {
+      name: "Water & Sewerage Authority",
+      short: "Drinking water and sanitation",
+      custodia: [
+        "Water connections per service ID",
+        "Consumption per period",
+        "Quality and availability by zone",
+        "Scheduled outages",
+      ],
+      expone: [
+        "GET /water-account/{nis}",
+        "GET /consumption/{nis}/{period}",
+        "POST /service-requests",
+        "GET /quality/{canton-district}",
+      ],
+      consume: [
+        "registro-civil · GET /persons/{id}",
+        "muni-sjo · GET /property/{id}",
+        "minae · GET /water-concessions/{folio}",
+      ],
+    },
+  },
+  {
+    id: "micitt",
+    tag: "mic",
+    status: "planned",
+    accent: "#8b5cf6",
+    es: {
+      name: "Ministerio de Ciencia, Tecnología y Telecomunicaciones",
+      short: "Rector digital · gobernanza tecnológica",
+      custodia: [
+        "Estrategia digital nacional",
+        "Registro de proveedores tecnológicos del Estado",
+        "Política de datos abiertos",
+        "Espectro radioeléctrico (vía SUTEL)",
+      ],
+      expone: [
+        "GET /digital-strategy/{realm}",
+        "GET /open-data-catalog",
+        "POST /tech-procurement",
+      ],
+      consume: [
+        "procomer · GET /tech-exporters",
+        "sugef · GET /fintech-registry",
+      ],
+    },
+    en: {
+      name: "Ministry of Science, Technology and Telecom",
+      short: "Digital steward · technology governance",
+      custodia: [
+        "National digital strategy",
+        "Registry of state tech vendors",
+        "Open data policy",
+        "Radio spectrum (via SUTEL)",
+      ],
+      expone: [
+        "GET /digital-strategy/{realm}",
+        "GET /open-data-catalog",
+        "POST /tech-procurement",
+      ],
+      consume: [
+        "procomer · GET /tech-exporters",
+        "sugef · GET /fintech-registry",
+      ],
+    },
+  },
+  {
+    id: "minae",
+    tag: "mie",
+    status: "planned",
+    accent: "#84cc16",
+    es: {
+      name: "Ministerio de Ambiente y Energía",
+      short: "Carbono neutralidad · concesiones · áreas protegidas",
+      custodia: [
+        "Áreas silvestres protegidas",
+        "Concesiones de agua y energía",
+        "Inventario nacional de carbono",
+        "Permisos de impacto ambiental",
+      ],
+      expone: [
+        "GET /environmental-clearance/{folio}",
+        "GET /water-concessions/{folio}",
+        "GET /carbon-credits/{cedula-juridica}",
+        "POST /environmental-complaints",
+      ],
+      consume: [
+        "registro-nacional · GET /property/{folio-real}",
+        "muni-sjo · GET /zoning/{distrito}",
+      ],
+    },
+    en: {
+      name: "Ministry of Environment and Energy",
+      short: "Carbon neutrality · concessions · protected areas",
+      custodia: [
+        "Protected wildlands",
+        "Water and energy concessions",
+        "National carbon inventory",
+        "Environmental impact permits",
+      ],
+      expone: [
+        "GET /environmental-clearance/{folio}",
+        "GET /water-concessions/{folio}",
+        "GET /carbon-credits/{legal-entity-id}",
+        "POST /environmental-complaints",
+      ],
+      consume: [
+        "registro-nacional · GET /property/{folio-real}",
+        "muni-sjo · GET /zoning/{district}",
+      ],
+    },
+  },
+  {
+    id: "minsa",
+    tag: "msa",
+    status: "planned",
+    accent: "#ec4899",
+    es: {
+      name: "Ministerio de Salud",
+      short: "Salud pública · vigilancia epidemiológica · permisos sanitarios",
+      custodia: [
+        "Carné nacional de vacunación",
+        "Vigilancia epidemiológica",
+        "Permisos sanitarios de funcionamiento",
+        "Registro de medicamentos y dispositivos",
+      ],
+      expone: [
+        "GET /vaccination-record/{cedula}",
+        "GET /sanitary-permit/{cedula-juridica}",
+        "GET /epidemiological-alerts/{distrito}",
+      ],
+      consume: [
+        "registro-civil · GET /persons/{cedula}",
+        "ccss · GET /clinical-history/{cedula}",
+        "muni-sjo · GET /property/{cedula} (inspección)",
+      ],
+    },
+    en: {
+      name: "Ministry of Health",
+      short: "Public health · epidemiology · sanitary permits",
+      custodia: [
+        "National vaccination card",
+        "Epidemiological surveillance",
+        "Sanitary operating permits",
+        "Drug and device registry",
+      ],
+      expone: [
+        "GET /vaccination-record/{id}",
+        "GET /sanitary-permit/{legal-entity-id}",
+        "GET /epidemiological-alerts/{district}",
+      ],
+      consume: [
+        "registro-civil · GET /persons/{id}",
+        "ccss · GET /clinical-history/{id}",
+        "muni-sjo · GET /property/{id} (inspection)",
+      ],
+    },
+  },
+  {
+    id: "pani",
+    tag: "pni",
+    status: "planned",
+    accent: "#fb923c",
+    es: {
+      name: "Patronato Nacional de la Infancia",
+      short: "Niñez y adolescencia · protección integral",
+      custodia: [
+        "Registro de menores con expediente",
+        "Medidas de protección activas",
+        "Adopciones y procesos especiales",
+      ],
+      expone: [
+        "GET /minors/{cedula}",
+        "GET /protection-measures/{cedula}",
+        "POST /child-welfare-reports",
+      ],
+      consume: [
+        "registro-civil · GET /persons/{cedula}/household",
+        "poder-judicial · GET /alimony/{cedula}",
+        "ccss · GET /insurance-status/{cedula}",
+      ],
+    },
+    en: {
+      name: "Children & Adolescents Welfare",
+      short: "Children & youth · integral protection",
+      custodia: [
+        "Registry of minors with files",
+        "Active protection measures",
+        "Adoptions and special procedures",
+      ],
+      expone: [
+        "GET /minors/{id}",
+        "GET /protection-measures/{id}",
+        "POST /child-welfare-reports",
+      ],
+      consume: [
+        "registro-civil · GET /persons/{id}/household",
+        "poder-judicial · GET /alimony/{id}",
+        "ccss · GET /insurance-status/{id}",
+      ],
+    },
+  },
+  {
+    id: "sugef",
+    tag: "sug",
+    status: "planned",
+    accent: "#14b8a6",
+    es: {
+      name: "Superintendencia de Entidades Financieras",
+      short: "Supervisión financiera · KYC · AML",
+      custodia: [
+        "Padrón de entidades supervisadas",
+        "Centro de información crediticia",
+        "Listas de cumplimiento (PEP, sancionados)",
+        "Registro de fintechs",
+      ],
+      expone: [
+        "GET /credit-info/{cedula}",
+        "GET /aml-flags/{cedula}",
+        "GET /supervised-entities",
+        "POST /suspicious-activity-reports",
+      ],
+      consume: [
+        "registro-civil · GET /persons/{cedula}",
+        "registro-nacional · GET /entity/{cedula-juridica}",
+        "poder-judicial · GET /criminal-record/{cedula}",
+      ],
+    },
+    en: {
+      name: "Financial Entities Superintendence",
+      short: "Financial oversight · KYC · AML",
+      custodia: [
+        "Roster of supervised entities",
+        "Credit information bureau",
+        "Compliance lists (PEP, sanctioned)",
+        "Fintech registry",
+      ],
+      expone: [
+        "GET /credit-info/{id}",
+        "GET /aml-flags/{id}",
+        "GET /supervised-entities",
+        "POST /suspicious-activity-reports",
+      ],
+      consume: [
+        "registro-civil · GET /persons/{id}",
+        "registro-nacional · GET /entity/{legal-entity-id}",
+        "poder-judicial · GET /criminal-record/{id}",
+      ],
+    },
+  },
+  {
+    id: "fuerza-publica",
+    tag: "msp",
+    status: "planned",
+    accent: "#475569",
+    es: {
+      name: "Fuerza Pública · Ministerio de Seguridad",
+      short: "Denuncias ciudadanas · operativos · seguridad pública",
+      custodia: [
+        "Denuncias ciudadanas",
+        "Reportes de incidentes",
+        "Bitácora operativa",
+      ],
+      expone: [
+        "POST /citizen-reports",
+        "GET /reports/{cedula}",
+        "GET /alerts/{distrito}",
+      ],
+      consume: [
+        "registro-civil · GET /persons/{cedula}",
+        "poder-judicial · POST /complaints",
+        "iduc-signing · firma de denuncias",
+      ],
+    },
+    en: {
+      name: "Public Force · Ministry of Security",
+      short: "Citizen reports · operations · public safety",
+      custodia: [
+        "Citizen reports",
+        "Incident reports",
+        "Operational logbook",
+      ],
+      expone: [
+        "POST /citizen-reports",
+        "GET /reports/{id}",
+        "GET /alerts/{district}",
+      ],
+      consume: [
+        "registro-civil · GET /persons/{id}",
+        "poder-judicial · POST /complaints",
+        "iduc-signing · report signature",
+      ],
+    },
+  },
+  {
+    id: "bomberos",
+    tag: "bom",
+    status: "planned",
+    accent: "#dc2626",
+    es: {
+      name: "Cuerpo de Bomberos",
+      short: "Inspecciones · prevención · respuesta a emergencias",
+      custodia: [
+        "Inspecciones de seguridad humana",
+        "Permisos contra incendios",
+        "Reportes de emergencia",
+      ],
+      expone: [
+        "GET /inspections/{folio-real}",
+        "GET /fire-permit/{cedula-juridica}",
+        "POST /emergency-reports",
+      ],
+      consume: [
+        "muni-sjo · GET /construction-permits/{folio}",
+        "registro-nacional · GET /property/{folio-real}",
+      ],
+    },
+    en: {
+      name: "Fire Department",
+      short: "Inspections · prevention · emergency response",
+      custodia: [
+        "Human-safety inspections",
+        "Fire permits",
+        "Emergency reports",
+      ],
+      expone: [
+        "GET /inspections/{folio-real}",
+        "GET /fire-permit/{legal-entity-id}",
+        "POST /emergency-reports",
+      ],
+      consume: [
+        "muni-sjo · GET /construction-permits/{folio}",
+        "registro-nacional · GET /property/{folio-real}",
+      ],
+    },
+  },
+  {
+    id: "procomer",
+    tag: "pro",
+    status: "planned",
+    accent: "#0ea5e9",
+    es: {
+      name: "Promotora de Comercio Exterior",
+      short: "Exportadores · zonas francas · comercio internacional",
+      custodia: [
+        "Padrón de exportadores",
+        "Empresas en régimen de zona franca",
+        "Trámites VUCE (ventanilla única)",
+      ],
+      expone: [
+        "GET /exporters/{cedula-juridica}",
+        "GET /free-zone-status/{cedula-juridica}",
+        "POST /export-permits",
+      ],
+      consume: [
+        "registro-nacional · GET /entity/{cedula-juridica}",
+        "hacienda · GET /tax-status/{cedula-juridica}",
+        "minae · GET /environmental-clearance/{folio}",
+      ],
+    },
+    en: {
+      name: "Foreign Trade Promoter",
+      short: "Exporters · free zones · international trade",
+      custodia: [
+        "Exporter roster",
+        "Free-zone regime companies",
+        "Single-window filings (VUCE)",
+      ],
+      expone: [
+        "GET /exporters/{legal-entity-id}",
+        "GET /free-zone-status/{legal-entity-id}",
+        "POST /export-permits",
+      ],
+      consume: [
+        "registro-nacional · GET /entity/{legal-entity-id}",
+        "hacienda · GET /tax-status/{legal-entity-id}",
+        "minae · GET /environmental-clearance/{folio}",
       ],
     },
   },

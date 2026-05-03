@@ -149,6 +149,12 @@ export default function MembersCarousel() {
           {c.cta} →
         </button>
       </div>
+
+      <div className="mx-auto mt-4 max-w-6xl px-5 sm:px-6">
+        <p className="text-[10.5px] leading-relaxed text-[var(--color-muted)] sm:text-[11px]">
+          {c.disclaimer}
+        </p>
+      </div>
     </section>
   );
 }

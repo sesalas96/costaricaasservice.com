@@ -102,6 +102,7 @@ export default function DemoChat() {
 
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
   const chatScrollRef = useRef<HTMLDivElement>(null);
+  const chatPanelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -148,6 +149,12 @@ export default function DemoChat() {
     setCompleted(false);
     setActiveCaseId(def.id);
     setUsage((u) => ({ date: todayKey(), count: u.count + 1 }));
+
+    if (typeof window !== "undefined" && window.innerWidth < 1024) {
+      requestAnimationFrame(() => {
+        chatPanelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
 
     let cumulative = 700;
     loc.steps.forEach((step, idx) => {
@@ -349,7 +356,7 @@ export default function DemoChat() {
           </div>
 
           {/* Chat */}
-          <div className="lg:col-span-7">
+          <div ref={chatPanelRef} className="scroll-mt-20 lg:col-span-7">
             <div className="mb-4 flex flex-col gap-1">
               <div className="text-xs font-mono uppercase tracking-widest text-[var(--color-muted)]">
                 {d.chatHeading}
