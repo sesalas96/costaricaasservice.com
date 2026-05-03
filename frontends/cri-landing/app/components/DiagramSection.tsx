@@ -167,16 +167,16 @@ export default function DiagramSection() {
 
   return (
     <InstitutionProvider>
-    <section id="diagramas" className="py-24">
+    <section id="diagramas" className="py-16 md:py-24">
       <InstitutionPanel />
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="mx-auto max-w-6xl px-5 sm:px-6">
         {/* ── Header con switch ───────────────────────────────── */}
-        <div className="mb-10 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div className="mb-8 flex flex-col gap-6 md:mb-10 lg:flex-row lg:items-end lg:justify-between">
           <div className="flex flex-col gap-3">
             <div className="text-xs font-mono uppercase tracking-widest text-[var(--color-muted)]">
               {t.diagrams.eyebrow}
             </div>
-            <h2 className="max-w-2xl text-3xl font-semibold tracking-tight md:text-4xl">
+            <h2 className="max-w-2xl text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl">
               {t.diagrams.heading}
             </h2>
           </div>
@@ -263,7 +263,7 @@ export default function DiagramSection() {
               </div>
 
               {/* Canvas */}
-              <div className="h-[620px] w-full">
+              <div className="h-[480px] w-full sm:h-[560px] md:h-[620px]">
                 {active === "ecosistema" && (
                   <EcosystemDiagram key={diagramKey} audience={audience} />
                 )}

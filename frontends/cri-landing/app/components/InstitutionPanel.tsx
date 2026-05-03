@@ -263,7 +263,7 @@ export default function InstitutionPanel() {
         <button
           onClick={close}
           aria-label={t.institutionPanel.closeAria}
-          className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-muted)] transition-colors hover:bg-[var(--color-surface-2)] hover:text-[var(--color-text)]"
+          className="absolute right-3 top-3 z-10 flex h-10 w-10 items-center justify-center rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] text-base text-[var(--color-muted)] transition-colors hover:bg-[var(--color-surface-2)] hover:text-[var(--color-text)] sm:right-4 sm:top-4"
         >
           ×
         </button>

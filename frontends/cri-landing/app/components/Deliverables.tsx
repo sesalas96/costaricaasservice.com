@@ -84,16 +84,16 @@ export default function Deliverables() {
   return (
     <section
       id="entregables"
-      className="border-b border-t border-[var(--color-border)] py-24"
+      className="border-b border-t border-[var(--color-border)] py-16 md:py-24"
     >
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="mx-auto max-w-6xl px-5 sm:px-6">
         {/* ── Header con switch ───────────────────────────────── */}
-        <div className="mb-10 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div className="mb-8 flex flex-col gap-6 md:mb-10 lg:flex-row lg:items-end lg:justify-between">
           <div className="flex flex-col gap-3">
-            <div className="text-xs font-mono uppercase tracking-widest text-[var(--color-muted)]">
+            <div className="text-[10px] font-mono uppercase tracking-widest text-[var(--color-muted)] sm:text-xs">
               {d.eyebrow}
             </div>
-            <h2 className="max-w-2xl text-3xl font-semibold tracking-tight md:text-4xl">
+            <h2 className="max-w-2xl text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl">
               {d.heading}
             </h2>
           </div>
@@ -113,8 +113,8 @@ export default function Deliverables() {
         </div>
 
         {/* ── Lead + intro ────────────────────────────────────── */}
-        <div className="mb-10 grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-10">
-          <p className="text-lg leading-relaxed text-[var(--color-muted)] lg:col-span-6">
+        <div className="mb-8 grid grid-cols-1 gap-6 md:mb-10 lg:grid-cols-12 lg:gap-10">
+          <p className="text-base leading-relaxed text-[var(--color-muted)] sm:text-lg lg:col-span-6">
             {d.lead}
           </p>
           <p className="text-base leading-relaxed text-[var(--color-muted)] lg:col-span-6">
@@ -132,7 +132,7 @@ export default function Deliverables() {
             return (
               <article
                 key={card.title}
-                className="group relative flex h-full flex-col gap-4 bg-[var(--color-surface)] p-7 transition-colors hover:bg-[var(--color-surface-2)]"
+                className="group relative flex h-full flex-col gap-4 bg-[var(--color-surface)] p-5 transition-colors hover:bg-[var(--color-surface-2)] sm:p-7"
               >
                 <div
                   aria-hidden

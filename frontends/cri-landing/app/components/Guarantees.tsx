@@ -37,28 +37,28 @@ export default function Guarantees() {
   return (
     <section
       id="garantias"
-      className="border-b border-[var(--color-border)] py-24"
+      className="border-b border-[var(--color-border)] py-16 md:py-24"
     >
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="mx-auto max-w-6xl px-5 sm:px-6">
         {/* ── Cabezal con descripción ──────────────────────── */}
-        <div className="mb-16 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
+        <div className="mb-12 grid grid-cols-1 gap-8 md:mb-16 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
-            <div className="text-xs font-mono uppercase tracking-widest text-[var(--color-muted)]">
+            <div className="text-[10px] font-mono uppercase tracking-widest text-[var(--color-muted)] sm:text-xs">
               {g.eyebrow}
             </div>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl">
               {g.heading}
             </h2>
           </div>
           <div className="lg:col-span-7">
-            <p className="text-lg leading-relaxed text-[var(--color-muted)]">
+            <p className="text-base leading-relaxed text-[var(--color-muted)] sm:text-lg">
               {g.lead}
             </p>
           </div>
         </div>
 
         {/* ── 3 audiencias ─────────────────────────────────── */}
-        <div className="mb-20">
+        <div className="mb-16 md:mb-20">
           <div className="mb-6 text-xs font-mono uppercase tracking-widest text-[var(--color-muted)]">
             {g.audiencesHeading}
           </div>
@@ -68,7 +68,7 @@ export default function Guarantees() {
               return (
                 <div
                   key={a.title}
-                  className="relative overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-7"
+                  className="relative overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 sm:p-7"
                 >
                   <div
                     aria-hidden
@@ -94,7 +94,7 @@ export default function Guarantees() {
         </div>
 
         {/* ── Casos de uso ─────────────────────────────────── */}
-        <div className="mb-20">
+        <div className="mb-16 md:mb-20">
           <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-12">
             <div className="lg:col-span-5">
               <div className="text-xs font-mono uppercase tracking-widest text-[var(--color-muted)]">
@@ -119,7 +119,7 @@ export default function Guarantees() {
               return (
                 <article
                   key={c.title}
-                  className="group flex h-full flex-col gap-4 bg-[var(--color-surface)] p-7 transition-colors hover:bg-[var(--color-surface-2)]"
+                  className="group flex h-full flex-col gap-4 bg-[var(--color-surface)] p-5 transition-colors hover:bg-[var(--color-surface-2)] sm:p-7"
                 >
                   <div className="flex items-center justify-between">
                     <span
@@ -147,7 +147,7 @@ export default function Guarantees() {
             })}
             <Link
               href="/casos"
-              className="group relative flex h-full flex-col justify-between gap-4 p-7 transition-colors hover:bg-[var(--color-surface-2)]"
+              className="group relative flex h-full flex-col justify-between gap-4 p-5 transition-colors hover:bg-[var(--color-surface-2)] sm:p-7"
               style={{
                 background:
                   "linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-2) 100%)",
@@ -199,7 +199,7 @@ export default function Guarantees() {
         </div>
 
         {/* ── Garantías invariantes ─────────────────────────── */}
-        <div className="border-t border-[var(--color-border)] pt-16">
+        <div className="border-t border-[var(--color-border)] pt-12 md:pt-16">
           <div className="mb-8 flex flex-col gap-2">
             <div className="text-xs font-mono uppercase tracking-widest text-[var(--color-muted)]">
               {g.invariantsEyebrow}
@@ -216,7 +216,7 @@ export default function Guarantees() {
               return (
                 <div
                   key={item.title}
-                  className="group relative flex flex-col gap-4 bg-[var(--color-surface)] p-8 transition-colors hover:bg-[var(--color-surface-2)]"
+                  className="group relative flex flex-col gap-4 bg-[var(--color-surface)] p-6 transition-colors hover:bg-[var(--color-surface-2)] sm:p-8"
                 >
                   <div className="flex items-center justify-between">
                     <span
