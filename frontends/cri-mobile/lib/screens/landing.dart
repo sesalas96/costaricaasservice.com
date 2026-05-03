@@ -127,21 +127,14 @@ class _LandingScreenState extends State<LandingScreen> {
         elevation: 0,
         title: Row(
           children: [
-            Container(
-              width: 30,
-              height: 30,
-              decoration: BoxDecoration(
-                color: CrColors.crBlueBright,
-                borderRadius: BorderRadius.circular(6),
-              ),
-              alignment: Alignment.center,
-              child: const Text(
-                'CR',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 11,
-                ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(6.5),
+              child: Image.asset(
+                'assets/app_icon.png',
+                width: 30,
+                height: 30,
+                fit: BoxFit.cover,
+                filterQuality: FilterQuality.medium,
               ),
             ),
             const SizedBox(width: 10),

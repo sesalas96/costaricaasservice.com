@@ -71,16 +71,15 @@ class _HomeScreenState extends State<HomeScreen> {
         titleSpacing: 16,
         title: Row(
           children: [
-            Container(
-              width: 32,
-              height: 32,
-              decoration: BoxDecoration(
-                color: CrColors.crBlueBright,
-                borderRadius: BorderRadius.circular(6),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(7),
+              child: Image.asset(
+                'assets/app_icon.png',
+                width: 32,
+                height: 32,
+                fit: BoxFit.cover,
+                filterQuality: FilterQuality.medium,
               ),
-              alignment: Alignment.center,
-              child: const Text('CR',
-                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12)),
             ),
             const SizedBox(width: 10),
             const Text(
