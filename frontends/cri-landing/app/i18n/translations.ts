@@ -78,6 +78,35 @@ export type Translations = {
       identity: { citizen: string; technical: string };
     };
   };
+  deliverables: {
+    eyebrow: string;
+    heading: string;
+    lead: string;
+    view: {
+      business: string;
+      technical: string;
+      hint: string;
+      activeBadge: string;
+    };
+    business: {
+      intro: string;
+      cards: {
+        tag: string;
+        title: string;
+        sub: string;
+        items: string[];
+      }[];
+    };
+    technical: {
+      intro: string;
+      cards: {
+        tag: string;
+        title: string;
+        sub: string;
+        items: string[];
+      }[];
+    };
+  };
   footer: {
     coreOf: string;
   };
@@ -232,6 +261,21 @@ export type Translations = {
       signs: string;
       anyoneVerifies: string;
     };
+  };
+  institutionPanel: {
+    closeAria: string;
+    badgeLive: string;
+    badgePlanned: string;
+    listHeading: string;
+    listSub: string;
+    listCount: string;
+    backToList: string;
+    sectionCustodia: string;
+    sectionExpone: string;
+    sectionConsume: string;
+    emptyConsume: string;
+    nodeBadgeLabel: string;
+    diagramHint: string;
   };
 };
 
@@ -452,6 +496,142 @@ export const translations: Record<Lang, Translations> = {
           technical:
             "iduc-identity emite JWT RS256, iduc-keys custodia Ed25519 en KMS (Vault), iduc-signing produce JWS/CAdES/PAdES con sellado RFC 3161.",
         },
+      },
+    },
+    deliverables: {
+      eyebrow: "Entregables del sistema",
+      heading: "Qué se entrega cuando costaricaasservice se enciende.",
+      lead: "Un mismo monorepo, dos lecturas. Lo que recibís según tu rol — y lo que hay adentro de la caja, repo por repo.",
+      view: {
+        business: "Vista de negocio",
+        technical: "Vista técnica",
+        hint: "Cambiá entre qué te llevás y qué hay adentro.",
+        activeBadge: "activa",
+      },
+      business: {
+        intro:
+          "Cuatro paquetes alineados con quién consume el sistema: el Estado que lo opera, la institución que lo extiende, el ciudadano que lo usa y la plataforma transversal que sostiene el contrato legal.",
+        cards: [
+          {
+            tag: "Realm · jurisdicción",
+            title: "Para el Estado que lo opera",
+            sub: "Control plane completo del realm",
+            items: [
+              "Control plane admin (gestión de members, claves, billing)",
+              "Hub de interoperabilidad con CA del realm",
+              "Gobernanza del catálogo de servicios inter-member",
+              "Observabilidad end-to-end (trazas, métricas, p99 < 500ms)",
+              "Runbooks y respuesta a incidentes",
+            ],
+          },
+          {
+            tag: "Member · institución",
+            title: "Para cada institución",
+            sub: "Conectarse al ecosistema en días, no años",
+            items: [
+              "Security-server desplegable (firma JWS + mTLS llave en mano)",
+              "BFF Member + portal operador",
+              "SDK interop-client (expone y consume servicios remotos)",
+              "Plantilla de servicio (cri-templates-service) lista para producción",
+              "Onboarding al catálogo y emisión de certificados X.509",
+            ],
+          },
+          {
+            tag: "Ciudadano · MiCR",
+            title: "Para cada habitante",
+            sub: "Una sola puerta al Estado",
+            items: [
+              "MiCR Web (Next.js 15) y MiCR Mobile (Flutter melos)",
+              "Identidad digital única + login con WebAuthn/passkey",
+              "Firma digital con valor jurídico (Ed25519 en KMS)",
+              "Bitácora de accesos: quién consultó tus datos y por qué",
+              "Notificaciones legales y archivos firmados (PDF + CAdES/PAdES)",
+            ],
+          },
+          {
+            tag: "Plataforma · transversal",
+            title: "Capacidades comunes",
+            sub: "El contrato legal y la trazabilidad que sostienen todo",
+            items: [
+              "Audit chain hash-encadenado (SHA-256 + Merkle por epoch)",
+              "Notificaciones electrónicas con valor legal",
+              "Servicio de archivos firmados (PDF + CAdES/PAdES)",
+              "Feature flags por realm y por member",
+              "KMS con envelope encryption (Vault Transit en dev, AWS KMS en prod)",
+            ],
+          },
+        ],
+      },
+      technical: {
+        intro:
+          "Las seis áreas del monorepo, con los repos concretos que se despliegan en cada una. Cada servicio con su propia DB, multi-tenant desde el día uno (schema-per-realm).",
+        cards: [
+          {
+            tag: "gateway",
+            title: "Entrada al sistema",
+            sub: "Gateway central + BFFs por audiencia",
+            items: [
+              "cri-gateway-api · JWT RS256 + RBAC + rate limit + revocación Roaring",
+              "cri-bff-citizen · orquesta MiCR (web + mobile)",
+              "cri-bff-member · portal operador",
+              "cri-bff-admin · control plane costaricaasservice",
+            ],
+          },
+          {
+            tag: "iduc",
+            title: "Identidad Digital Única",
+            sub: "Autenticación, claves y firma",
+            items: [
+              "cri-svc-iduc-identity · login + WebAuthn + JWT RS256",
+              "cri-svc-iduc-keys · Ed25519 custodiadas en KMS",
+              "cri-svc-iduc-signing · JWS / CAdES / PAdES + sellado RFC 3161",
+            ],
+          },
+          {
+            tag: "interop",
+            title: "Conecta · X-Road analog",
+            sub: "Hub central + plano de datos federado",
+            items: [
+              "cri-svc-interop-hub · catálogo + CA del realm + gobernanza",
+              "cri-svc-security-server · daemon que cada member instala",
+              "cri-svc-interop-router · plano de datos HTTP/2 + mTLS",
+              "cri-svc-interop-audit · hash chain SHA-256 + Merkle epoch",
+            ],
+          },
+          {
+            tag: "members",
+            title: "Instituciones",
+            sub: "Servicios mock listos para conectar reales",
+            items: [
+              "cri-svc-registro-civil · TSE mock con 1000 personas seed",
+              "cri-svc-hacienda · declaración pre-llenada (consume Reg.Civil)",
+              "+ MIT, CCSS, MOPT… (escalable por catálogo)",
+            ],
+          },
+          {
+            tag: "platform",
+            title: "Plataforma transversal",
+            sub: "Capacidades compartidas con valor legal",
+            items: [
+              "cri-svc-audit · vista ciudadana del log inter-member",
+              "cri-svc-notifications · notificaciones con valor legal",
+              "cri-svc-files · PDF firmados (storage S3 en prod)",
+              "cri-svc-feature-flags · flags por realm/member",
+              "cri-templates-service · scaffold para servicios nuevos",
+            ],
+          },
+          {
+            tag: "frontends",
+            title: "Superficies cliente",
+            sub: "Web + mobile + landing institucional",
+            items: [
+              "cri-landing · sitio público (Next.js 15)",
+              "cri-web-micr · MiCR para ciudadanos (Next.js 15)",
+              "cri-web-admin · control plane de members y realm",
+              "cri-mobile · MiCR Mobile (Flutter melos, iOS + Android)",
+            ],
+          },
+        ],
       },
     },
     footer: {
@@ -730,6 +910,23 @@ export const translations: Record<Lang, Translations> = {
         anyoneVerifies: "cualquiera puede confirmar que fuiste vos",
       },
     },
+    institutionPanel: {
+      closeAria: "Cerrar panel",
+      badgeLive: "live",
+      badgePlanned: "próximamente",
+      listHeading: "Catálogo de instituciones",
+      listSub:
+        "Cualquier institución del Estado se conecta vía Conecta CR con las mismas garantías de identidad, trazabilidad y firma. Esto es lo que cada una expone — o expondrá — al ecosistema.",
+      listCount: "{n} instituciones · {l} live · {p} próximamente",
+      backToList: "← Volver al catálogo",
+      sectionCustodia: "Datos que custodia",
+      sectionExpone: "Servicios expuestos vía Conecta",
+      sectionConsume: "Consume de otras instituciones",
+      emptyConsume: "No consume datos de otros — fuente de oro.",
+      nodeBadgeLabel: "ver",
+      diagramHint:
+        "tip: hacé click en una institución para ver qué expone vía Conecta",
+    },
   },
   en: {
     hero: {
@@ -947,6 +1144,142 @@ export const translations: Record<Lang, Translations> = {
           technical:
             "iduc-identity issues RS256 JWTs, iduc-keys custodies Ed25519 in a KMS (Vault), iduc-signing produces JWS/CAdES/PAdES with RFC 3161 timestamping.",
         },
+      },
+    },
+    deliverables: {
+      eyebrow: "System deliverables",
+      heading: "What ships when costaricaasservice goes live.",
+      lead: "One monorepo, two readings. What you receive based on your role — and what is inside the box, repo by repo.",
+      view: {
+        business: "Business view",
+        technical: "Technical view",
+        hint: "Switch between what you get and what is inside.",
+        activeBadge: "active",
+      },
+      business: {
+        intro:
+          "Four packages aligned with who consumes the system: the State that operates it, the institution that extends it, the citizen who uses it, and the platform layer that holds the legal contract.",
+        cards: [
+          {
+            tag: "Realm · jurisdiction",
+            title: "For the State that operates it",
+            sub: "Full realm control plane",
+            items: [
+              "Admin control plane (members, keys, billing)",
+              "Interoperability hub with the realm CA",
+              "Inter-member service catalog governance",
+              "End-to-end observability (traces, metrics, p99 < 500ms)",
+              "Runbooks and incident response",
+            ],
+          },
+          {
+            tag: "Member · institution",
+            title: "For each institution",
+            sub: "Connect to the ecosystem in days, not years",
+            items: [
+              "Deployable security-server (JWS signing + mTLS turnkey)",
+              "Member BFF + operator portal",
+              "interop-client SDK (expose and consume remote services)",
+              "Service template (cri-templates-service) production-ready",
+              "Catalog onboarding and X.509 certificate issuance",
+            ],
+          },
+          {
+            tag: "Citizen · MiCR",
+            title: "For every resident",
+            sub: "A single front door to the State",
+            items: [
+              "MiCR Web (Next.js 15) and MiCR Mobile (Flutter melos)",
+              "Single digital identity + WebAuthn/passkey login",
+              "Legally-binding digital signature (Ed25519 in KMS)",
+              "Access log: who looked at your data and why",
+              "Legal notifications and signed files (PDF + CAdES/PAdES)",
+            ],
+          },
+          {
+            tag: "Platform · cross-cutting",
+            title: "Shared capabilities",
+            sub: "The legal contract and traceability that hold it together",
+            items: [
+              "Hash-chained audit (SHA-256 + Merkle per epoch)",
+              "Electronic notifications with legal weight",
+              "Signed-file service (PDF + CAdES/PAdES)",
+              "Feature flags per realm and per member",
+              "KMS with envelope encryption (Vault Transit in dev, AWS KMS in prod)",
+            ],
+          },
+        ],
+      },
+      technical: {
+        intro:
+          "The six monorepo areas, with the concrete repos deployed in each one. Every service owns its database, multi-tenant from day one (schema-per-realm).",
+        cards: [
+          {
+            tag: "gateway",
+            title: "System ingress",
+            sub: "Central gateway + audience-specific BFFs",
+            items: [
+              "cri-gateway-api · JWT RS256 + RBAC + rate limit + Roaring revocation",
+              "cri-bff-citizen · orchestrates MiCR (web + mobile)",
+              "cri-bff-member · operator portal",
+              "cri-bff-admin · costaricaasservice control plane",
+            ],
+          },
+          {
+            tag: "iduc",
+            title: "Single Digital Identity",
+            sub: "Authentication, keys and signing",
+            items: [
+              "cri-svc-iduc-identity · login + WebAuthn + JWT RS256",
+              "cri-svc-iduc-keys · Ed25519 custodied in KMS",
+              "cri-svc-iduc-signing · JWS / CAdES / PAdES + RFC 3161 timestamping",
+            ],
+          },
+          {
+            tag: "interop",
+            title: "Conecta · X-Road analog",
+            sub: "Central hub + federated data plane",
+            items: [
+              "cri-svc-interop-hub · catalog + realm CA + governance",
+              "cri-svc-security-server · daemon each member installs",
+              "cri-svc-interop-router · HTTP/2 + mTLS data plane",
+              "cri-svc-interop-audit · SHA-256 hash chain + Merkle epoch",
+            ],
+          },
+          {
+            tag: "members",
+            title: "Institutions",
+            sub: "Mock services ready to swap for real ones",
+            items: [
+              "cri-svc-registro-civil · TSE mock with 1000 seeded persons",
+              "cri-svc-hacienda · pre-filled tax return (consumes Reg.Civil)",
+              "+ MIT, CCSS, MOPT… (catalog-scalable)",
+            ],
+          },
+          {
+            tag: "platform",
+            title: "Cross-cutting platform",
+            sub: "Shared capabilities with legal value",
+            items: [
+              "cri-svc-audit · citizen view of the inter-member log",
+              "cri-svc-notifications · notifications with legal weight",
+              "cri-svc-files · signed PDFs (S3 storage in prod)",
+              "cri-svc-feature-flags · per-realm/per-member flags",
+              "cri-templates-service · scaffold for new services",
+            ],
+          },
+          {
+            tag: "frontends",
+            title: "Client surfaces",
+            sub: "Web + mobile + institutional landing",
+            items: [
+              "cri-landing · public site (Next.js 15)",
+              "cri-web-micr · MiCR for citizens (Next.js 15)",
+              "cri-web-admin · members and realm control plane",
+              "cri-mobile · MiCR Mobile (Flutter melos, iOS + Android)",
+            ],
+          },
+        ],
       },
     },
     footer: {
@@ -1224,6 +1557,22 @@ export const translations: Record<Lang, Translations> = {
         signs: "it's signed from your vault",
         anyoneVerifies: "anyone can confirm it was you",
       },
+    },
+    institutionPanel: {
+      closeAria: "Close panel",
+      badgeLive: "live",
+      badgePlanned: "coming soon",
+      listHeading: "Institutions catalog",
+      listSub:
+        "Any institution of the state plugs into Conecta CR with the same guarantees of identity, traceability and signature. Here is what each one exposes — or will expose — to the ecosystem.",
+      listCount: "{n} institutions · {l} live · {p} coming soon",
+      backToList: "← Back to catalog",
+      sectionCustodia: "Data it custodies",
+      sectionExpone: "Services exposed via Conecta",
+      sectionConsume: "Consumes from other institutions",
+      emptyConsume: "Does not consume from others — it's a golden source.",
+      nodeBadgeLabel: "view",
+      diagramHint: "tip: click an institution to see what it exposes via Conecta",
     },
   },
 };

@@ -7,6 +7,8 @@ import InteropFlowDiagram from "./diagrams/InteropFlowDiagram";
 import OnceOnlyDiagram from "./diagrams/OnceOnlyDiagram";
 import IdentityDiagram from "./diagrams/IdentityDiagram";
 import type { Audience } from "./diagrams/types";
+import { InstitutionProvider } from "./InstitutionContext";
+import InstitutionPanel from "./InstitutionPanel";
 
 type ModuleKey = "ecosistema" | "interop" | "onceOnly" | "identity";
 
@@ -164,7 +166,9 @@ export default function DiagramSection() {
   const diagramKey = `${active}-${audience}`;
 
   return (
+    <InstitutionProvider>
     <section id="diagramas" className="py-24">
+      <InstitutionPanel />
       <div className="mx-auto max-w-6xl px-6">
         {/* ── Header con switch ───────────────────────────────── */}
         <div className="mb-10 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
@@ -279,9 +283,13 @@ export default function DiagramSection() {
               <span>tip:</span>
               <span>{t.diagrams.tip}</span>
             </div>
+            <div className="mt-1 font-mono text-[11px] text-[var(--color-muted)]">
+              {t.institutionPanel.diagramHint}
+            </div>
           </div>
         </div>
       </div>
     </section>
+    </InstitutionProvider>
   );
 }

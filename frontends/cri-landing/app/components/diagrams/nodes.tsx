@@ -1,6 +1,11 @@
 "use client";
 
 import { Handle, Position, type Node, type NodeProps } from "@xyflow/react";
+import { useT } from "../../i18n/LanguageProvider";
+import {
+  useInstitution,
+  type InstitutionTarget,
+} from "../InstitutionContext";
 
 export type AreaKey =
   | "frontend"
@@ -37,12 +42,11 @@ export type ServiceNode = Node<
     subtitle?: string;
     area: AreaKey;
     emphasis?: boolean;
+    institutionId?: InstitutionTarget;
   },
   "service"
 >;
 
-// Cada lado expone source y target (handles superpuestos invisibles).
-// IDs convenidos: `${side}-s` (source), `${side}-t` (target). Side ∈ {t,r,b,l}.
 const SIDES = [
   { side: "t", pos: Position.Top },
   { side: "r", pos: Position.Right },
@@ -58,27 +62,51 @@ const baseHandleStyle = (color: string) => ({
 });
 
 export function ServiceNodeView({ data }: NodeProps<ServiceNode>) {
+  const { t } = useT();
+  const { open } = useInstitution();
   const color = AREA_COLOR[data.area];
   const dotStyle = baseHandleStyle(color);
+  const isClickable = !!data.institutionId;
+
+  const handleClick = () => {
+    if (data.institutionId) open(data.institutionId);
+  };
+
   return (
     <div
-      className="rounded-lg border bg-[var(--color-surface)] px-4 py-3 shadow-sm transition-transform"
+      className={
+        "diagram-node relative rounded-lg border bg-[var(--color-surface)] px-4 py-3 shadow-sm transition-transform" +
+        (isClickable ? " is-clickable" : "") +
+        (data.emphasis ? " is-emphasis" : "")
+      }
       style={{
         borderColor: data.emphasis ? color : "var(--color-border)",
         boxShadow: data.emphasis ? `0 0 0 1px ${color} inset` : undefined,
         minWidth: 180,
+        ["--node-accent" as string]: color,
       }}
+      onClick={isClickable ? handleClick : undefined}
+      role={isClickable ? "button" : undefined}
+      tabIndex={isClickable ? 0 : undefined}
+      onKeyDown={
+        isClickable
+          ? (e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                handleClick();
+              }
+            }
+          : undefined
+      }
     >
       {SIDES.map(({ side, pos }) => (
         <span key={side}>
-          {/* dot visible (source) */}
           <Handle
             id={`${side}-s`}
             type="source"
             position={pos}
             style={dotStyle}
           />
-          {/* target invisible superpuesto */}
           <Handle
             id={`${side}-t`}
             type="target"
@@ -87,6 +115,21 @@ export function ServiceNodeView({ data }: NodeProps<ServiceNode>) {
           />
         </span>
       ))}
+
+      {isClickable && (
+        <span
+          aria-hidden
+          className="absolute -right-2 -top-2 inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-widest"
+          style={{
+            background: color,
+            color: "#0a0d12",
+            boxShadow: `0 4px 12px -4px ${color}`,
+          }}
+        >
+          ↗ {t.institutionPanel.nodeBadgeLabel}
+        </span>
+      )}
+
       <div className="flex items-center gap-2">
         <span
           className="h-1.5 w-1.5 rounded-full"
