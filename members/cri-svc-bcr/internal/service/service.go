@@ -11,8 +11,6 @@ package service
 
 import (
 	"context"
-	"encoding/json"
-	"strconv"
 
 	interop "github.com/devsebas/costaricaasservice/libs/cri-lib-interop-client/interop"
 	screrrors "github.com/devsebas/costaricaasservice/libs/cri-lib-shared/errors"
@@ -36,6 +34,19 @@ type KYCResult struct {
 	Trace         []string `json:"trace"`
 }
 
+type personData struct {
+	Cedula   string `json:"cedula"`
+	FullName string `json:"fullName"`
+	Address  string `json:"address"`
+}
+
+type taxData struct {
+	Cedula      string  `json:"cedula"`
+	Year        int     `json:"year"`
+	GrossIncome float64 `json:"grossIncome"`
+	Status      string  `json:"status"`
+}
+
 // KYCCheck dispara el flujo de onboarding: consulta registro-civil para
 // nombre/domicilio + hacienda para ingreso bruto. Compone un resultado.
 //
@@ -46,8 +57,7 @@ func (s *Service) KYCCheck(ctx context.Context, realm, cedula string) (*KYCResul
 		return nil, screrrors.New(screrrors.CodeBadRequest, "cedula required")
 	}
 
-	// 1. Datos personales (Registro Civil)
-	personResp, err := s.interopClient.Call(ctx, interop.CallRequest{
+	person, personAuditID, err := interop.CallTyped[personData](ctx, s.interopClient, interop.CallRequest{
 		TargetMember: "registro-civil",
 		Service:      "persons.get",
 		Version:      "v1",
@@ -58,19 +68,8 @@ func (s *Service) KYCCheck(ctx context.Context, realm, cedula string) (*KYCResul
 	if err != nil {
 		return nil, screrrors.Wrap(screrrors.CodeUnavailable, "registro-civil lookup", err)
 	}
-	if personResp.Status >= 400 {
-		return nil, screrrors.New(screrrors.CodeNotFound, "person not in registro-civil: "+strconv.Itoa(personResp.Status))
-	}
 
-	type personData struct {
-		Cedula   string `json:"cedula"`
-		FullName string `json:"fullName"`
-		Address  string `json:"address"`
-	}
-	personFields, personAuditID := unwrap[personData](personResp.Body)
-
-	// 2. Ingresos (Hacienda)
-	taxResp, err := s.interopClient.Call(ctx, interop.CallRequest{
+	tax, taxAuditID, err := interop.CallTyped[taxData](ctx, s.interopClient, interop.CallRequest{
 		TargetMember: "hacienda",
 		Service:      "tax.status",
 		Version:      "v1",
@@ -82,34 +81,26 @@ func (s *Service) KYCCheck(ctx context.Context, realm, cedula string) (*KYCResul
 		return nil, screrrors.Wrap(screrrors.CodeUnavailable, "hacienda lookup", err)
 	}
 
-	type taxData struct {
-		Cedula      string  `json:"cedula"`
-		Year        int     `json:"year"`
-		GrossIncome float64 `json:"grossIncome"`
-		Status      string  `json:"status"`
-	}
-	taxFields, taxAuditID := unwrap[taxData](taxResp.Body)
-
 	bracket := "low"
 	approved := false
 	reason := "ingreso bruto insuficiente"
 	switch {
-	case taxFields.GrossIncome >= 20_000_000:
+	case tax.GrossIncome >= 20_000_000:
 		bracket = "high"
 		approved = true
 		reason = "ingreso comprobado, aprobado para producto premium"
-	case taxFields.GrossIncome >= 10_000_000:
+	case tax.GrossIncome >= 10_000_000:
 		bracket = "medium"
 		approved = true
 		reason = "ingreso comprobado, aprobado para producto estándar"
 	}
 
 	return &KYCResult{
-		Cedula:        personFields.Cedula,
-		FullName:      personFields.FullName,
-		Address:       personFields.Address,
+		Cedula:        person.Cedula,
+		FullName:      person.FullName,
+		Address:       person.Address,
 		IncomeBracket: bracket,
-		GrossIncome:   taxFields.GrossIncome,
+		GrossIncome:   tax.GrossIncome,
 		Approved:      approved,
 		Reason:        reason,
 		Trace: []string{
@@ -117,26 +108,4 @@ func (s *Service) KYCCheck(ctx context.Context, realm, cedula string) (*KYCResul
 			"hacienda/tax.status/v1 audit_id=" + taxAuditID,
 		},
 	}, nil
-}
-
-// unwrap desempaca el doble envelope SS → peer-dispatcher → data<T>.
-// Si falla algún unmarshal devuelve zero values.
-func unwrap[T any](raw []byte) (T, string) {
-	var zero T
-	var ssEnv struct {
-		Data struct {
-			AuditID string          `json:"audit_id"`
-			Body    json.RawMessage `json:"body"`
-		} `json:"data"`
-	}
-	if err := json.Unmarshal(raw, &ssEnv); err != nil {
-		return zero, ""
-	}
-	var peerEnv struct {
-		Data T `json:"data"`
-	}
-	if err := json.Unmarshal(ssEnv.Data.Body, &peerEnv); err != nil {
-		return zero, ssEnv.Data.AuditID
-	}
-	return peerEnv.Data, ssEnv.Data.AuditID
 }
